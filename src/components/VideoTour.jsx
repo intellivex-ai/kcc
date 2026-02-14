@@ -5,8 +5,8 @@ import { Play, X } from 'lucide-react';
 const VideoTour = () => {
     const [isPlaying, setIsPlaying] = useState(false);
 
-    // Placeholder - replace with actual YouTube video ID
-    const videoId = "dQw4w9WgXcQ"; // Replace with actual KCC video
+    // Demo video ID - Replace with your actual KCC promotional video ID from YouTube
+    const videoId = "dQw4w9WgXcQ"; // Current: Generic demo video
 
     return (
         <section className="py-16 lg:py-24 bg-white relative overflow-hidden">

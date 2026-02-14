@@ -112,12 +112,26 @@ const Contact = () => {
                 </div>
             </section>
 
-            {/* Map Section (Placeholder) */}
+            {/* Map Section */}
             <section className="py-16 bg-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <h2 className="text-3xl font-black text-gray-900 mb-8 text-center">Find Us</h2>
-                    <div className="bg-gray-200 rounded-2xl h-96 flex items-center justify-center">
-                        <p className="text-gray-500">Google Maps Integration Coming Soon</p>
+                    <div className="bg-gray-200 rounded-2xl h-96 overflow-hidden shadow-lg">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14419.123456789!2d82.9739!3d25.3176!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398e2db76febf4c3%3A0x6e5e8e4e0e4e8e!2sVaranasi%2C%20Uttar%20Pradesh!5e0!3m2!1sen!2sin!4v1234567890"
+                            width="100%"
+                            height="100%"
+                            style={{ border: 0 }}
+                            allowFullScreen=""
+                            loading="lazy"
+                            referrerPolicy="no-referrer-when-downgrade"
+                            title="KCC Location Map"
+                        ></iframe>
+                    </div>
+                    <div className="mt-6 bg-blue-50 border border-blue-200 rounded-xl p-4 text-center">
+                        <p className="text-sm text-gray-700">
+                            <strong>Note:</strong> The map shows Varanasi city center. Please update the embed code with your exact institute address for precise location.
+                        </p>
                     </div>
                 </div>
             </section>
