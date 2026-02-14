@@ -16,23 +16,28 @@ const LiveChat = () => {
             s0.parentNode.insertBefore(s1, s0);
         })();
 
-        // Customize widget appearance
-        if (window.Tawk_API) {
-            window.Tawk_API.customStyle = {
-                visibility: {
-                    desktop: {
-                        position: 'bl', // bottom-left
-                        xOffset: 20,
-                        yOffset: 20
-                    },
-                    mobile: {
-                        position: 'bl',
-                        xOffset: 10,
-                        yOffset: 80
-                    }
+        // Customize widget appearance with onLoad callback
+        window.Tawk_API = window.Tawk_API || {};
+        window.Tawk_API.onLoad = function () {
+            window.Tawk_API.setAttributes({
+                'position': 'bl'
+            });
+        };
+
+        window.Tawk_API.customStyle = {
+            visibility: {
+                desktop: {
+                    position: 'bl', // bottom-left
+                    xOffset: 20,
+                    yOffset: 20
+                },
+                mobile: {
+                    position: 'bl',
+                    xOffset: 10,
+                    yOffset: 80
                 }
-            };
-        }
+            }
+        };
 
         return () => {
             // Cleanup if component unmounts
