@@ -24,10 +24,20 @@ const OnlineBooking = lazy(() => import('./pages/OnlineBooking'));
 const StudentPortal = lazy(() => import('./pages/StudentPortal'));
 const PaymentGateway = lazy(() => import('./pages/PaymentGateway'));
 
+// Admin pages
+const AdminLogin = lazy(() => import('./pages/admin/AdminLogin'));
+const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'));
+const Dashboard = lazy(() => import('./pages/admin/Dashboard'));
+const Inquiries = lazy(() => import('./pages/admin/Inquiries'));
+const Students = lazy(() => import('./pages/admin/Students'));
+const Analytics = lazy(() => import('./pages/admin/Analytics'));
+import ProtectedRoute from './components/admin/ProtectedRoute';
+
 import CustomCursor from './components/CustomCursor';
 import LiveChat from './components/LiveChat';
 import NotificationSystem from './components/NotificationSystem';
 import OfferBanner from './components/OfferBanner';
+import InstallPWA from './components/InstallPWA';
 
 function App() {
   return (
@@ -65,12 +75,27 @@ function App() {
               <Route path="/booking" element={<OnlineBooking />} />
               <Route path="/portal" element={<StudentPortal />} />
               <Route path="/payment" element={<PaymentGateway />} />
+
+              {/* Admin Routes */}
+              <Route path="/admin/login" element={<AdminLogin />} />
+              <Route path="/admin" element={
+                <ProtectedRoute>
+                  <AdminDashboard />
+                </ProtectedRoute>
+              }>
+                <Route index element={<Dashboard />} />
+                <Route path="dashboard" element={<Dashboard />} />
+                <Route path="inquiries" element={<Inquiries />} />
+                <Route path="students" element={<Students />} />
+                <Route path="analytics" element={<Analytics />} />
+              </Route>
             </Routes>
           </Suspense>
         </main>
         <Footer />
         <Chatbot />
         <NotificationSystem />
+        <InstallPWA />
       </div>
     </Router>
   );
