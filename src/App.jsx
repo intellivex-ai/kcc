@@ -10,12 +10,14 @@ import Contact from './pages/Contact';
 
 import CustomCursor from './components/CustomCursor';
 import LiveChat from './components/LiveChat';
+import OfferBanner from './components/OfferBanner';
 
 function App() {
   return (
     <Router>
       <CustomCursor />
       <LiveChat />
+      <OfferBanner />
       <div className="flex flex-col min-h-screen bg-white">
         <Navbar />
         <main className="flex-grow">
