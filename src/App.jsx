@@ -12,6 +12,10 @@ import Downloads from './pages/Downloads';
 import SuccessStories from './pages/SuccessStories';
 import Scholarships from './pages/Scholarships';
 import CourseComparison from './pages/CourseComparison';
+import OnlineAdmission from './pages/OnlineAdmission';
+import ResultsChecker from './pages/ResultsChecker';
+import AlumniNetwork from './pages/AlumniNetwork';
+import ReferralProgram from './pages/ReferralProgram';
 
 import CustomCursor from './components/CustomCursor';
 import LiveChat from './components/LiveChat';
@@ -37,6 +41,10 @@ function App() {
             <Route path="/success-stories" element={<SuccessStories />} />
             <Route path="/scholarships" element={<Scholarships />} />
             <Route path="/compare" element={<CourseComparison />} />
+            <Route path="/admission" element={<OnlineAdmission />} />
+            <Route path="/results" element={<ResultsChecker />} />
+            <Route path="/alumni" element={<AlumniNetwork />} />
+            <Route path="/referral" element={<ReferralProgram />} />
           </Routes>
         </main>
         <Footer />
