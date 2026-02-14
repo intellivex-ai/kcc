@@ -21,12 +21,12 @@ const LiveChat = () => {
             window.Tawk_API.customStyle = {
                 visibility: {
                     desktop: {
-                        position: 'br', // bottom-right
+                        position: 'bl', // bottom-left
                         xOffset: 20,
                         yOffset: 20
                     },
                     mobile: {
-                        position: 'br',
+                        position: 'bl',
                         xOffset: 10,
                         yOffset: 80
                     }
