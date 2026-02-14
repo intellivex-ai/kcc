@@ -7,6 +7,10 @@ import Services from './pages/Services';
 import Education from './pages/Education';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import Blog from './pages/Blog';
+import Downloads from './pages/Downloads';
+import SuccessStories from './pages/SuccessStories';
+import Scholarships from './pages/Scholarships';
 
 import CustomCursor from './components/CustomCursor';
 import LiveChat from './components/LiveChat';
@@ -27,6 +31,10 @@ function App() {
             <Route path="/education" element={<Education />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/downloads" element={<Downloads />} />
+            <Route path="/success-stories" element={<SuccessStories />} />
+            <Route path="/scholarships" element={<Scholarships />} />
           </Routes>
         </main>
         <Footer />
