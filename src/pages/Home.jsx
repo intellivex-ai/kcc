@@ -10,6 +10,8 @@ import FAQ from '../components/FAQ';
 import Newsletter from '../components/Newsletter';
 import CourseCalendar from '../components/CourseCalendar';
 import PartnerLogos from '../components/PartnerLogos';
+import VideoTour from '../components/VideoTour';
+import FeeCalculator from '../components/FeeCalculator';
 
 const Home = () => {
     return (
@@ -19,7 +21,9 @@ const Home = () => {
             <PartnerLogos />
             <ServiceMatrix />
             <EducationPortal />
+            <VideoTour />
             <CourseCalendar />
+            <FeeCalculator />
             <Testimonials />
             <Gallery />
             <DocumentHelper />
