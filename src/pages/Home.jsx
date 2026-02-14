@@ -9,12 +9,14 @@ import Gallery from '../components/Gallery';
 import FAQ from '../components/FAQ';
 import Newsletter from '../components/Newsletter';
 import CourseCalendar from '../components/CourseCalendar';
+import PartnerLogos from '../components/PartnerLogos';
 
 const Home = () => {
     return (
         <div className="space-y-0">
             <Hero />
             <StatsCounter />
+            <PartnerLogos />
             <ServiceMatrix />
             <EducationPortal />
             <CourseCalendar />
