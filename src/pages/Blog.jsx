@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Search, Calendar, Clock, Tag, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { blogPosts, blogCategories } from '../data/blog-posts';
-import { BannerAd, SidebarAd } from '../components/AdSense';
+import { BannerAd, InArticleAd } from '../components/AdSense';
 
 const Blog = () => {
     const [selectedCategory, setSelectedCategory] = useState('all');
@@ -69,94 +69,88 @@ const Blog = () => {
                 </div>
             </section>
 
-            {/* Top Banner Ad */}
-            <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
-                <BannerAd adSlot="1234567890" />
-            </section>
+            {/* Banner Ad */}
+            <BannerAd adSlot="1234567890" />
 
             {/* Blog Posts Grid */}
             <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
                 {filteredPosts.length > 0 ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {filteredPosts.map((post, index) => (
-                            <motion.article
-                                key={post.id}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: index * 0.1 }}
-                                className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all group"
-                            >
-                                {/* Image */}
-                                <div className="relative h-48 overflow-hidden">
-                                    <img
-                                        src={post.image}
-                                        alt={post.title}
-                                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                                    />
-                                    <div className="absolute top-4 left-4">
-                                        <span className="px-3 py-1 bg-primary text-white text-xs font-bold rounded-full">
-                                            {post.category}
-                                        </span>
-                                    </div>
-                                </div>
-
-                                {/* Content */}
-                                <div className="p-6">
-                                    <div className="flex items-center gap-4 text-sm text-gray-500 mb-3">
-                                        <span className="flex items-center gap-1">
-                                            <Calendar size={14} />
-                                            {new Date(post.date).toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' })}
-                                        </span>
-                                        <span className="flex items-center gap-1">
-                                            <Clock size={14} />
-                                            {post.readTime}
-                                        </span>
-                                    </div>
-
-                                    <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors">
-                                        {post.title}
-                                    </h3>
-
-                                    <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-                                        {post.excerpt}
-                                    </p>
-
-                                    {/* Tags */}
-                                    <div className="flex flex-wrap gap-2 mb-4">
-                                        {post.tags.slice(0, 3).map((tag, i) => (
-                                            <span
-                                                key={i}
-                                                className="flex items-center gap-1 px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-md"
-                                            >
-                                                <Tag size={12} />
-                                                {tag}
+                    <>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {filteredPosts.map((post, index) => (
+                                <motion.article
+                                    key={post.id}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: index * 0.1 }}
+                                    className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all group"
+                                >
+                                    {/* Image */}
+                                    <div className="relative h-48 overflow-hidden">
+                                        <img
+                                            src={post.image}
+                                            alt={post.title}
+                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                                        />
+                                        <div className="absolute top-4 left-4">
+                                            <span className="px-3 py-1 bg-primary text-white text-xs font-bold rounded-full">
+                                                {post.category}
                                             </span>
-                                        ))}
+                                        </div>
                                     </div>
 
-                                    {/* Read More */}
-                                    <Link
-                                        to={`/blog/${post.slug}`}
-                                        className="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all"
-                                    >
-                                        Read Article
-                                        <ArrowRight size={16} />
-                                    </Link>
-                                </div>
-                            </motion.article>
-                        ))}
-                    </div>
-                ) : (
-                    <div className="text-center py-16">
-                        <p className="text-gray-500 text-lg">No articles found matching your criteria.</p>
-                    </div>
-                )}
-            </section>
+                                    {/* Content */}
+                                    <div className="p-6">
+                                        <div className="flex items-center gap-4 text-sm text-gray-500 mb-3">
+                                            <span className="flex items-center gap-1">
+                                                <Calendar size={14} />
+                                                {new Date(post.date).toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' })}
+                                            </span>
+                                            <span className="flex items-center gap-1">
+                                                <Clock size={14} />
+                                                {post.readTime}
+                                            </span>
+                                        </div>
 
-            {/* Bottom Banner Ad */}
-            <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-                <BannerAd adSlot="0987654321" />
-            </section>
+                                        <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors">
+                                            {post.title}
+                                        </h3>
+
+                                        <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                                            {post.excerpt}
+                                        </p>
+
+                                        {/* Tags */}
+                                        <div className="flex flex-wrap gap-2 mb-4">
+                                            {post.tags.slice(0, 3).map((tag, i) => (
+                                                <span
+                                                    key={i}
+                                                    className="flex items-center gap-1 px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-md"
+                                                >
+                                                    <Tag size={12} />
+                                                    {tag}
+                                                </span>
+                                            ))}
+                                        </div>
+
+                                        {/* Read More */}
+                                        <Link
+                                            to={`/blog/${post.slug}`}
+                                            className="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all"
+                                        >
+                                            Read Article
+                                            <ArrowRight size={16} />
+                                        </Link>
+                                    </div>
+                                </motion.article>
+                            ))}
+                        </div>
+                        ) : (
+                        <div className="text-center py-16">
+                            <p className="text-gray-500 text-lg">No articles found matching your criteria.</p>
+                        </div>
+                )}
+                    </section>
         </div>
     );
 };
