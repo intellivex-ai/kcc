@@ -13,6 +13,9 @@ import PartnerLogos from '../components/PartnerLogos';
 import VideoTour from '../components/VideoTour';
 import FeeCalculator from '../components/FeeCalculator';
 import EventsSection from '../components/EventsSection';
+import ExamCountdown from '../components/ExamCountdown';
+import CoursePopularity from '../components/CoursePopularity';
+import CourseRoadmap from '../components/CourseRoadmap';
 
 const Home = () => {
     return (
@@ -25,6 +28,9 @@ const Home = () => {
             <VideoTour />
             <CourseCalendar />
             <EventsSection />
+            <ExamCountdown />
+            <CoursePopularity />
+            <CourseRoadmap />
             <FeeCalculator />
             <Testimonials />
             <Gallery />

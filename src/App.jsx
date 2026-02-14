@@ -11,6 +11,7 @@ import Blog from './pages/Blog';
 import Downloads from './pages/Downloads';
 import SuccessStories from './pages/SuccessStories';
 import Scholarships from './pages/Scholarships';
+import CourseComparison from './pages/CourseComparison';
 
 import CustomCursor from './components/CustomCursor';
 import LiveChat from './components/LiveChat';
@@ -35,6 +36,7 @@ function App() {
             <Route path="/downloads" element={<Downloads />} />
             <Route path="/success-stories" element={<SuccessStories />} />
             <Route path="/scholarships" element={<Scholarships />} />
+            <Route path="/compare" element={<CourseComparison />} />
           </Routes>
         </main>
         <Footer />
