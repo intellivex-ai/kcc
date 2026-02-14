@@ -3,7 +3,7 @@
  * Handles page views, events, and user tracking
  */
 
-const GA_MEASUREMENT_ID = 'G-XXXXXXXXXX'; // Replace with your actual GA4 ID
+const GA_MEASUREMENT_ID = 'G-0T9LYER45J'; // Replace with your actual GA4 ID
 
 /**
  * Initialize Google Analytics
