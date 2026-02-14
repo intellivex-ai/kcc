@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Search, Calendar, Clock, Tag, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { blogPosts, blogCategories } from '../data/blog-posts';
+import { BannerAd, SidebarAd } from '../components/AdSense';
 
 const Blog = () => {
     const [selectedCategory, setSelectedCategory] = useState('all');
@@ -66,6 +67,11 @@ const Blog = () => {
                         </div>
                     </div>
                 </div>
+            </section>
+
+            {/* Top Banner Ad */}
+            <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+                <BannerAd adSlot="1234567890" />
             </section>
 
             {/* Blog Posts Grid */}
@@ -145,6 +151,11 @@ const Blog = () => {
                         <p className="text-gray-500 text-lg">No articles found matching your criteria.</p>
                     </div>
                 )}
+            </section>
+
+            {/* Bottom Banner Ad */}
+            <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+                <BannerAd adSlot="0987654321" />
             </section>
         </div>
     );
