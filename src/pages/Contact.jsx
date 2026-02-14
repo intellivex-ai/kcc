@@ -1,132 +1,127 @@
 import React from 'react';
-import { MapPin, Phone, Mail, Clock } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Mail, Phone, MapPin, Clock, MessageSquare } from 'lucide-react';
+import InquiryForm from '../components/InquiryForm';
 
 const Contact = () => {
-    const [openIndex, setOpenIndex] = React.useState(null);
-
-    const faqs = [
-        {
-            question: "What is the duration of the CCC course?",
-            answer: "The CCC (Course on Computer Concepts) is an 80-hour government-certified course, typically completed in 3 months. It is mandatory for many UP government jobs."
-        },
-        {
-            question: "Do you provide Admit Card and Result services?",
-            answer: "Yes! We download and print Admit Cards for all major exams (SSC, UPSC, UP Police, etc.) and provide high-quality result printouts."
-        },
-        {
-            question: "Can I withdraw money using my Aadhaar card?",
-            answer: "Absolutely. We are a DigiPay authorized centre. You can withdraw cash from any bank account using just your Aadhaar number and fingerprint."
-        },
-        {
-            question: "What documents are required for Scholarship application?",
-            answer: "You typically need your Aadhar Card, Bank Passbook, Last Year's Result, Income Certificate, Caste Certificate, and a Passport size photo."
-        },
-        {
-            question: "What are your opening hours?",
-            answer: "We are open from Monday to Saturday, 9:00 AM to 7:00 PM. We are closed on Sundays."
-        }
-    ];
-
-    const toggleFaq = (index) => {
-        setOpenIndex(openIndex === index ? null : index);
-    };
-
     return (
-        <div className="pt-20">
-            <div className="bg-primary text-white py-16 text-center">
-                <h1 className="text-4xl font-bold mb-4">Contact Us</h1>
-                <p className="text-blue-100 max-w-2xl mx-auto">
-                    Have a question or need a service? Visit us or get in touch.
-                </p>
-            </div>
+        <div className=\"min-h-screen bg-gray-50\">
+    {/* Header */ }
+    <section className=\"bg-gradient-to-br from-primary to-blue-600 py-20\">
+        < div className =\"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center\">
+            < h1 className =\"text-4xl md:text-5xl font-black text-white mb-4\">Get In Touch</h1>
+                < p className =\"text-blue-100 text-lg max-w-2xl mx-auto\">
+                        Have questions ? We're here to help! Reach out via form, phone, or visit our center.
+                    </p >
+                </div >
+            </section >
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-                <div className="grid lg:grid-cols-2 gap-12 mb-20">
+    {/* Contact Section */ }
+    < section className =\"py-16\">
+        < div className =\"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8\">
+            < div className =\"grid grid-cols-1 lg:grid-cols-2 gap-12\">
+{/* Contact Info */ }
+<div className=\"space-y-8\">
+    < div >
+    <h2 className=\"text-3xl font-black text-gray-900 mb-6\">Contact Information</h2>
+        < p className =\"text-gray-600 mb-8\">
+                                    Kusum Computer Centre - Your trusted partner for computer education and government services.
+                                </p >
+                            </div >
 
-                    {/* Contact Info */}
-                    <div className="space-y-8">
-                        <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-start gap-4">
-                            <div className="bg-blue-100 p-3 rounded-full text-primary shrink-0">
-                                <MapPin size={24} />
-                            </div>
-                            <div>
-                                <h3 className="font-bold text-lg text-gray-900 mb-1">Our Location</h3>
-                                <p className="text-gray-600">
-                                    N.H.-2 G.T. Road, Rajatalab,<br />
-                                    Varanasi, Uttar Pradesh - 221311
-                                </p>
-                            </div>
-                        </div>
+    {/* Contact Cards */ }
+    < div className =\"space-y-4\">
+        < motion.div
+initial = {{ opacity: 0, x: -20 }}
+whileInView = {{ opacity: 1, x: 0 }}
+viewport = {{ once: true }}
+className =\"flex items-start gap-4 bg-white p-6 rounded-2xl shadow-md\"
+    >
+    <div className=\"w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center shrink-0\">
+        < Phone size = { 24} className =\"text-primary\" />
+                                    </div >
+                                    <div>
+                                        <h3 className=\"font-bold text-gray-900 mb-1\">Phone</h3>
+                                        <a href=\"tel:9795633704\" className=\"text-gray-600 hover:text-primary\">+91 9795633704</a>
+                                    </div >
+                                </motion.div >
 
-                        <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-start gap-4">
-                            <div className="bg-green-100 p-3 rounded-full text-green-600 shrink-0">
-                                <Phone size={24} />
-                            </div>
-                            <div>
-                                <h3 className="font-bold text-lg text-gray-900 mb-1">Phone Number</h3>
-                                <p className="text-gray-900 font-medium">Naveen Kumar</p>
-                                <p className="text-gray-600">+91 97956 33704</p>
-                                <p className="text-gray-400 text-sm mt-1">Mon-Sat, 9am to 7pm</p>
-                            </div>
-                        </div>
+    <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.1 }}
+        className=\"flex items-start gap-4 bg-white p-6 rounded-2xl shadow-md\"
+            >
+            <div className=\"w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center shrink-0\">
+                < MessageSquare size = { 24} className =\"text-green-600\" />
+                                    </div >
+                                    <div>
+                                        <h3 className=\"font-bold text-gray-900 mb-1\">WhatsApp</h3>
+                                        <a 
+                                            href=\"https://wa.me/919795633704\" 
+target =\"_blank\" 
+rel =\"noopener noreferrer\"
+className =\"text-gray-600 hover:text-green-600\"
+    >
+    Chat with us
+                                        </a >
+                                    </div >
+                                </motion.div >
 
-                        <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-start gap-4">
-                            <div className="bg-purple-100 p-3 rounded-full text-purple-600 shrink-0">
-                                <Mail size={24} />
-                            </div>
-                            <div>
-                                <h3 className="font-bold text-lg text-gray-900 mb-1">Email Address</h3>
-                                <p className="text-gray-600">contact@kusumcc.com</p>
-                            </div>
-                        </div>
-                    </div>
+    <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.2 }}
+        className=\"flex items-start gap-4 bg-white p-6 rounded-2xl shadow-md\"
+            >
+            <div className=\"w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center shrink-0\">
+                < MapPin size = { 24} className =\"text-purple-600\" />
+                                    </div >
+                                    <div>
+                                        <h3 className=\"font-bold text-gray-900 mb-1\">Address</h3>
+                                        <p className=\"text-gray-600\">Rajatalab, Varanasi, Uttar Pradesh</p>
+                                    </div >
+                                </motion.div >
 
-                    {/* Map Embed */}
-                    <div className="h-full min-h-[400px] bg-gray-200 rounded-2xl overflow-hidden shadow-lg">
-                        <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3608.203798547466!2d82.86603217604434!3d25.263725529000635!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398e3fb939e6a943%3A0xe54e60156d9569f6!2sRaja%20Talab%2C%20Uttar%20Pradesh!5e0!3m2!1sen!2sin!4v1707920194848!5m2!1sen!2sin"
-                            width="100%"
-                            height="100%"
-                            style={{ border: 0 }}
-                            allowFullScreen=""
-                            loading="lazy"
-                            referrerPolicy="no-referrer-when-downgrade"
-                            title="Kusum Computer Centre Location"
-                        ></iframe>
-                    </div>
+    <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.3 }}
+        className=\"flex items-start gap-4 bg-white p-6 rounded-2xl shadow-md\"
+            >
+            <div className=\"w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center shrink-0\">
+                < Clock size = { 24} className =\"text-orange-600\" />
+                                    </div >
+                                    <div>
+                                        <h3 className=\"font-bold text-gray-900 mb-1\">Working Hours</h3>
+                                        <p className=\"text-gray-600\">Mon - Sat: 9:00 AM - 6:00 PM</p>
+    < p className =\"text-gray-500 text-sm\">Sunday: Closed</p>
+                                    </div >
+                                </motion.div >
+                            </div >
+                        </div >
 
-                </div>
+    {/* Inquiry Form */ }
+    < div >
+    <InquiryForm />
+                        </div >
+                    </div >
+                </div >
+            </section >
 
-                {/* FAQ Section */}
-                <div className="max-w-3xl mx-auto">
-                    <h2 className="text-3xl font-bold text-center mb-8 text-gray-900">Frequently Asked Questions</h2>
-                    <div className="space-y-4">
-                        {faqs.map((faq, index) => (
-                            <div key={index} className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                                <button
-                                    className="w-full flex justify-between items-center p-5 text-left focus:outline-none"
-                                    onClick={() => toggleFaq(index)}
-                                >
-                                    <span className="font-semibold text-gray-900">{faq.question}</span>
-                                    <span className={`transform transition-transform duration-300 ${openIndex === index ? 'rotate-180' : ''}`}>
-                                        <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                                        </svg>
-                                    </span>
-                                </button>
-                                <div
-                                    className={`transition-all duration-300 ease-in-out overflow-hidden ${openIndex === index ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}
-                                >
-                                    <div className="p-5 pt-0 text-gray-600 bg-gray-50/50">
-                                        {faq.answer}
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-        </div>
+    {/* Map Section (Placeholder) */ }
+    < section className =\"py-16 bg-white\">
+        < div className =\"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8\">
+            < h2 className =\"text-3xl font-black text-gray-900 mb-8 text-center\">Find Us</h2>
+                < div className =\"bg-gray-200 rounded-2xl h-96 flex items-center justify-center\">
+                    < p className =\"text-gray-500\">Google Maps Integration Coming Soon</p>
+                    </div >
+                </div >
+            </section >
+        </div >
     );
 };
 

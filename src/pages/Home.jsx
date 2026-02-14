@@ -7,6 +7,8 @@ import StatsCounter from '../components/StatsCounter';
 import Testimonials from '../components/Testimonials';
 import Gallery from '../components/Gallery';
 import FAQ from '../components/FAQ';
+import Newsletter from '../components/Newsletter';
+import CourseCalendar from '../components/CourseCalendar';
 
 const Home = () => {
     return (
@@ -15,9 +17,11 @@ const Home = () => {
             <StatsCounter />
             <ServiceMatrix />
             <EducationPortal />
+            <CourseCalendar />
             <Testimonials />
             <Gallery />
             <DocumentHelper />
+            <Newsletter />
             <FAQ />
         </div>
     );
