@@ -1,198 +1,298 @@
 /**
- * Admin Data Management Library
+ * Admin Data Management Library - Supabase Backend
  * Handles CRUD operations for inquiries and students
- * Uses localStorage for demo purposes
+ * Production-ready with PostgreSQL and real-time persistence
  */
 
-const INQUIRIES_KEY = 'kcc_inquiries';
-const STUDENTS_KEY = 'kcc_students';
+import supabase from './supabase';
 
-// Demo data generator
-const generateDemoInquiries = () => [
-    {
-        id: '1',
-        name: 'Rahul Sharma',
-        email: 'rahul@example.com',
-        phone: '9876543210',
-        subject: 'CCC Course Inquiry',
-        message: 'I want to know about the CCC course duration and fees.',
-        status: 'new',
-        createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString()
-    },
-    {
-        id: '2',
-        name: 'Priya Singh',
-        email: 'priya@example.com',
-        phone: '9123456789',
-        subject: 'O-Level Admission',
-        message: 'When is the next batch starting for O-Level?',
-        status: 'in-progress',
-        createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString()
-    },
-    {
-        id: '3',
-        name: 'Amit Kumar',
-        email: 'amit@example.com',
-        phone: '9988776655',
-        subject: 'PAN Card Service',
-        message: 'How much time does it take to get a new PAN card?',
-        status: 'resolved',
-        createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString()
-    }
-];
+// ============================================
+// INQUIRIES CRUD
+// ============================================
 
-const generateDemoStudents = () => [
-    {
-        id: '1',
-        name: 'Anjali Verma',
-        email: 'anjali@example.com',
-        phone: '9876543211',
-        course: 'CCC',
-        dob: '2000-05-15',
-        address: 'Varanasi, UP',
-        status: 'active',
-        enrolledAt: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString()
-    },
-    {
-        id: '2',
-        name: 'Vikash Yadav',
-        email: 'vikash@example.com',
-        phone: '9123456788',
-        course: 'O-Level',
-        dob: '1998-08-22',
-        address: 'Varanasi, UP',
-        status: 'active',
-        enrolledAt: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString()
-    }
-];
+/**
+ * Get all inquiries
+ */
+export const getInquiries = async () => {
+    try {
+        const { data, error } = await supabase
+            .from('inquiries')
+            .select('*')
+            .order('created_at', { ascending: false });
 
-// Initialize demo data if not exists
-const initDemoData = () => {
-    if (!localStorage.getItem(INQUIRIES_KEY)) {
-        localStorage.setItem(INQUIRIES_KEY, JSON.stringify(generateDemoInquiries()));
-    }
-    if (!localStorage.getItem(STUDENTS_KEY)) {
-        localStorage.setItem(STUDENTS_KEY, JSON.stringify(generateDemoStudents()));
+        if (error) throw error;
+        return data || [];
+    } catch (error) {
+        console.error('Error fetching inquiries:', error);
+        return [];
     }
 };
 
-// Inquiries CRUD
-export const getInquiries = () => {
-    initDemoData();
-    const data = localStorage.getItem(INQUIRIES_KEY);
-    return data ? JSON.parse(data) : [];
-};
+/**
+ * Get inquiry by ID
+ */
+export const getInquiryById = async (id) => {
+    try {
+        const { data, error } = await supabase
+            .from('inquiries')
+            .select('*')
+            .eq('id', id)
+            .single();
 
-export const getInquiryById = (id) => {
-    const inquiries = getInquiries();
-    return inquiries.find(inq => inq.id === id);
-};
-
-export const addInquiry = (inquiry) => {
-    const inquiries = getInquiries();
-    const newInquiry = {
-        ...inquiry,
-        id: Date.now().toString(),
-        status: 'new',
-        createdAt: new Date().toISOString()
-    };
-    inquiries.unshift(newInquiry);
-    localStorage.setItem(INQUIRIES_KEY, JSON.stringify(inquiries));
-    return newInquiry;
-};
-
-export const updateInquiry = (id, updates) => {
-    const inquiries = getInquiries();
-    const index = inquiries.findIndex(inq => inq.id === id);
-    if (index !== -1) {
-        inquiries[index] = { ...inquiries[index], ...updates };
-        localStorage.setItem(INQUIRIES_KEY, JSON.stringify(inquiries));
-        return inquiries[index];
+        if (error) throw error;
+        return data;
+    } catch (error) {
+        console.error('Error fetching inquiry:', error);
+        return null;
     }
-    return null;
 };
 
-export const deleteInquiry = (id) => {
-    const inquiries = getInquiries();
-    const filtered = inquiries.filter(inq => inq.id !== id);
-    localStorage.setItem(INQUIRIES_KEY, JSON.stringify(filtered));
-    return true;
-};
+/**
+ * Add new inquiry
+ */
+export const addInquiry = async (inquiry) => {
+    try {
+        const { data, error } = await supabase
+            .from('inquiries')
+            .insert({
+                name: inquiry.name,
+                email: inquiry.email,
+                phone: inquiry.phone,
+                subject: inquiry.subject,
+                message: inquiry.message,
+                status: 'new'
+            })
+            .select()
+            .single();
 
-// Students CRUD
-export const getStudents = () => {
-    initDemoData();
-    const data = localStorage.getItem(STUDENTS_KEY);
-    return data ? JSON.parse(data) : [];
-};
-
-export const getStudentById = (id) => {
-    const students = getStudents();
-    return students.find(std => std.id === id);
-};
-
-export const addStudent = (student) => {
-    const students = getStudents();
-    const newStudent = {
-        ...student,
-        id: Date.now().toString(),
-        status: 'active',
-        enrolledAt: new Date().toISOString()
-    };
-    students.unshift(newStudent);
-    localStorage.setItem(STUDENTS_KEY, JSON.stringify(students));
-    return newStudent;
-};
-
-export const updateStudent = (id, updates) => {
-    const students = getStudents();
-    const index = students.findIndex(std => std.id === id);
-    if (index !== -1) {
-        students[index] = { ...students[index], ...updates };
-        localStorage.setItem(STUDENTS_KEY, JSON.stringify(students));
-        return students[index];
+        if (error) throw error;
+        return data;
+    } catch (error) {
+        console.error('Error adding inquiry:', error);
+        throw error;
     }
-    return null;
 };
 
-export const deleteStudent = (id) => {
-    const students = getStudents();
-    const filtered = students.filter(std => std.id !== id);
-    localStorage.setItem(STUDENTS_KEY, JSON.stringify(filtered));
-    return true;
+/**
+ * Update inquiry
+ */
+export const updateInquiry = async (id, updates) => {
+    try {
+        const { data, error } = await supabase
+            .from('inquiries')
+            .update({
+                ...updates,
+                updated_at: new Date().toISOString()
+            })
+            .eq('id', id)
+            .select()
+            .single();
+
+        if (error) throw error;
+        return data;
+    } catch (error) {
+        console.error('Error updating inquiry:', error);
+        return null;
+    }
 };
 
-// Analytics
-export const getAnalytics = () => {
-    const inquiries = getInquiries();
-    const students = getStudents();
+/**
+ * Delete inquiry
+ */
+export const deleteInquiry = async (id) => {
+    try {
+        const { error } = await supabase
+            .from('inquiries')
+            .delete()
+            .eq('id', id);
 
-    const now = new Date();
-    const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+        if (error) throw error;
+        return true;
+    } catch (error) {
+        console.error('Error deleting inquiry:', error);
+        return false;
+    }
+};
 
-    const recentInquiries = inquiries.filter(inq =>
-        new Date(inq.createdAt) >= thirtyDaysAgo
-    );
+// ============================================
+// STUDENTS CRUD
+// ============================================
 
-    return {
-        totalInquiries: inquiries.length,
-        newInquiries: inquiries.filter(inq => inq.status === 'new').length,
-        totalStudents: students.length,
-        activeStudents: students.filter(std => std.status === 'active').length,
-        recentInquiries: recentInquiries.length,
-        inquiriesByStatus: {
+/**
+ * Get all students
+ */
+export const getStudents = async () => {
+    try {
+        const { data, error } = await supabase
+            .from('students')
+            .select('*')
+            .order('enrolled_at', { ascending: false });
+
+        if (error) throw error;
+        return data || [];
+    } catch (error) {
+        console.error('Error fetching students:', error);
+        return [];
+    }
+};
+
+/**
+ * Get student by ID
+ */
+export const getStudentById = async (id) => {
+    try {
+        const { data, error } = await supabase
+            .from('students')
+            .select('*')
+            .eq('id', id)
+            .single();
+
+        if (error) throw error;
+        return data;
+    } catch (error) {
+        console.error('Error fetching student:', error);
+        return null;
+    }
+};
+
+/**
+ * Add new student
+ */
+export const addStudent = async (student) => {
+    try {
+        const { data, error } = await supabase
+            .from('students')
+            .insert({
+                name: student.name,
+                email: student.email,
+                phone: student.phone,
+                course: student.course,
+                dob: student.dob,
+                address: student.address,
+                status: 'active'
+            })
+            .select()
+            .single();
+
+        if (error) throw error;
+        return data;
+    } catch (error) {
+        console.error('Error adding student:', error);
+        throw error;
+    }
+};
+
+/**
+ * Update student
+ */
+export const updateStudent = async (id, updates) => {
+    try {
+        const { data, error } = await supabase
+            .from('students')
+            .update({
+                ...updates,
+                updated_at: new Date().toISOString()
+            })
+            .eq('id', id)
+            .select()
+            .single();
+
+        if (error) throw error;
+        return data;
+    } catch (error) {
+        console.error('Error updating student:', error);
+        return null;
+    }
+};
+
+/**
+ * Delete student
+ */
+export const deleteStudent = async (id) => {
+    try {
+        const { error } = await supabase
+            .from('students')
+            .delete()
+            .eq('id', id);
+
+        if (error) throw error;
+        return true;
+    } catch (error) {
+        console.error('Error deleting student:', error);
+        return false;
+    }
+};
+
+// ============================================
+// ANALYTICS
+// ============================================
+
+/**
+ * Get analytics data
+ */
+export const getAnalytics = async () => {
+    try {
+        // Fetch all inquiries and students
+        const [inquiriesResponse, studentsResponse] = await Promise.all([
+            supabase.from('inquiries').select('status, created_at'),
+            supabase.from('students').select('status, course, enrolled_at')
+        ]);
+
+        if (inquiriesResponse.error) throw inquiriesResponse.error;
+        if (studentsResponse.error) throw studentsResponse.error;
+
+        const inquiries = inquiriesResponse.data || [];
+        const students = studentsResponse.data || [];
+
+        // Calculate stats
+        const now = new Date();
+        const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+
+        const recentInquiries = inquiries.filter(inq =>
+            new Date(inq.created_at) >= thirtyDaysAgo
+        );
+
+        const inquiriesByStatus = {
             new: inquiries.filter(inq => inq.status === 'new').length,
             inProgress: inquiries.filter(inq => inq.status === 'in-progress').length,
             resolved: inquiries.filter(inq => inq.status === 'resolved').length
-        },
-        studentsByCourse: students.reduce((acc, std) => {
+        };
+
+        const studentsByCourse = students.reduce((acc, std) => {
             acc[std.course] = (acc[std.course] || 0) + 1;
             return acc;
-        }, {})
-    };
+        }, {});
+
+        return {
+            totalInquiries: inquiries.length,
+            newInquiries: inquiriesByStatus.new,
+            totalStudents: students.length,
+            activeStudents: students.filter(std => std.status === 'active').length,
+            recentInquiries: recentInquiries.length,
+            inquiriesByStatus,
+            studentsByCourse
+        };
+    } catch (error) {
+        console.error('Error fetching analytics:', error);
+        return {
+            totalInquiries: 0,
+            newInquiries: 0,
+            totalStudents: 0,
+            activeStudents: 0,
+            recentInquiries: 0,
+            inquiriesByStatus: { new: 0, inProgress: 0, resolved: 0 },
+            studentsByCourse: {}
+        };
+    }
 };
 
-// Export to CSV
+// ============================================
+// EXPORT TO CSV
+// ============================================
+
+/**
+ * Export data to CSV
+ */
 export const exportToCSV = (data, filename) => {
     if (!data || data.length === 0) return;
 
@@ -215,6 +315,7 @@ export const exportToCSV = (data, filename) => {
     window.URL.revokeObjectURL(url);
 };
 
+// Export all functions
 export default {
     getInquiries,
     getInquiryById,

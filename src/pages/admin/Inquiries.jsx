@@ -19,9 +19,14 @@ const Inquiries = () => {
         filterInquiries();
     }, [searchTerm, statusFilter, inquiries]);
 
-    const loadInquiries = () => {
-        const data = getInquiries();
-        setInquiries(data);
+    const loadInquiries = async () => {
+        try {
+            const data = await getInquiries();
+            setInquiries(data);
+        } catch (error) {
+            console.error('Failed to load inquiries:', error);
+            toast.error('Failed to load inquiries');
+        }
     };
 
     const filterInquiries = () => {
@@ -42,17 +47,27 @@ const Inquiries = () => {
         setFilteredInquiries(filtered);
     };
 
-    const handleStatusChange = (id, newStatus) => {
-        updateInquiry(id, { status: newStatus });
-        loadInquiries();
-        toast.success('Status updated!');
+    const handleStatusChange = async (id, newStatus) => {
+        try {
+            await updateInquiry(id, { status: newStatus });
+            await loadInquiries();
+            toast.success('Status updated!');
+        } catch (error) {
+            console.error('Failed to update status:', error);
+            toast.error('Failed to update status');
+        }
     };
 
-    const handleDelete = (id) => {
+    const handleDelete = async (id) => {
         if (window.confirm('Are you sure you want to delete this inquiry?')) {
-            deleteInquiry(id);
-            loadInquiries();
-            toast.success('Inquiry deleted!');
+            try {
+                await deleteInquiry(id);
+                await loadInquiries();
+                toast.success('Inquiry deleted!');
+            } catch (error) {
+                console.error('Failed to delete inquiry:', error);
+                toast.error('Failed to delete inquiry');
+            }
         }
     };
 
@@ -149,10 +164,10 @@ const Inquiries = () => {
                                             value={inquiry.status}
                                             onChange={(e) => handleStatusChange(inquiry.id, e.target.value)}
                                             className={`px-3 py-1 rounded-full text-xs font-semibold border-0 ${inquiry.status === 'new'
-                                                    ? 'bg-orange-100 text-orange-700'
-                                                    : inquiry.status === 'in-progress'
-                                                        ? 'bg-blue-100 text-blue-700'
-                                                        : 'bg-green-100 text-green-700'
+                                                ? 'bg-orange-100 text-orange-700'
+                                                : inquiry.status === 'in-progress'
+                                                    ? 'bg-blue-100 text-blue-700'
+                                                    : 'bg-green-100 text-green-700'
                                                 }`}
                                         >
                                             <option value="new">New</option>

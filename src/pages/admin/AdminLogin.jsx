@@ -58,9 +58,10 @@ const AdminLogin = () => {
                                 type="text"
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
-                                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary"
+                                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all"
                                 placeholder="Enter username"
                                 required
+                                autoComplete="username"
                             />
                         </div>
                     </div>
@@ -75,9 +76,10 @@ const AdminLogin = () => {
                                 type="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary"
+                                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all"
                                 placeholder="Enter password"
                                 required
+                                autoComplete="current-password"
                             />
                         </div>
                     </div>
@@ -97,14 +99,6 @@ const AdminLogin = () => {
                         )}
                     </button>
                 </form>
-
-                {/* Demo Credentials */}
-                <div className="mt-6 p-4 bg-gray-50 rounded-xl">
-                    <p className="text-xs text-gray-600 text-center">
-                        <strong>Demo Credentials:</strong><br />
-                        Username: admin | Password: kcc2024
-                    </p>
-                </div>
             </motion.div>
         </div>
     );

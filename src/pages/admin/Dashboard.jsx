@@ -8,8 +8,25 @@ const Dashboard = () => {
     const [stats, setStats] = useState(null);
 
     useEffect(() => {
-        const analytics = getAnalytics();
-        setStats(analytics);
+        const fetchAnalytics = async () => {
+            try {
+                const analytics = await getAnalytics();
+                setStats(analytics);
+            } catch (error) {
+                console.error('Failed to load analytics:', error);
+                // Set empty stats on error
+                setStats({
+                    totalInquiries: 0,
+                    newInquiries: 0,
+                    totalStudents: 0,
+                    activeStudents: 0,
+                    recentInquiries: 0,
+                    inquiriesByStatus: { new: 0, inProgress: 0, resolved: 0 },
+                    studentsByCourse: {}
+                });
+            }
+        };
+        fetchAnalytics();
     }, []);
 
     if (!stats) {

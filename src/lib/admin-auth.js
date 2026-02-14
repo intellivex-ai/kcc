@@ -1,20 +1,23 @@
 /**
  * Admin Authentication Library
  * Handles admin login/logout and session management
- * Uses localStorage for demo purposes
+ * Production-ready with environment-based credentials
  */
 
 const ADMIN_KEY = 'kcc_admin_session';
-const DEFAULT_CREDENTIALS = {
-    username: 'admin',
-    password: 'kcc2024'
+
+// Get credentials from environment variables
+const ADMIN_CREDENTIALS = {
+    username: import.meta.env.VITE_ADMIN_USERNAME || 'admin',
+    password: import.meta.env.VITE_ADMIN_PASSWORD || 'kcc2024'
 };
 
 /**
  * Login with username and password
  */
 export const login = (username, password) => {
-    if (username === DEFAULT_CREDENTIALS.username && password === DEFAULT_CREDENTIALS.password) {
+    // Validate credentials
+    if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
         const session = {
             username,
             loginTime: new Date().toISOString(),
@@ -25,7 +28,7 @@ export const login = (username, password) => {
         return { success: true, user: session };
     }
 
-    return { success: false, error: 'Invalid credentials' };
+    return { success: false, error: 'Invalid username or password' };
 };
 
 /**

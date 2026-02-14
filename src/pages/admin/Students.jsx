@@ -19,9 +19,14 @@ const Students = () => {
         filterStudents();
     }, [searchTerm, courseFilter, students]);
 
-    const loadStudents = () => {
-        const data = getStudents();
-        setStudents(data);
+    const loadStudents = async () => {
+        try {
+            const data = await getStudents();
+            setStudents(data);
+        } catch (error) {
+            console.error('Failed to load students:', error);
+            toast.error('Failed to load students');
+        }
     };
 
     const filterStudents = () => {
@@ -42,11 +47,16 @@ const Students = () => {
         setFilteredStudents(filtered);
     };
 
-    const handleDelete = (id) => {
+    const handleDelete = async (id) => {
         if (window.confirm('Are you sure you want to delete this student?')) {
-            deleteStudent(id);
-            loadStudents();
-            toast.success('Student deleted!');
+            try {
+                await deleteStudent(id);
+                await loadStudents();
+                toast.success('Student deleted!');
+            } catch (error) {
+                console.error('Failed to delete student:', error);
+                toast.error('Failed to delete student');
+            }
         }
     };
 
@@ -145,8 +155,8 @@ const Students = () => {
                                     </td>
                                     <td className="px-6 py-4">
                                         <span className={`px-3 py-1 rounded-full text-xs font-semibold ${student.status === 'active'
-                                                ? 'bg-green-100 text-green-700'
-                                                : 'bg-gray-100 text-gray-700'
+                                            ? 'bg-green-100 text-green-700'
+                                            : 'bg-gray-100 text-gray-700'
                                             }`}>
                                             {student.status}
                                         </span>

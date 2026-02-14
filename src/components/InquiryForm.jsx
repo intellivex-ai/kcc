@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Send, User, Mail, Phone, BookOpen, MessageSquare, CheckCircle } from 'lucide-react';
+import { addInquiry } from '../lib/admin-data';
 
 const InquiryForm = () => {
     const [formData, setFormData] = useState({
@@ -12,6 +13,7 @@ const InquiryForm = () => {
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
+    const [error, setError] = useState(null);
 
     const courses = [
         'CCC Course',
@@ -33,17 +35,31 @@ const InquiryForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
+        setError(null);
 
-        // Simulate API call
-        setTimeout(() => {
+        try {
+            // Save to Supabase
+            await addInquiry({
+                name: formData.name,
+                email: formData.email,
+                phone: formData.phone,
+                subject: formData.course,
+                message: formData.message || 'No message provided'
+            });
+
             setIsSubmitting(false);
             setIsSuccess(true);
+
             // Reset form after 3 seconds
             setTimeout(() => {
                 setIsSuccess(false);
                 setFormData({ name: '', email: '', phone: '', course: '', message: '' });
             }, 3000);
-        }, 1500);
+        } catch (err) {
+            console.error('Failed to submit inquiry:', err);
+            setError('Failed to submit inquiry. Please try again.');
+            setIsSubmitting(false);
+        }
     };
 
     if (isSuccess) {
@@ -71,6 +87,13 @@ const InquiryForm = () => {
             className="bg-white rounded-2xl p-6 lg:p-8 shadow-xl border border-gray-100"
         >
             <h3 className="text-2xl font-black text-gray-900 mb-6">Quick Inquiry</h3>
+
+            {/* Error Message */}
+            {error && (
+                <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">
+                    {error}
+                </div>
+            )}
 
             {/* Name */}
             <div className="mb-4">
