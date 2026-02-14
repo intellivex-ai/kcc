@@ -16,9 +16,12 @@ import OnlineAdmission from './pages/OnlineAdmission';
 import ResultsChecker from './pages/ResultsChecker';
 import AlumniNetwork from './pages/AlumniNetwork';
 import ReferralProgram from './pages/ReferralProgram';
+import JobBoard from './pages/JobBoard';
+import OnlineBooking from './pages/OnlineBooking';
 
 import CustomCursor from './components/CustomCursor';
 import LiveChat from './components/LiveChat';
+import NotificationSystem from './components/NotificationSystem';
 import OfferBanner from './components/OfferBanner';
 
 function App() {
@@ -45,6 +48,8 @@ function App() {
             <Route path="/results" element={<ResultsChecker />} />
             <Route path="/alumni" element={<AlumniNetwork />} />
             <Route path="/referral" element={<ReferralProgram />} />
+            <Route path="/jobs" element={<JobBoard />} />
+            <Route path="/booking" element={<OnlineBooking />} />
           </Routes>
         </main>
         <Footer />
