@@ -8,9 +8,14 @@ import Education from './pages/Education';
 import About from './pages/About';
 import Contact from './pages/Contact';
 
+import CustomCursor from './components/CustomCursor';
+import LiveChat from './components/LiveChat';
+
 function App() {
   return (
     <Router>
+      <CustomCursor />
+      <LiveChat />
       <div className="flex flex-col min-h-screen bg-white">
         <Navbar />
         <main className="flex-grow">

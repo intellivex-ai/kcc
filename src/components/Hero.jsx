@@ -5,16 +5,15 @@ import { Link } from 'react-router-dom';
 
 const Hero = () => {
     return (
-        <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden">
-            {/* Background Decor */}
-            <div className="absolute top-0 right-0 -z-10 opacity-10">
-                <svg width="400" height="400" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                    <path fill="#003366" d="M44.7,-76.4C58.9,-69.2,71.8,-59.1,81.6,-46.6C91.4,-34.1,98.1,-19.2,95.8,-4.1C93.5,11.1,82.2,26.4,71.3,38.9C60.4,51.4,49.9,61.1,37.8,68.6C25.7,76.1,12,81.4,-0.9,82.9C-13.8,84.4,-26.4,82.1,-38.1,75.4C-49.8,68.7,-60.6,57.6,-69.7,44.9C-78.8,32.2,-86.2,17.9,-85.4,3.9C-84.6,-10.1,-75.6,-23.8,-65.4,-35.3C-55.2,-46.8,-43.8,-56.1,-31.4,-64.3C-19,-72.5,-5.6,-79.6,9.1,-81.1C23.8,-82.6,47.6,-78.5,44.7,-76.4Z" transform="translate(100 100)" />
-                </svg>
+        <section className="relative pt-28 pb-16 lg:pt-48 lg:pb-32 overflow-hidden bg-gray-50">
+            {/* Modern Gradient Background */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <div className="absolute -top-[20%] -right-[10%] w-[400px] lg:w-[700px] h-[400px] lg:h-[700px] rounded-full bg-blue-100/50 blur-3xl opacity-60 animate-pulse-slow"></div>
+                <div className="absolute top-[40%] -left-[10%] w-[300px] lg:w-[500px] h-[300px] lg:h-[500px] rounded-full bg-purple-100/40 blur-3xl opacity-50 animate-pulse-slow delay-1000"></div>
             </div>
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-20">
 
                     {/* Left Content */}
                     <motion.div
@@ -23,34 +22,50 @@ const Hero = () => {
                         transition={{ duration: 0.8 }}
                         className="flex-1 text-center lg:text-left"
                     >
-                        <div className="inline-block px-4 py-1.5 mb-6 rounded-full bg-blue-50 border border-blue-100">
-                            <span className="text-primary font-semibold text-sm tracking-wide">TRUSTED BY 1000+ STUDENTS & CITIZENS</span>
+                        <div className="inline-flex items-center gap-2 px-3 py-1.5 mb-6 rounded-full bg-white/60 border border-blue-100 backdrop-blur-md shadow-sm">
+                            <span className="flex h-2 w-2 relative">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                            </span>
+                            <span className="text-primary font-bold text-[10px] sm:text-xs tracking-wider uppercase">Open Now • Serving Rajatalab</span>
                         </div>
 
-                        <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
-                            Empowering Rajatalab with <span className="text-primary relative inline-block">
-                                Digital Excellence
-                                <svg className="absolute w-full h-3 -bottom-1 left-0 text-secondary opacity-60" viewBox="0 0 100 10" preserveAspectRatio="none">
-                                    <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="3" fill="none" />
-                                </svg>
+                        <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black text-gray-900 leading-tight mb-6 tracking-tight">
+                            Digital Seva <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-600">
+                                made simple.
                             </span>
                         </h1>
 
-                        <p className="text-lg text-gray-600 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                            Your one-stop destination for Aadhar Banking, Government Services, and Government Certified Computer Education (CCC/O-Level).
+                        <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed font-medium">
+                            Your trusted destination for Aadhaar Banking, Government Services, and certified Computer Education.
                         </p>
 
                         <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                            <Link to="/education" className="flex items-center justify-center gap-2 bg-primary text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-primary-light transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1">
-                                Start Learning <Rocket size={20} />
+                            <Link to="/education" className="group relative px-8 py-4 bg-primary text-white rounded-2xl font-bold text-lg overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-primary/30 transition-all hover:-translate-y-1">
+                                <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+                                <span className="relative flex items-center gap-2">Start Learning <Rocket size={20} /></span>
                             </Link>
-                            <Link to="/services" className="flex items-center justify-center gap-2 bg-white text-primary border-2 border-primary/10 px-8 py-4 rounded-xl font-bold text-lg hover:border-primary hover:bg-blue-50 transition-all">
+                            <Link to="/services" className="px-8 py-4 bg-white text-gray-700 border border-gray-200 rounded-2xl font-bold text-lg hover:bg-gray-50 hover:border-gray-300 transition-all shadow-sm hover:shadow-md flex items-center gap-2 justify-center">
                                 View Services <ShieldCheck size={20} />
                             </Link>
                         </div>
+
+                        {/* Stats */}
+                        <div className="mt-12 flex items-center justify-center lg:justify-start gap-8 border-t border-gray-200/60 pt-8">
+                            <div>
+                                <h4 className="text-3xl font-bold text-gray-900">2k+</h4>
+                                <p className="text-sm text-gray-500 font-medium">Happy Citizens</p>
+                            </div>
+                            <div className="w-px h-10 bg-gray-200"></div>
+                            <div>
+                                <h4 className="text-3xl font-bold text-gray-900">500+</h4>
+                                <p className="text-sm text-gray-500 font-medium">Students Certified</p>
+                            </div>
+                        </div>
                     </motion.div>
 
-                    {/* Right Visual (3D Card) */}
+                    {/* Right Visual (Glassmorphism Card) */}
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
@@ -58,46 +73,64 @@ const Hero = () => {
                         className="flex-1 relative w-full max-w-md lg:max-w-full"
                     >
                         <div className="relative w-full aspect-[4/3] perspective-1000">
-                            <div className="absolute inset-0 bg-gradient-to-tr from-primary to-blue-400 rounded-3xl transform rotate-3 opacity-20 blur-2xl animate-pulse"></div>
+                            {/* Floating decorative elements */}
+                            <motion.div
+                                animate={{ y: [0, -20, 0] }}
+                                transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+                                className="absolute -top-10 -right-10 w-24 h-24 bg-yellow-400 rounded-3xl rotate-12 blur-sm opacity-20 z-0"
+                            ></motion.div>
+                            <motion.div
+                                animate={{ y: [0, 20, 0] }}
+                                transition={{ repeat: Infinity, duration: 7, ease: "easeInOut" }}
+                                className="absolute -bottom-5 -left-5 w-32 h-32 bg-primary rounded-full blur-2xl opacity-10 z-0"
+                            ></motion.div>
 
                             {/* The "Card" */}
-                            <div className="relative h-full bg-white/80 backdrop-blur-xl border border-white/40 rounded-3xl shadow-2xl p-6 lg:p-8 flex flex-col justify-between transform hover:rotate-1 hover:scale-[1.02] transition-all duration-500 animate-float">
-                                {/* Decoration */}
-                                <div className="absolute top-0 right-0 p-6 opacity-10">
-                                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/9/95/Digital_India_logo.svg/1200px-Digital_India_logo.svg.png" alt="Digital India" className="w-32 grayscale" />
+                            <div className="relative z-10 h-full bg-white/70 backdrop-blur-xl border border-white/60 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] p-8 flex flex-col justify-between overflow-hidden">
+                                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-purple-500 to-pink-500"></div>
+
+                                <div className="flex justify-between items-start">
+                                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center text-3xl shadow-lg shadow-primary/30 text-white">
+                                        🏛️
+                                    </div>
+                                    <div className="bg-green-50 text-green-700 px-3 py-1 rounded-full text-xs font-bold border border-green-100">
+                                        VERIFIED
+                                    </div>
                                 </div>
 
-                                <div>
-                                    <div className="flex items-center gap-3 mb-6">
-                                        <div className="w-12 h-12 rounded-full bg-secondary/20 flex items-center justify-center text-2xl">🎓</div>
-                                        <div>
-                                            <h3 className="font-bold text-gray-800">Certificate of Completion</h3>
-                                            <p className="text-xs text-gray-500">Ministry of Electronics & IT</p>
+                                <div className="space-y-6 mt-4">
+                                    <div className="space-y-2">
+                                        <h3 className="text-2xl font-bold text-gray-900">Kusum Computer Centre</h3>
+                                        <p className="text-gray-500 font-medium">Rajatalab's Premium Digital Hub</p>
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <div className="bg-white p-3 rounded-xl shadow-sm border border-gray-100">
+                                            <div className="w-2 h-2 rounded-full bg-blue-500 mb-2"></div>
+                                            <div className="h-2 w-16 bg-gray-100 rounded-full"></div>
+                                        </div>
+                                        <div className="bg-white p-3 rounded-xl shadow-sm border border-gray-100">
+                                            <div className="w-2 h-2 rounded-full bg-purple-500 mb-2"></div>
+                                            <div className="h-2 w-12 bg-gray-100 rounded-full"></div>
                                         </div>
                                     </div>
-
-                                    <div className="space-y-3">
-                                        <div className="h-2 bg-gray-100 rounded-full w-3/4"></div>
-                                        <div className="h-2 bg-gray-100 rounded-full w-full"></div>
-                                        <div className="h-2 bg-gray-100 rounded-full w-5/6"></div>
-                                    </div>
                                 </div>
 
-                                <div className="flex items-center justify-between mt-8 pt-6 border-t border-gray-100">
-                                    <div className="flex -space-x-2">
-                                        {[1, 2, 3].map(i => (
-                                            <div key={i} className={`w-8 h-8 rounded-full border-2 border-white bg-gray-200 flex items-center justify-center text-[8px] font-bold text-gray-500`}>User</div>
+                                <div className="mt-8 pt-6 border-t border-gray-100/50 flex items-center justify-between">
+                                    <div className="flex -space-x-3">
+                                        {[1, 2, 3, 4].map(i => (
+                                            <div key={i} className={`w-10 h-10 rounded-full border-[3px] border-white bg-gray-100 shadow-sm flex items-center justify-center text-xs overflow-hidden`}>
+                                                <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${i + 20}`} alt="User" />
+                                            </div>
                                         ))}
-                                        <div className="w-8 h-8 rounded-full border-2 border-white bg-gray-50 flex items-center justify-center text-xs font-bold text-primary">+1k</div>
                                     </div>
                                     <div className="text-right">
-                                        <p className="text-xs text-gray-500 font-medium">Verified Centre</p>
-                                        <div className="text-accent font-bold text-sm flex items-center gap-1">
-                                            ● CSC Approved
+                                        <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider">Rating</p>
+                                        <div className="text-yellow-500 font-bold text-lg flex items-center gap-1">
+                                            4.9 <span className="text-xs text-gray-400">/ 5.0</span>
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </motion.div>

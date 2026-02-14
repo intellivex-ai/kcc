@@ -71,8 +71,8 @@ const Navbar = () => {
 
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 group">
-            <div className="bg-primary p-2 rounded-lg group-hover:bg-opacity-90 transition-all shadow-md">
-              <span className="text-secondary font-bold text-xl">KCC</span>
+            <div className="bg-white p-1 rounded-lg group-hover:shadow-lg transition-all shadow-md">
+              <img src="/logo.png" alt="KCC Logo" className="w-10 h-10 object-contain" />
             </div>
             <div className="flex flex-col">
               <span className="font-bold text-lg leading-tight transition-colors text-primary dark:text-white">Kusum</span>
@@ -190,14 +190,14 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-t border-gray-100 dark:border-gray-800 shadow-xl"
+            className="md:hidden bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border-t border-gray-100 dark:border-gray-800 shadow-2xl h-screen"
           >
-            <div className="px-4 pt-2 pb-6 space-y-1">
+            <div className="px-5 pt-4 pb-8 space-y-2">
               <Link
                 to="/"
                 onClick={() => setIsOpen(false)}
                 className={cn(
-                  "block px-4 py-3 text-base font-medium rounded-lg transition-colors",
+                  "block px-4 py-3.5 text-base font-bold rounded-xl transition-all",
                   isActive('/')
                     ? "bg-primary/10 text-primary dark:text-secondary"
                     : "text-gray-900 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-white/5"

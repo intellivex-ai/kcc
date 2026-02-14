@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@media (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
+}
+
 @layer base {
   :root {
     --background: 210 40% 98%; /* Cool Light Background */

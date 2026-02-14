@@ -11,8 +11,8 @@ const Footer = () => {
                     {/* Brand & About */}
                     <div className="space-y-4">
                         <div className="flex items-center space-x-2">
-                            <div className="bg-white/10 p-2 rounded-lg">
-                                <span className="text-secondary font-bold text-xl">KCC</span>
+                            <div className="bg-white p-1 rounded-lg">
+                                <img src="/logo.png" alt="KCC Logo" className="w-10 h-10 object-contain" />
                             </div>
                             <span className="text-xl font-bold">Kusum Computer Centre</span>
                         </div>

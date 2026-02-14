@@ -2,6 +2,35 @@ import React from 'react';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 
 const Contact = () => {
+    const [openIndex, setOpenIndex] = React.useState(null);
+
+    const faqs = [
+        {
+            question: "What is the duration of the CCC course?",
+            answer: "The CCC (Course on Computer Concepts) is an 80-hour government-certified course, typically completed in 3 months. It is mandatory for many UP government jobs."
+        },
+        {
+            question: "Do you provide Admit Card and Result services?",
+            answer: "Yes! We download and print Admit Cards for all major exams (SSC, UPSC, UP Police, etc.) and provide high-quality result printouts."
+        },
+        {
+            question: "Can I withdraw money using my Aadhaar card?",
+            answer: "Absolutely. We are a DigiPay authorized centre. You can withdraw cash from any bank account using just your Aadhaar number and fingerprint."
+        },
+        {
+            question: "What documents are required for Scholarship application?",
+            answer: "You typically need your Aadhar Card, Bank Passbook, Last Year's Result, Income Certificate, Caste Certificate, and a Passport size photo."
+        },
+        {
+            question: "What are your opening hours?",
+            answer: "We are open from Monday to Saturday, 9:00 AM to 7:00 PM. We are closed on Sundays."
+        }
+    ];
+
+    const toggleFaq = (index) => {
+        setOpenIndex(openIndex === index ? null : index);
+    };
+
     return (
         <div className="pt-20">
             <div className="bg-primary text-white py-16 text-center">
@@ -12,7 +41,7 @@ const Contact = () => {
             </div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-                <div className="grid lg:grid-cols-2 gap-12">
+                <div className="grid lg:grid-cols-2 gap-12 mb-20">
 
                     {/* Contact Info */}
                     <div className="space-y-8">
@@ -66,6 +95,35 @@ const Contact = () => {
                         ></iframe>
                     </div>
 
+                </div>
+
+                {/* FAQ Section */}
+                <div className="max-w-3xl mx-auto">
+                    <h2 className="text-3xl font-bold text-center mb-8 text-gray-900">Frequently Asked Questions</h2>
+                    <div className="space-y-4">
+                        {faqs.map((faq, index) => (
+                            <div key={index} className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                                <button
+                                    className="w-full flex justify-between items-center p-5 text-left focus:outline-none"
+                                    onClick={() => toggleFaq(index)}
+                                >
+                                    <span className="font-semibold text-gray-900">{faq.question}</span>
+                                    <span className={`transform transition-transform duration-300 ${openIndex === index ? 'rotate-180' : ''}`}>
+                                        <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                                        </svg>
+                                    </span>
+                                </button>
+                                <div
+                                    className={`transition-all duration-300 ease-in-out overflow-hidden ${openIndex === index ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}
+                                >
+                                    <div className="p-5 pt-0 text-gray-600 bg-gray-50/50">
+                                        {faq.answer}
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>
