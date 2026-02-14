@@ -1,0 +1,15 @@
+# Robots.txt for Kusum Computer Centre
+
+# Allow all search engines
+User-agent: *
+Allow: /
+
+# Disallow admin and internal routes
+Disallow: /admin/
+Disallow: /portal/login
+
+# Sitemap location
+Sitemap: https://kusumcomputercentre.com/sitemap.xml
+
+# Crawl delay (optional, adjust if needed)
+Crawl-delay: 1
