@@ -1,0 +1,239 @@
+/* Mobile Optimization Utilities */
+
+/* Improved Touch Targets for Mobile */
+@media (max-width: 768px) {
+  /* Minimum touch target size 44x44px */
+  button,
+  a,
+  input[type="button"],
+  input[type="submit"],
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Better padding for mobile buttons */
+  button:not(.no-mobile-padding),
+  .btn {
+    padding: 12px 20px !important;
+  }
+
+  /* Larger text for readability */
+  body {
+    font-size: 16px !important;
+  }
+
+  /* Prevent zoom on input focus */
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+
+  /* Better spacing */
+  .container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  /* Fix overflow issues */
+  body {
+    overflow-x: hidden !important;
+  }
+
+  * {
+    max-width: 100%;
+  }
+
+  /* Better modal/dialog sizing */
+  .modal, .dialog {
+    margin: 1rem;
+    max-height: calc(100vh - 2rem);
+  }
+
+  /* Sticky elements adjustment */
+  .sticky-bottom {
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  /* Hide horizontal scrollbar */
+  ::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+  }
+}
+
+/* Tablet Optimization (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  /* Grid adjustments */
+  .grid-cols-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  /* Container padding */
+  .container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  /* Font size adjustments */
+  h1 {
+    font-size: 2.5rem !important;
+  }
+
+  h2 {
+    font-size: 2rem !important;
+  }
+
+  /* Card spacing */
+  .card {
+    padding: 1.5rem;
+  }
+}
+
+/* Landscape Mobile */
+@media (max-width: 896px) and (orientation: landscape) {
+  /* Reduce vertical padding */
+  section {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  /* Compact headers */
+  h1 {
+    font-size: 2rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  /* Shorter hero sections */
+  .hero {
+    min-height: 60vh !important;
+  }
+}
+
+/* Small Mobile (320px - 480px) */
+@media (max-width: 480px) {
+  /* Reduce text sizes */
+  h1 {
+    font-size: 1.75rem !important;
+  }
+
+  h2 {
+    font-size: 1.5rem !important;
+  }
+
+  h3 {
+    font-size: 1.25rem !important;
+  }
+
+  /* Tighter spacing */
+  .space-y-8 > * + * {
+    margin-top: 1.5rem !important;
+  }
+
+  .space-y-6 > * + * {
+    margin-top: 1rem !important;
+  }
+
+  /* Full-width buttons on small screens */
+  .btn-responsive {
+    width: 100% !important;
+  }
+
+  /* Stack everything */
+  .flex-responsive {
+    flex-direction: column !important;
+  }
+
+  /* Smaller modals */
+  .modal {
+    width: 95vw !important;
+    margin: 0.5rem !important;
+  }
+}
+
+/* Responsive Images */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Touch-friendly links */
+@media (hover: none) and (pointer: coarse) {
+  a:hover {
+    background-color: transparent;
+  }
+
+  /* Larger tap area for links */
+  a {
+    padding: 4px;
+    margin: -4px;
+  }
+}
+
+/* Fix for chatbot and floating elements on mobile */
+@media (max-width: 768px) {
+  .fixed.bottom-6.right-6 {
+    bottom: 1rem !important;
+    right: 1rem !important;
+  }
+
+  .fixed.bottom-24 {
+    bottom: 5rem !important;
+  }
+
+  /* Notification system mobile positioning */
+  .fixed.bottom-24.right-24 {
+    bottom: 6rem !important;
+    right: 1rem !important;
+    left: 1rem !important;
+    width: calc(100vw - 2rem) !important;
+    max-width: 400px;
+  }
+}
+
+/* Safe area for notched devices (iPhone X, etc.) */
+@supports (padding: max(0px)) {
+  body {
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
+  }
+
+  .safe-bottom {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+}
+
+/* Remove tap highlight on mobile */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Smooth scrolling for mobile */
+html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Better form controls on mobile */
+@media (max-width: 768px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  input[type="password"],
+  textarea,
+  select {
+    padding: 14px 16px !important;
+    border-radius: 12px !important;
+  }
+
+  /* Larger checkboxes and radios */
+  input[type="checkbox"],
+  input[type="radio"] {
+    width: 20px;
+    height: 20px;
+  }
+}

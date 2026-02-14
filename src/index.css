@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Mobile & Tablet Optimizations */
+@import './styles/mobile-optimizations.css';
+
 @media (pointer: fine) {
   * {
     cursor: none !important;
