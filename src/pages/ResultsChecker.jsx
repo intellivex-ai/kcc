@@ -1,57 +1,31 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Download, CheckCircle, XCircle, Award } from 'lucide-react';
+import { getResultByRollNumber } from '../lib/admin-data';
 
 const ResultsChecker = () => {
     const [rollNumber, setRollNumber] = useState('');
     const [result, setResult] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
-    // Mock results database
-    const mockResults = {
-        'CCC2024001': {
-            name: 'Rahul Sharma',
-            course: 'CCC',
-            rollNumber: 'CCC2024001',
-            examDate: '2024-01-15',
-            status: 'PASS',
-            grade: 'A',
-            totalMarks: 100,
-            obtainedMarks: 87,
-            percentage: 87,
-            subjects: [
-                { name: 'Computer Basics', marks: 22, total: 25 },
-                { name: 'MS Office', marks: 24, total: 25 },
-                { name: 'Internet & Email', marks: 21, total: 25 },
-                { name: 'Practical', marks: 20, total: 25 }
-            ]
-        },
-        'OLEVEL2024002': {
-            name: 'Priya Singh',
-            course: 'O-Level',
-            rollNumber: 'OLEVEL2024002',
-            examDate: '2024-01-20',
-            status: 'PASS',
-            grade: 'B+',
-            totalMarks: 400,
-            obtainedMarks: 315,
-            percentage: 78.75,
-            subjects: [
-                { name: 'M1 - IT Tools', marks: 82, total: 100 },
-                { name: 'M2 - Programming', marks: 75, total: 100 },
-                { name: 'M3 - Web Design', marks: 80, total: 100 },
-                { name: 'M4 - Database', marks: 78, total: 100 }
-            ]
-        }
-    };
-
-    const handleCheck = () => {
+    const handleCheck = async () => {
         setLoading(true);
-        setTimeout(() => {
-            const foundResult = mockResults[rollNumber.toUpperCase()];
-            setResult(foundResult || 'NOT_FOUND');
+        setError(null);
+        setResult(null);
+        try {
+            const foundResult = await getResultByRollNumber(rollNumber.toUpperCase());
+            if (foundResult) {
+                setResult(foundResult);
+            } else {
+                setResult('NOT_FOUND');
+            }
+        } catch (err) {
+            console.error(err);
+            setError('An error occurred while fetching the result.');
+        } finally {
             setLoading(false);
-        }, 1500);
+        }
     };
 
     return (
@@ -84,7 +58,7 @@ const ResultsChecker = () => {
                     </div>
 
                     <div className="mt-4 text-sm text-gray-600">
-                        <p><strong>Demo Roll Numbers:</strong> CCC2024001, OLEVEL2024002</p>
+                        <p><strong>Demo Roll Numbers:</strong> Enter a valid roll number from your admit card.</p>
                     </div>
                 </div>
 
@@ -107,8 +81,8 @@ const ResultsChecker = () => {
                                     }`}>
                                     <div className="flex items-center justify-between">
                                         <div>
-                                            <h2 className="text-3xl font-black mb-2">{result.name}</h2>
-                                            <p className="text-green-100">Roll Number: {result.rollNumber}</p>
+                                            <h2 className="text-3xl font-black mb-2">{result.student_name}</h2>
+                                            <p className="text-green-100">Roll Number: {result.roll_number}</p>
                                             <p className="text-green-100">Course: {result.course}</p>
                                         </div>
                                         <div className="text-center">
@@ -128,11 +102,11 @@ const ResultsChecker = () => {
                                     <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
                                         <div className="bg-blue-50 rounded-xl p-4 text-center">
                                             <p className="text-sm text-gray-600 mb-1">Total Marks</p>
-                                            <p className="text-2xl font-black text-primary">{result.totalMarks}</p>
+                                            <p className="text-2xl font-black text-primary">{result.total_marks}</p>
                                         </div>
                                         <div className="bg-green-50 rounded-xl p-4 text-center">
                                             <p className="text-sm text-gray-600 mb-1">Obtained</p>
-                                            <p className="text-2xl font-black text-green-600">{result.obtainedMarks}</p>
+                                            <p className="text-2xl font-black text-green-600">{result.obtained_marks}</p>
                                         </div>
                                         <div className="bg-purple-50 rounded-xl p-4 text-center">
                                             <p className="text-sm text-gray-600 mb-1">Percentage</p>
@@ -145,28 +119,30 @@ const ResultsChecker = () => {
                                     </div>
 
                                     {/* Subject-wise Marks */}
-                                    <div>
-                                        <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                                            <Award size={20} className="text-primary" />
-                                            Subject-wise Performance
-                                        </h3>
-                                        <div className="space-y-3">
-                                            {result.subjects.map((subject, index) => (
-                                                <div key={index} className="bg-gray-50 rounded-xl p-4">
-                                                    <div className="flex justify-between items-center mb-2">
-                                                        <span className="font-semibold text-gray-900">{subject.name}</span>
-                                                        <span className="font-bold text-primary">{subject.marks}/{subject.total}</span>
+                                    {result.subjects && result.subjects.length > 0 && (
+                                        <div>
+                                            <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                                                <Award size={20} className="text-primary" />
+                                                Subject-wise Performance
+                                            </h3>
+                                            <div className="space-y-3">
+                                                {result.subjects.map((subject, index) => (
+                                                    <div key={index} className="bg-gray-50 rounded-xl p-4">
+                                                        <div className="flex justify-between items-center mb-2">
+                                                            <span className="font-semibold text-gray-900">{subject.name}</span>
+                                                            <span className="font-bold text-primary">{subject.marks}/{subject.total}</span>
+                                                        </div>
+                                                        <div className="w-full bg-gray-200 rounded-full h-2">
+                                                            <div
+                                                                className="bg-primary h-2 rounded-full"
+                                                                style={{ width: `${(subject.marks / subject.total) * 100}%` }}
+                                                            ></div>
+                                                        </div>
                                                     </div>
-                                                    <div className="w-full bg-gray-200 rounded-full h-2">
-                                                        <div
-                                                            className="bg-primary h-2 rounded-full"
-                                                            style={{ width: `${(subject.marks / subject.total) * 100}%` }}
-                                                        ></div>
-                                                    </div>
-                                                </div>
-                                            ))}
+                                                ))}
+                                            </div>
                                         </div>
-                                    </div>
+                                    )}
 
                                     {/* Download Button */}
                                     <div className="mt-6 text-center">
@@ -179,6 +155,11 @@ const ResultsChecker = () => {
                             </div>
                         )}
                     </motion.div>
+                )}
+                {error && (
+                    <div className="mt-4 p-4 bg-red-100 text-red-700 rounded-xl text-center">
+                        {error}
+                    </div>
                 )}
             </div>
         </div>

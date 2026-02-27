@@ -7,7 +7,9 @@ import {
     BarChart3,
     LogOut,
     Menu,
-    X
+    X,
+    FileText,
+    Bell
 } from 'lucide-react';
 import { logout } from '../../lib/admin-auth';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -25,6 +27,8 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         { path: '/admin/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
         { path: '/admin/inquiries', icon: Mail, label: 'Inquiries' },
         { path: '/admin/students', icon: Users, label: 'Students' },
+        { path: '/admin/results', icon: FileText, label: 'Results' },
+        { path: '/admin/subscribers', icon: Bell, label: 'Subscribers' },
         { path: '/admin/analytics', icon: BarChart3, label: 'Analytics' }
     ];
 

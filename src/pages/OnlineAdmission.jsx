@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle, ChevronRight, Upload, User, BookOpen, CreditCard, FileText } from 'lucide-react';
+import { addStudent } from '../lib/admin-data';
+import toast, { Toaster } from 'react-hot-toast';
 
 const OnlineAdmission = () => {
     const [currentStep, setCurrentStep] = useState(1);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [formData, setFormData] = useState({
         // Personal Info
         fullName: '',
@@ -17,49 +20,72 @@ const OnlineAdmission = () => {
         // Education
         qualification: '',
         percentage: '',
-        // Documents
-        photo: null,
-        certificate: null,
-        idProof: null
+        // Payment
+        paymentMethod: 'offline'
     });
+    // We are skipping file uploads for now to simplify database interaction without bucket setup
 
     const steps = [
         { number: 1, title: 'Personal Info', icon: User },
         { number: 2, title: 'Course Selection', icon: BookOpen },
         { number: 3, title: 'Education Details', icon: FileText },
-        { number: 4, title: 'Upload Documents', icon: Upload },
-        { number: 5, title: 'Payment', icon: CreditCard }
+        // { number: 4, title: 'Upload Documents', icon: Upload }, // Skipped for simplicity in this iteration
+        { number: 4, title: 'Payment', icon: CreditCard }
     ];
 
     const handleInputChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleFileChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.files[0] });
-    };
-
     const nextStep = () => {
-        if (currentStep < 5) setCurrentStep(currentStep + 1);
+        if (currentStep < 4) setCurrentStep(currentStep + 1);
     };
 
     const prevStep = () => {
         if (currentStep > 1) setCurrentStep(currentStep - 1);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        alert('Admission form submitted! We will contact you soon.');
-        // Here you would send formData to backend
+        setIsSubmitting(true);
+
+        try {
+            await addStudent({
+                name: formData.fullName,
+                email: formData.email,
+                phone: formData.phone,
+                course: formData.course,
+                dob: formData.dob,
+                address: 'Online Admission', // Default address or add field
+                gender: formData.gender,
+                batchTime: formData.batchTime,
+                qualification: formData.qualification,
+                percentage: formData.percentage,
+                paymentMethod: formData.paymentMethod,
+                paymentStatus: 'pending'
+            });
+
+            toast.success('Admission form submitted! We will contact you soon.');
+            // Reset form or redirect
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 2000);
+        } catch (error) {
+            console.error('Submission failed:', error);
+            toast.error('Failed to submit admission form. Please try again.');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
         <div className="min-h-screen bg-gray-50 py-12">
+            <Toaster position="top-right" />
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Header */}
                 <div className="text-center mb-8">
                     <h1 className="text-4xl font-black text-gray-900 mb-2">Online Admission</h1>
-                    <p className="text-gray-600">Complete your enrollment in 5 easy steps</p>
+                    <p className="text-gray-600">Complete your enrollment in 4 easy steps</p>
                 </div>
 
                 {/* Progress Steps */}
@@ -273,57 +299,8 @@ const OnlineAdmission = () => {
                                 </div>
                             )}
 
-                            {/* Step 4: Documents */}
+                            {/* Step 4: Payment */}
                             {currentStep === 4 && (
-                                <div className="space-y-4">
-                                    <h2 className="text-2xl font-bold text-gray-900 mb-6">Upload Documents</h2>
-
-                                    <div>
-                                        <label className="block text-sm font-semibold text-gray-700 mb-2">Passport Size Photo *</label>
-                                        <input
-                                            type="file"
-                                            name="photo"
-                                            onChange={handleFileChange}
-                                            accept="image/*"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary"
-                                            required
-                                        />
-                                    </div>
-
-                                    <div>
-                                        <label className="block text-sm font-semibold text-gray-700 mb-2">Education Certificate *</label>
-                                        <input
-                                            type="file"
-                                            name="certificate"
-                                            onChange={handleFileChange}
-                                            accept=".pdf,.jpg,.jpeg,.png"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary"
-                                            required
-                                        />
-                                    </div>
-
-                                    <div>
-                                        <label className="block text-sm font-semibold text-gray-700 mb-2">ID Proof (Aadhar/PAN) *</label>
-                                        <input
-                                            type="file"
-                                            name="idProof"
-                                            onChange={handleFileChange}
-                                            accept=".pdf,.jpg,.jpeg,.png"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary"
-                                            required
-                                        />
-                                    </div>
-
-                                    <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
-                                        <p className="text-sm text-yellow-900">
-                                            <strong>Requirements:</strong> Files should be less than 2MB. Accepted formats: JPG, PNG, PDF
-                                        </p>
-                                    </div>
-                                </div>
-                            )}
-
-                            {/* Step 5: Payment */}
-                            {currentStep === 5 && (
                                 <div className="space-y-6">
                                     <h2 className="text-2xl font-bold text-gray-900 mb-6">Payment Details</h2>
 
@@ -336,9 +313,21 @@ const OnlineAdmission = () => {
                                     <div className="space-y-3">
                                         <h4 className="font-bold text-gray-900">Payment Options</h4>
 
-                                        <div className="border-2 border-gray-200 rounded-xl p-4 hover:border-primary transition-colors cursor-pointer">
+                                        <div
+                                            className={`border-2 rounded-xl p-4 transition-colors cursor-pointer ${
+                                                formData.paymentMethod === 'online' ? 'border-primary bg-blue-50' : 'border-gray-200 hover:border-primary'
+                                            }`}
+                                            onClick={() => setFormData({...formData, paymentMethod: 'online'})}
+                                        >
                                             <label className="flex items-center gap-3 cursor-pointer">
-                                                <input type="radio" name="payment" value="online" className="w-4 h-4" />
+                                                <input
+                                                    type="radio"
+                                                    name="paymentMethod"
+                                                    value="online"
+                                                    checked={formData.paymentMethod === 'online'}
+                                                    onChange={handleInputChange}
+                                                    className="w-4 h-4"
+                                                />
                                                 <div>
                                                     <p className="font-semibold">Pay Online (UPI/Card)</p>
                                                     <p className="text-sm text-gray-600">Instant confirmation</p>
@@ -346,9 +335,21 @@ const OnlineAdmission = () => {
                                             </label>
                                         </div>
 
-                                        <div className="border-2 border-gray-200 rounded-xl p-4 hover:border-primary transition-colors cursor-pointer">
+                                        <div
+                                            className={`border-2 rounded-xl p-4 transition-colors cursor-pointer ${
+                                                formData.paymentMethod === 'offline' ? 'border-primary bg-blue-50' : 'border-gray-200 hover:border-primary'
+                                            }`}
+                                            onClick={() => setFormData({...formData, paymentMethod: 'offline'})}
+                                        >
                                             <label className="flex items-center gap-3 cursor-pointer">
-                                                <input type="radio" name="payment" value="offline" className="w-4 h-4" defaultChecked />
+                                                <input
+                                                    type="radio"
+                                                    name="paymentMethod"
+                                                    value="offline"
+                                                    checked={formData.paymentMethod === 'offline'}
+                                                    onChange={handleInputChange}
+                                                    className="w-4 h-4"
+                                                />
                                                 <div>
                                                     <p className="font-semibold">Pay at Center</p>
                                                     <p className="text-sm text-gray-600">Cash/Card accepted during visit</p>
@@ -380,7 +381,7 @@ const OnlineAdmission = () => {
                             Previous
                         </button>
 
-                        {currentStep < 5 ? (
+                        {currentStep < 4 ? (
                             <button
                                 onClick={nextStep}
                                 className="px-6 py-3 bg-primary text-white rounded-xl font-semibold hover:bg-blue-700 flex items-center gap-2"
@@ -391,9 +392,10 @@ const OnlineAdmission = () => {
                         ) : (
                             <button
                                 onClick={handleSubmit}
+                                disabled={isSubmitting}
                                 className="px-6 py-3 bg-green-600 text-white rounded-xl font-semibold hover:bg-green-700 flex items-center gap-2"
                             >
-                                Submit Application
+                                {isSubmitting ? 'Submitting...' : 'Submit Application'}
                                 <CheckCircle size={20} />
                             </button>
                         )}

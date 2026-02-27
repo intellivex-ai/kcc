@@ -30,6 +30,8 @@ const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'));
 const Dashboard = lazy(() => import('./pages/admin/Dashboard'));
 const Inquiries = lazy(() => import('./pages/admin/Inquiries'));
 const Students = lazy(() => import('./pages/admin/Students'));
+const Results = lazy(() => import('./pages/admin/Results'));
+const Subscribers = lazy(() => import('./pages/admin/Subscribers'));
 const Analytics = lazy(() => import('./pages/admin/Analytics'));
 import ProtectedRoute from './components/admin/ProtectedRoute';
 
@@ -87,6 +89,8 @@ function App() {
                 <Route path="dashboard" element={<Dashboard />} />
                 <Route path="inquiries" element={<Inquiries />} />
                 <Route path="students" element={<Students />} />
+                <Route path="results" element={<Results />} />
+                <Route path="subscribers" element={<Subscribers />} />
                 <Route path="analytics" element={<Analytics />} />
               </Route>
             </Routes>
