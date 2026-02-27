@@ -1,24 +1,31 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Send, CheckCircle } from 'lucide-react';
+import { addSubscriber } from '../lib/admin-data';
 
 const Newsletter = () => {
     const [email, setEmail] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
+    const [error, setError] = useState(null);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
+        setError(null);
 
-        // Simulate API call
-        setTimeout(() => {
+        try {
+            await addSubscriber(email);
             setIsSubmitting(false);
             setIsSuccess(true);
             setEmail('');
             // Reset success message after 3 seconds
             setTimeout(() => setIsSuccess(false), 3000);
-        }, 1000);
+        } catch (err) {
+            console.error('Failed to subscribe:', err);
+            setError('Failed to subscribe. Please try again.');
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -56,6 +63,11 @@ const Newsletter = () => {
                         </motion.div>
                     ) : (
                         <form onSubmit={handleSubmit} className="max-w-xl mx-auto">
+                            {error && (
+                                <div className="mb-4 text-red-200 text-sm font-semibold">
+                                    {error}
+                                </div>
+                            )}
                             <div className="flex flex-col sm:flex-row gap-3">
                                 <input
                                     type="email"
@@ -84,7 +96,7 @@ const Newsletter = () => {
                                 </button>
                             </div>
                             <p className="text-blue-100 text-xs mt-4">
-                                No spam, unsubscribe anytime • 2000+ subscribers
+                                No spam, unsubscribe anytime • Join our growing community
                             </p>
                         </form>
                     )}

@@ -169,7 +169,14 @@ export const addStudent = async (student) => {
                 course: student.course,
                 dob: student.dob,
                 address: student.address,
-                status: 'active'
+                status: 'active',
+                // New fields for Online Admission
+                gender: student.gender,
+                batch_time: student.batchTime,
+                qualification: student.qualification,
+                percentage: student.percentage,
+                payment_method: student.paymentMethod,
+                payment_status: student.paymentStatus || 'pending'
             })
             .select()
             .single();
@@ -219,6 +226,163 @@ export const deleteStudent = async (id) => {
         return true;
     } catch (error) {
         console.error('Error deleting student:', error);
+        return false;
+    }
+};
+
+// ============================================
+// SUBSCRIBERS CRUD
+// ============================================
+
+/**
+ * Get all subscribers
+ */
+export const getSubscribers = async () => {
+    try {
+        const { data, error } = await supabase
+            .from('subscribers')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        if (error) throw error;
+        return data || [];
+    } catch (error) {
+        console.error('Error fetching subscribers:', error);
+        return [];
+    }
+};
+
+/**
+ * Add new subscriber
+ */
+export const addSubscriber = async (email) => {
+    try {
+        // Check if already subscribed
+        const { data: existing } = await supabase
+            .from('subscribers')
+            .select('id')
+            .eq('email', email)
+            .single();
+
+        if (existing) return existing;
+
+        const { data, error } = await supabase
+            .from('subscribers')
+            .insert({ email })
+            .select()
+            .single();
+
+        if (error) throw error;
+        return data;
+    } catch (error) {
+        console.error('Error adding subscriber:', error);
+        throw error;
+    }
+};
+
+/**
+ * Delete subscriber
+ */
+export const deleteSubscriber = async (id) => {
+    try {
+        const { error } = await supabase
+            .from('subscribers')
+            .delete()
+            .eq('id', id);
+
+        if (error) throw error;
+        return true;
+    } catch (error) {
+        console.error('Error deleting subscriber:', error);
+        return false;
+    }
+};
+
+// ============================================
+// RESULTS CRUD
+// ============================================
+
+/**
+ * Get all results
+ */
+export const getResults = async () => {
+    try {
+        const { data, error } = await supabase
+            .from('results')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        if (error) throw error;
+        return data || [];
+    } catch (error) {
+        console.error('Error fetching results:', error);
+        return [];
+    }
+};
+
+/**
+ * Get result by Roll Number
+ */
+export const getResultByRollNumber = async (rollNumber) => {
+    try {
+        const { data, error } = await supabase
+            .from('results')
+            .select('*')
+            .eq('roll_number', rollNumber)
+            .single();
+
+        if (error) throw error;
+        return data;
+    } catch (error) {
+        console.error('Error fetching result:', error);
+        return null;
+    }
+};
+
+/**
+ * Add new result
+ */
+export const addResult = async (result) => {
+    try {
+        const { data, error } = await supabase
+            .from('results')
+            .insert({
+                roll_number: result.rollNumber,
+                student_name: result.studentName,
+                course: result.course,
+                exam_date: result.examDate,
+                status: result.status,
+                grade: result.grade,
+                total_marks: result.totalMarks,
+                obtained_marks: result.obtainedMarks,
+                percentage: result.percentage,
+                subjects: result.subjects // JSON array
+            })
+            .select()
+            .single();
+
+        if (error) throw error;
+        return data;
+    } catch (error) {
+        console.error('Error adding result:', error);
+        throw error;
+    }
+};
+
+/**
+ * Delete result
+ */
+export const deleteResult = async (id) => {
+    try {
+        const { error } = await supabase
+            .from('results')
+            .delete()
+            .eq('id', id);
+
+        if (error) throw error;
+        return true;
+    } catch (error) {
+        console.error('Error deleting result:', error);
         return false;
     }
 };
@@ -300,9 +464,10 @@ export const exportToCSV = (data, filename) => {
     const csv = [
         headers.join(','),
         ...data.map(row =>
-            headers.map(header =>
-                JSON.stringify(row[header] || '')
-            ).join(',')
+            headers.map(header => {
+                const value = row[header];
+                return JSON.stringify(typeof value === 'object' ? JSON.stringify(value) : (value || ''));
+            }).join(',')
         )
     ].join('\n');
 
@@ -327,6 +492,13 @@ export default {
     addStudent,
     updateStudent,
     deleteStudent,
+    getSubscribers,
+    addSubscriber,
+    deleteSubscriber,
+    getResults,
+    getResultByRollNumber,
+    addResult,
+    deleteResult,
     getAnalytics,
     exportToCSV
 };
