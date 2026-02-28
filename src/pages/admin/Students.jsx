@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Filter, Eye, Trash2, Download } from 'lucide-react';
 import { getStudents, deleteStudent, exportToCSV } from '../../lib/admin-data';
@@ -6,18 +6,9 @@ import toast, { Toaster } from 'react-hot-toast';
 
 const Students = () => {
     const [students, setStudents] = useState([]);
-    const [filteredStudents, setFilteredStudents] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [courseFilter, setCourseFilter] = useState('all');
     const [selectedStudent, setSelectedStudent] = useState(null);
-
-    useEffect(() => {
-        loadStudents();
-    }, []);
-
-    useEffect(() => {
-        filterStudents();
-    }, [searchTerm, courseFilter, students]);
 
     const loadStudents = async () => {
         try {
@@ -29,7 +20,15 @@ const Students = () => {
         }
     };
 
-    const filterStudents = () => {
+    useEffect(() => {
+        loadStudents();
+    }, []);
+
+    // ⚡ Bolt Performance Optimization:
+    // Using useMemo instead of useState + useEffect for derived state.
+    // This prevents an unnecessary double-render cycle when filters or search terms change.
+    // React calculates this synchronously during render, avoiding cascading updates.
+    const filteredStudents = useMemo(() => {
         let filtered = students;
 
         if (courseFilter !== 'all') {
@@ -44,8 +43,8 @@ const Students = () => {
             );
         }
 
-        setFilteredStudents(filtered);
-    };
+        return filtered;
+    }, [students, courseFilter, searchTerm]);
 
     const handleDelete = async (id) => {
         if (window.confirm('Are you sure you want to delete this student?')) {
