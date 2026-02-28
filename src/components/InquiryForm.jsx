@@ -97,11 +97,12 @@ const InquiryForm = () => {
 
             {/* Name */}
             <div className="mb-4">
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Full Name *</label>
+                <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">Full Name *</label>
                 <div className="relative">
                     <User size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
                     <input
                         type="text"
+                        id="name"
                         name="name"
                         value={formData.name}
                         onChange={handleChange}
@@ -114,11 +115,12 @@ const InquiryForm = () => {
 
             {/* Email */}
             <div className="mb-4">
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Email Address *</label>
+                <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">Email Address *</label>
                 <div className="relative">
                     <Mail size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
                     <input
                         type="email"
+                        id="email"
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
@@ -131,11 +133,12 @@ const InquiryForm = () => {
 
             {/* Phone */}
             <div className="mb-4">
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Phone Number *</label>
+                <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-2">Phone Number *</label>
                 <div className="relative">
                     <Phone size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
                     <input
                         type="tel"
+                        id="phone"
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
@@ -149,10 +152,11 @@ const InquiryForm = () => {
 
             {/* Course */}
             <div className="mb-4">
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Interested Course *</label>
+                <label htmlFor="course" className="block text-sm font-semibold text-gray-700 mb-2">Interested Course *</label>
                 <div className="relative">
                     <BookOpen size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
                     <select
+                        id="course"
                         name="course"
                         value={formData.course}
                         onChange={handleChange}
@@ -169,10 +173,11 @@ const InquiryForm = () => {
 
             {/* Message */}
             <div className="mb-6">
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Message (Optional)</label>
+                <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">Message (Optional)</label>
                 <div className="relative">
                     <MessageSquare size={18} className="absolute left-4 top-4 text-gray-400" />
                     <textarea
+                        id="message"
                         name="message"
                         value={formData.message}
                         onChange={handleChange}
