@@ -6,18 +6,24 @@
 
 const ADMIN_KEY = 'kcc_admin_session';
 
-// Get credentials from environment variables
+// Get credentials from environment variables (fail secure: no fallback)
 const ADMIN_CREDENTIALS = {
-    username: import.meta.env.VITE_ADMIN_USERNAME || 'admin',
-    password: import.meta.env.VITE_ADMIN_PASSWORD || 'kcc2024'
+    username: import.meta.env.VITE_ADMIN_USERNAME,
+    password: import.meta.env.VITE_ADMIN_PASSWORD
 };
 
 /**
  * Login with username and password
  */
 export const login = (username, password) => {
-    // Validate credentials
-    if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+    // Fail securely if environment credentials are not set
+    if (!ADMIN_CREDENTIALS.username || !ADMIN_CREDENTIALS.password) {
+        console.error('Admin credentials are not configured in environment.');
+        return { success: false, error: 'Authentication service unavailable' };
+    }
+
+    // Validate credentials safely
+    if (username && password && username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
         const session = {
             username,
             loginTime: new Date().toISOString(),
@@ -72,13 +78,9 @@ export const getSession = () => {
  * Change password (demo only)
  */
 export const changePassword = (oldPassword, newPassword) => {
-    // In production, this would call an API
-    if (oldPassword === DEFAULT_CREDENTIALS.password) {
-        // Update credentials (in real app, this would be on server)
-        return { success: true };
-    }
-
-    return { success: false, error: 'Current password is incorrect' };
+    // Client-side password changes are inherently insecure.
+    // In a production environment, this should always be handled server-side.
+    return { success: false, error: 'Password changes must be performed via server configuration.' };
 };
 
 export default {

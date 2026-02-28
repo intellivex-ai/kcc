@@ -1,0 +1,4 @@
+## 2024-05-24 - Hardcoded Admin Credentials Fallback
+**Vulnerability:** Found hardcoded fallback credentials (`admin` / `kcc2024`) in `src/lib/admin-auth.js` that could be used to bypass authentication if environment variables are not set or fail to load.
+**Learning:** Hardcoded fallbacks for authentication create a massive critical vulnerability. If environment variable parsing fails, the entire application becomes accessible to anyone who finds the fallback credentials in the frontend bundle. Additionally, there was a risk of an empty password login if both inputs and env vars were undefined.
+**Prevention:** Never use hardcoded fallbacks for authentication credentials. If environment variables are missing, the authentication system should fail securely (deny all access) rather than falling back to known default credentials. Ensure robust null/undefined checking in authentication functions.
