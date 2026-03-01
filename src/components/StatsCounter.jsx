@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, animate } from 'framer-motion';
 import { Users, Award, Building, TrendingUp } from 'lucide-react';
 
 const StatsCounter = () => {
@@ -67,32 +67,30 @@ const StatsCounter = () => {
     }, []);
 
     const Counter = ({ value, suffix }) => {
-        const [count, setCount] = useState(0);
+        const nodeRef = useRef(null);
 
         useEffect(() => {
             if (!isVisible) return;
 
-            let start = 0;
-            const end = value;
-            const duration = 2000;
-            const increment = end / (duration / 16);
+            const node = nodeRef.current;
+            if (!node) return;
 
-            const timer = setInterval(() => {
-                start += increment;
-                if (start >= end) {
-                    setCount(end);
-                    clearInterval(timer);
-                } else {
-                    setCount(Math.floor(start));
+            // Use framer-motion's animate for performant counter animation
+            // This avoids updating React state 60 times a second per counter
+            const controls = animate(0, value, {
+                duration: 2,
+                ease: "easeOut",
+                onUpdate(val) {
+                    node.textContent = Math.floor(val) + suffix;
                 }
-            }, 16);
+            });
 
-            return () => clearInterval(timer);
-        }, [isVisible, value]);
+            return () => controls.stop();
+        }, [isVisible, value, suffix]);
 
         return (
-            <span className="text-4xl sm:text-5xl lg:text-6xl font-black">
-                {count}{suffix}
+            <span ref={nodeRef} className="text-4xl sm:text-5xl lg:text-6xl font-black">
+                0{suffix}
             </span>
         );
     };

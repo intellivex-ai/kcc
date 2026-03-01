@@ -1,0 +1,3 @@
+## 2024-05-24 - React State Animation Bottleneck
+**Learning:** Using `setInterval` with `setState` for continuous animations (like number counters) causes massive re-render cascades on the main thread (e.g. 4 counters * 60fps = 240 re-renders/sec). This is a common anti-pattern in React that degrades scrolling and interaction performance.
+**Action:** Always use `framer-motion`'s `animate` function combined with a `useRef` to directly mutate DOM properties (like `node.textContent`) for continuous animations. This completely bypasses the React render cycle while achieving the exact same visual result.
