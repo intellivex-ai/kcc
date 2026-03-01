@@ -1,0 +1,3 @@
+## 2024-05-24 - Accessibility improvements for NotificationSystem
+**Learning:** Screen reader users can miss out on important unread counts and dynamic state changes if `aria-expanded` and descriptive `aria-label` strings (e.g. `Toggle notifications. You have X unread messages.`) are not provided on custom toggle buttons like the notification bell. In addition, interactive lists that function as buttons (like clickable notification rows) must implement `tabIndex={0}`, `role="button"`, and keyboard event handlers (`onKeyDown` for Enter/Space) to be fully accessible.
+**Action:** Next time I build a custom interactive list or a toggle button with dynamic counts, I will ensure these ARIA attributes and keyboard event handlers are included from the start.

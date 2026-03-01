@@ -102,11 +102,13 @@ const NotificationSystem = () => {
             <div className="fixed bottom-24 right-6 z-50">
                 <button
                     onClick={() => setShowPanel(!showPanel)}
-                    className="relative w-14 h-14 bg-primary text-white rounded-full shadow-lg hover:bg-blue-700 transition-all flex items-center justify-center group"
+                    aria-label={`Toggle notifications. You have ${unreadCount} unread messages.`}
+                    aria-expanded={showPanel}
+                    className="relative w-14 h-14 bg-primary text-white rounded-full shadow-lg hover:bg-blue-700 transition-all flex items-center justify-center group focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary outline-none"
                 >
-                    <Bell size={24} className={showPanel ? 'animate-bounce' : ''} />
+                    <Bell size={24} className={showPanel ? 'animate-bounce' : ''} aria-hidden="true" />
                     {unreadCount > 0 && (
-                        <span className="absolute -top-1 -right-1 w-6 h-6 bg-red-600 text-white rounded-full text-xs font-bold flex items-center justify-center">
+                        <span className="absolute -top-1 -right-1 w-6 h-6 bg-red-600 text-white rounded-full text-xs font-bold flex items-center justify-center" aria-hidden="true">
                             {unreadCount}
                         </span>
                     )}
@@ -121,15 +123,18 @@ const NotificationSystem = () => {
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: 300 }}
                         className="fixed bottom-24 right-24 w-96 max-h-[500px] bg-white rounded-2xl shadow-2xl z-50 overflow-hidden"
+                        role="dialog"
+                        aria-label="Notifications panel"
                     >
                         {/* Header */}
                         <div className="bg-gradient-to-r from-primary to-blue-600 text-white p-4 flex items-center justify-between">
                             <h3 className="font-bold text-lg">Notifications</h3>
                             <button
                                 onClick={() => setShowPanel(false)}
-                                className="hover:bg-white/20 rounded-lg p-1 transition-colors"
+                                aria-label="Close notifications panel"
+                                className="hover:bg-white/20 rounded-lg p-1 transition-colors focus-visible:ring-2 focus-visible:ring-white outline-none"
                             >
-                                <X size={20} />
+                                <X size={20} aria-hidden="true" />
                             </button>
                         </div>
 
@@ -155,11 +160,20 @@ const NotificationSystem = () => {
                                     <div
                                         key={notif.id}
                                         className={`p-4 border-b border-gray-100 ${!notif.read ? 'bg-blue-50/50' : 'hover:bg-gray-50'
-                                            } transition-colors cursor-pointer`}
+                                            } transition-colors cursor-pointer focus-visible:bg-gray-50 outline-none`}
                                         onClick={() => markAsRead(notif.id)}
+                                        onKeyDown={(e) => {
+                                            if (e.key === 'Enter' || e.key === ' ') {
+                                                e.preventDefault();
+                                                markAsRead(notif.id);
+                                            }
+                                        }}
+                                        tabIndex={0}
+                                        role="button"
+                                        aria-pressed={notif.read}
                                     >
                                         <div className="flex items-start gap-3">
-                                            <div className={`p-2 rounded-lg ${getBgColor(notif.type).split(' ')[0]}`}>
+                                            <div className={`p-2 rounded-lg ${getBgColor(notif.type).split(' ')[0]}`} aria-hidden="true">
                                                 {getIcon(notif.type)}
                                             </div>
                                             <div className="flex-1 min-w-0">
@@ -167,7 +181,7 @@ const NotificationSystem = () => {
                                                     <h4 className="font-semibold text-gray-900 text-sm">
                                                         {notif.title}
                                                         {!notif.read && (
-                                                            <span className="ml-2 w-2 h-2 bg-primary rounded-full inline-block"></span>
+                                                            <span className="ml-2 w-2 h-2 bg-primary rounded-full inline-block" aria-label="Unread"></span>
                                                         )}
                                                     </h4>
                                                     <button
@@ -175,9 +189,10 @@ const NotificationSystem = () => {
                                                             e.stopPropagation();
                                                             deleteNotification(notif.id);
                                                         }}
-                                                        className="text-gray-400 hover:text-red-600 transition-colors shrink-0"
+                                                        aria-label="Delete notification"
+                                                        className="text-gray-400 hover:text-red-600 transition-colors shrink-0 focus-visible:ring-2 focus-visible:ring-red-500 rounded outline-none"
                                                     >
-                                                        <X size={16} />
+                                                        <X size={16} aria-hidden="true" />
                                                     </button>
                                                 </div>
                                                 <p className="text-sm text-gray-600 mt-1">{notif.message}</p>
@@ -188,7 +203,7 @@ const NotificationSystem = () => {
                                 ))
                             ) : (
                                 <div className="p-8 text-center text-gray-500">
-                                    <Bell size={40} className="mx-auto mb-2 text-gray-300" />
+                                    <Bell size={40} className="mx-auto mb-2 text-gray-300" aria-hidden="true" />
                                     <p>No notifications</p>
                                 </div>
                             )}
@@ -199,7 +214,8 @@ const NotificationSystem = () => {
                             <div className="p-3 bg-gray-50 border-t text-center">
                                 <button
                                     onClick={() => setNotifications([])}
-                                    className="text-sm text-primary font-semibold hover:underline"
+                                    aria-label="Clear all notifications"
+                                    className="text-sm text-primary font-semibold hover:underline focus-visible:ring-2 focus-visible:ring-primary rounded px-2 py-1 outline-none"
                                 >
                                     Clear All
                                 </button>
@@ -213,6 +229,7 @@ const NotificationSystem = () => {
             {showPanel && (
                 <div
                     onClick={() => setShowPanel(false)}
+                    aria-hidden="true"
                     className="fixed inset-0 bg-black/20 z-40"
                 ></div>
             )}
