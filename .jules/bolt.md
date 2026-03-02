@@ -1,0 +1,3 @@
+## 2024-05-15 - [Event Delegation for Custom Cursors]
+**Learning:** Avoid using `MutationObserver` combined with `querySelectorAll` and individual `addEventListener` for tracking hover states across an entire React app (like in a custom cursor component). It introduces an O(N) operation on every DOM node addition/removal, causing severe main-thread blocking and jank in highly dynamic apps.
+**Action:** Use O(1) event delegation instead. Attach a single `mouseover`/`mouseout` listener to the `document` and use `e.target.closest('selector')` to determine if a relevant element is being interacted with.

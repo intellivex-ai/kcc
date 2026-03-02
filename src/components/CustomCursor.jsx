@@ -12,42 +12,32 @@ const CustomCursor = () => {
             if (!isVisible) setIsVisible(true);
         };
 
-        const handleMouseEnter = () => setIsHovering(true);
-        const handleMouseLeave = () => setIsHovering(false);
-
         window.addEventListener('mousemove', updateMousePosition);
 
-        // Add hover listeners to clickable elements
-        const clickables = document.querySelectorAll('a, button, input, textarea, select, .clickable');
-        clickables.forEach(el => {
-            el.addEventListener('mouseenter', handleMouseEnter);
-            el.addEventListener('mouseleave', handleMouseLeave);
-        });
+        // ⚡ Bolt: Replaced O(N) MutationObserver with O(1) event delegation
+        // This prevents severe main-thread blocking when DOM nodes are added/removed
+        const handleMouseOver = (e) => {
+            if (e.target.closest('a, button, input, textarea, select, .clickable')) {
+                setIsHovering(true);
+            }
+        };
 
-        // MutationObserver to handle dynamically added elements
-        const observer = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                if (mutation.type === 'childList') {
-                    const newClickables = document.querySelectorAll('a, button, input, textarea, select, .clickable');
-                    newClickables.forEach(el => {
-                        el.removeEventListener('mouseenter', handleMouseEnter);
-                        el.removeEventListener('mouseleave', handleMouseLeave);
-                        el.addEventListener('mouseenter', handleMouseEnter);
-                        el.addEventListener('mouseleave', handleMouseLeave);
-                    });
-                }
-            });
-        });
+        const handleMouseOut = (e) => {
+            const clickable = e.target.closest('a, button, input, textarea, select, .clickable');
+            // Only set hover to false if we are actually leaving the clickable element
+            // (not just moving between its children)
+            if (clickable && !clickable.contains(e.relatedTarget)) {
+                setIsHovering(false);
+            }
+        };
 
-        observer.observe(document.body, { childList: true, subtree: true });
+        document.addEventListener('mouseover', handleMouseOver);
+        document.addEventListener('mouseout', handleMouseOut);
 
         return () => {
             window.removeEventListener('mousemove', updateMousePosition);
-            clickables.forEach(el => {
-                el.removeEventListener('mouseenter', handleMouseEnter);
-                el.removeEventListener('mouseleave', handleMouseLeave);
-            });
-            observer.disconnect();
+            document.removeEventListener('mouseover', handleMouseOver);
+            document.removeEventListener('mouseout', handleMouseOut);
         };
     }, [isVisible]);
 
