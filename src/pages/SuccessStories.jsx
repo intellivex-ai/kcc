@@ -39,6 +39,7 @@ const SuccessStories = () => {
                                     <img
                                         src={story.image}
                                         alt={story.name}
+                                        loading="lazy"
                                         className="w-20 h-20 rounded-full bg-white p-1"
                                     />
                                     <div>

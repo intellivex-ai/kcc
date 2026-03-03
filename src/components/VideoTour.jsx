@@ -35,6 +35,7 @@ const VideoTour = () => {
                                 <img
                                     src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&h=675&fit=crop"
                                     alt="Computer Lab"
+                                    loading="lazy"
                                     className="w-full h-full object-cover"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>

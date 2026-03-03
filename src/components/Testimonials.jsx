@@ -87,6 +87,7 @@ const Testimonials = () => {
                                 <img
                                     src={testimonial.image}
                                     alt={testimonial.name}
+                                    loading="lazy"
                                     className="w-12 h-12 rounded-full bg-gray-100"
                                 />
                                 <div>
