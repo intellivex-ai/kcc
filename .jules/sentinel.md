@@ -1,0 +1,4 @@
+## 2024-05-20 - Prevent Admin Auth Bypass via Missing Environment Variables
+**Vulnerability:** The admin authentication library (`src/lib/admin-auth.js`) had hardcoded fallback credentials (`'admin'`, `'kcc2024'`) that would be used if the `VITE_ADMIN_USERNAME` and `VITE_ADMIN_PASSWORD` environment variables were not set. This allowed an attacker to bypass authentication if the environment variables were misconfigured or missing in production.
+**Learning:** Hardcoding default credentials as fallbacks for missing environment variables creates a significant security risk, especially for admin interfaces. It leads to easily guessable credentials being active by default if deployment configurations are incorrect.
+**Prevention:** Never use hardcoded fallback credentials for authentication logic. Instead, fail securely by explicitly checking for the required environment variables and denying access or throwing an error if they are missing.
