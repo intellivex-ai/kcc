@@ -100,6 +100,7 @@ const AlumniNetwork = () => {
                                     <img
                                         src={alumni.image}
                                         alt={alumni.name}
+                                        loading="lazy"
                                         className="w-24 h-24 rounded-full mx-auto bg-white p-2 mb-3"
                                     />
                                     <h3 className="text-xl font-black text-white mb-1">{alumni.name}</h3>
