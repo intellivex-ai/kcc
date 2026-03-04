@@ -43,7 +43,7 @@ const OfferBanner = () => {
                         </a>
                         <button
                             onClick={() => setIsVisible(false)}
-                            className="text-white/80 hover:text-white transition-colors"
+                            className="text-white/80 hover:text-white transition-colors p-1 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-pink-500"
                             aria-label="Close banner"
                         >
                             <X size={20} />
