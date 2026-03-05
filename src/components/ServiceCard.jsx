@@ -3,7 +3,10 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const ServiceCard = ({ service }) => {
+// ⚡ Bolt: Added React.memo to prevent unnecessary re-renders of ServiceCard
+// since it's rendered in a list within ServiceMatrix. It only needs to re-render
+// if the 'service' prop changes.
+const ServiceCard = React.memo(({ service }) => {
     const Icon = service.icon;
 
     return (
@@ -42,6 +45,6 @@ const ServiceCard = ({ service }) => {
             </Link>
         </motion.div>
     );
-};
+});
 
 export default ServiceCard;
