@@ -85,9 +85,11 @@ const Gallery = () => {
                             onClick={() => openLightbox(image, index)}
                             className="relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer group shadow-lg"
                         >
+                            {/* ⚡ Bolt: Native lazy loading to improve initial page load time */}
                             <img
                                 src={image.src}
                                 alt={image.alt}
+                                loading="lazy"
                                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -137,12 +139,14 @@ const Gallery = () => {
                             </button>
 
                             {/* Image */}
+                            {/* ⚡ Bolt: Native lazy loading to improve initial page load time */}
                             <motion.img
                                 initial={{ scale: 0.8 }}
                                 animate={{ scale: 1 }}
                                 exit={{ scale: 0.8 }}
                                 src={selectedImage.src}
                                 alt={selectedImage.alt}
+                                loading="lazy"
                                 className="max-w-full max-h-[90vh] rounded-lg"
                                 onClick={(e) => e.stopPropagation()}
                             />

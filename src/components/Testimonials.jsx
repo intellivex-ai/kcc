@@ -84,9 +84,11 @@ const Testimonials = () => {
 
                             {/* Author Info */}
                             <div className="flex items-center gap-4 pt-4 border-t border-gray-100">
+                                {/* ⚡ Bolt: Native lazy loading to improve initial page load time */}
                                 <img
                                     src={testimonial.image}
                                     alt={testimonial.name}
+                                    loading="lazy"
                                     className="w-12 h-12 rounded-full bg-gray-100"
                                 />
                                 <div>
