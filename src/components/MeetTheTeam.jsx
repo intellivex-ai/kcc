@@ -64,9 +64,11 @@ const MeetTheTeam = () => {
                         >
                             {/* Profile Image */}
                             <div className="relative mb-4">
+                                {/* ⚡ Bolt: Native lazy loading to improve initial page load time */}
                                 <img
                                     src={member.image}
                                     alt={member.name}
+                                    loading="lazy"
                                     className="w-24 h-24 rounded-full mx-auto bg-white border-4 border-white shadow-md group-hover:scale-110 transition-transform"
                                 />
                                 <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 rounded-full transition-colors"></div>

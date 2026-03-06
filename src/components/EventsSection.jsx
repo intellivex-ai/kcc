@@ -54,9 +54,11 @@ const EventsSection = () => {
                             <div className="flex flex-col sm:flex-row">
                                 {/* Image */}
                                 <div className="sm:w-1/3 h-48 sm:h-auto">
+                                    {/* ⚡ Bolt: Native lazy loading to improve initial page load time */}
                                     <img
                                         src={event.image}
                                         alt={event.title}
+                                        loading="lazy"
                                         className="w-full h-full object-cover"
                                     />
                                 </div>
