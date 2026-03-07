@@ -153,7 +153,7 @@ const Navbar = () => {
 
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 text-gray-900 dark:text-yellow-400 transition-all"
+              className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 text-gray-900 dark:text-yellow-400 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               aria-label="Toggle Dark Mode"
             >
               {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
@@ -169,13 +169,16 @@ const Navbar = () => {
           <div className="md:hidden flex items-center gap-4">
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 text-gray-900 dark:text-yellow-400 transition-all"
+              className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 text-gray-900 dark:text-yellow-400 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              aria-label="Toggle Dark Mode"
             >
               {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
             </button>
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-900 dark:text-white hover:text-primary focus:outline-none p-2"
+              className="text-gray-900 dark:text-white hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg p-2 transition-colors"
+              aria-label={isOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isOpen}
             >
               {isOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
