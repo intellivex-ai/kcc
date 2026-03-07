@@ -8,14 +8,19 @@ const ADMIN_KEY = 'kcc_admin_session';
 
 // Get credentials from environment variables
 const ADMIN_CREDENTIALS = {
-    username: import.meta.env.VITE_ADMIN_USERNAME || 'admin',
-    password: import.meta.env.VITE_ADMIN_PASSWORD || 'kcc2024'
+    username: import.meta.env.VITE_ADMIN_USERNAME,
+    password: import.meta.env.VITE_ADMIN_PASSWORD
 };
 
 /**
  * Login with username and password
  */
 export const login = (username, password) => {
+    // Fail securely if credentials are not configured
+    if (!ADMIN_CREDENTIALS.username || !ADMIN_CREDENTIALS.password) {
+        return { success: false, error: 'Authentication is not properly configured' };
+    }
+
     // Validate credentials
     if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
         const session = {
@@ -71,9 +76,15 @@ export const getSession = () => {
 /**
  * Change password (demo only)
  */
+// eslint-disable-next-line no-unused-vars
 export const changePassword = (oldPassword, newPassword) => {
+    // Fail securely if credentials are not configured
+    if (!ADMIN_CREDENTIALS.username || !ADMIN_CREDENTIALS.password) {
+        return { success: false, error: 'Authentication is not properly configured' };
+    }
+
     // In production, this would call an API
-    if (oldPassword === DEFAULT_CREDENTIALS.password) {
+    if (oldPassword === ADMIN_CREDENTIALS.password) {
         // Update credentials (in real app, this would be on server)
         return { success: true };
     }
