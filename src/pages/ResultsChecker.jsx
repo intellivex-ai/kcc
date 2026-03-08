@@ -2,48 +2,49 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Download, CheckCircle, XCircle, Award } from 'lucide-react';
 
+// ⚡ Bolt: Moved mockResults outside the component to prevent re-allocation on every keystroke
+// This reduces garbage collection overhead and prevents unnecessary memory usage during typing
+const mockResults = {
+    'CCC2024001': {
+        name: 'Rahul Sharma',
+        course: 'CCC',
+        rollNumber: 'CCC2024001',
+        examDate: '2024-01-15',
+        status: 'PASS',
+        grade: 'A',
+        totalMarks: 100,
+        obtainedMarks: 87,
+        percentage: 87,
+        subjects: [
+            { name: 'Computer Basics', marks: 22, total: 25 },
+            { name: 'MS Office', marks: 24, total: 25 },
+            { name: 'Internet & Email', marks: 21, total: 25 },
+            { name: 'Practical', marks: 20, total: 25 }
+        ]
+    },
+    'OLEVEL2024002': {
+        name: 'Priya Singh',
+        course: 'O-Level',
+        rollNumber: 'OLEVEL2024002',
+        examDate: '2024-01-20',
+        status: 'PASS',
+        grade: 'B+',
+        totalMarks: 400,
+        obtainedMarks: 315,
+        percentage: 78.75,
+        subjects: [
+            { name: 'M1 - IT Tools', marks: 82, total: 100 },
+            { name: 'M2 - Programming', marks: 75, total: 100 },
+            { name: 'M3 - Web Design', marks: 80, total: 100 },
+            { name: 'M4 - Database', marks: 78, total: 100 }
+        ]
+    }
+};
+
 const ResultsChecker = () => {
     const [rollNumber, setRollNumber] = useState('');
     const [result, setResult] = useState(null);
     const [loading, setLoading] = useState(false);
-
-    // Mock results database
-    const mockResults = {
-        'CCC2024001': {
-            name: 'Rahul Sharma',
-            course: 'CCC',
-            rollNumber: 'CCC2024001',
-            examDate: '2024-01-15',
-            status: 'PASS',
-            grade: 'A',
-            totalMarks: 100,
-            obtainedMarks: 87,
-            percentage: 87,
-            subjects: [
-                { name: 'Computer Basics', marks: 22, total: 25 },
-                { name: 'MS Office', marks: 24, total: 25 },
-                { name: 'Internet & Email', marks: 21, total: 25 },
-                { name: 'Practical', marks: 20, total: 25 }
-            ]
-        },
-        'OLEVEL2024002': {
-            name: 'Priya Singh',
-            course: 'O-Level',
-            rollNumber: 'OLEVEL2024002',
-            examDate: '2024-01-20',
-            status: 'PASS',
-            grade: 'B+',
-            totalMarks: 400,
-            obtainedMarks: 315,
-            percentage: 78.75,
-            subjects: [
-                { name: 'M1 - IT Tools', marks: 82, total: 100 },
-                { name: 'M2 - Programming', marks: 75, total: 100 },
-                { name: 'M3 - Web Design', marks: 80, total: 100 },
-                { name: 'M4 - Database', marks: 78, total: 100 }
-            ]
-        }
-    };
 
     const handleCheck = () => {
         setLoading(true);
