@@ -41,10 +41,11 @@ const VideoTour = () => {
 
                                 {/* Play Button */}
                                 <motion.button
+                                    aria-label="Play video tour"
                                     onClick={() => setIsPlaying(true)}
                                     whileHover={{ scale: 1.1 }}
                                     whileTap={{ scale: 0.95 }}
-                                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl group"
+                                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl group focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
                                 >
                                     <Play size={32} className="text-primary ml-1 group-hover:scale-110 transition-transform" fill="currentColor" />
                                 </motion.button>
@@ -73,8 +74,9 @@ const VideoTour = () => {
                                     className="absolute inset-0"
                                 ></iframe>
                                 <button
+                                    aria-label="Close video tour"
                                     onClick={() => setIsPlaying(false)}
-                                    className="absolute top-4 right-4 w-10 h-10 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center text-white transition-colors z-10"
+                                    className="absolute top-4 right-4 w-10 h-10 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center text-white transition-colors z-10 focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
                                 >
                                     <X size={20} />
                                 </button>
