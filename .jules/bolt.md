@@ -1,0 +1,3 @@
+## 2024-05-18 - Prevent object reallocation on keystroke in form components
+**Learning:** In React components with frequent state updates (like text inputs triggering `onChange`), defining large static objects (like mock databases or configuration objects) inside the component body causes unnecessary memory allocation and garbage collection overhead on every single render cycle, tying up the main thread.
+**Action:** Always move static data structures (arrays, objects) that do not depend on component state or props outside of the functional component scope to ensure they are allocated only once.
