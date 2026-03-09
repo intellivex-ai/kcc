@@ -1,0 +1,4 @@
+## 2025-03-09 - Hardcoded Admin Credentials in fallback
+**Vulnerability:** Found hardcoded fallback credentials (`admin` / `kcc2024`) in `src/lib/admin-auth.js` for the admin login if the environment variables are not set. There is also a reference to undefined `DEFAULT_CREDENTIALS` in `changePassword`.
+**Learning:** Client-side authentication logic in Vite bundles environment variables into the frontend JavaScript. Fallback credentials provided for "development convenience" get shipped to production, creating a severe backdoor auth bypass vulnerability.
+**Prevention:** Always fail securely by throwing an error or denying access when required authentication environment variables are missing, instead of falling back to default hardcoded credentials. Never embed secrets directly in client-side code, even as defaults.

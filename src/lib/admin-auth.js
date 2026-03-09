@@ -7,15 +7,22 @@
 const ADMIN_KEY = 'kcc_admin_session';
 
 // Get credentials from environment variables
+// 🛡️ Sentinel: Removed hardcoded fallback credentials to prevent auth bypass
 const ADMIN_CREDENTIALS = {
-    username: import.meta.env.VITE_ADMIN_USERNAME || 'admin',
-    password: import.meta.env.VITE_ADMIN_PASSWORD || 'kcc2024'
+    username: import.meta.env.VITE_ADMIN_USERNAME,
+    password: import.meta.env.VITE_ADMIN_PASSWORD
 };
 
 /**
  * Login with username and password
  */
 export const login = (username, password) => {
+    // 🛡️ Sentinel: Fail securely if credentials are not configured in environment
+    if (!ADMIN_CREDENTIALS.username || !ADMIN_CREDENTIALS.password) {
+        console.error('Admin authentication is not configured on the server.');
+        return { success: false, error: 'Authentication service unavailable' };
+    }
+
     // Validate credentials
     if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
         const session = {
@@ -71,9 +78,11 @@ export const getSession = () => {
 /**
  * Change password (demo only)
  */
+// eslint-disable-next-line no-unused-vars
 export const changePassword = (oldPassword, newPassword) => {
+    // 🛡️ Sentinel: Fixed ReferenceError and insecure default check
     // In production, this would call an API
-    if (oldPassword === DEFAULT_CREDENTIALS.password) {
+    if (oldPassword === ADMIN_CREDENTIALS.password) {
         // Update credentials (in real app, this would be on server)
         return { success: true };
     }
