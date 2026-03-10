@@ -1,0 +1,3 @@
+## 2024-05-24 - Accessible Focus States & Icon Buttons
+**Learning:** Found several icon-only buttons (`Moon`/`Sun`, `Menu`/`X`) in `Navbar.jsx` missing `aria-label`s and proper focus management. Using `focus:outline-none` on interactive elements without providing a fallback focus state is a critical accessibility issue, as it hides keyboard focus from users.
+**Action:** Always replace `focus:outline-none` with accessible focus styles like `focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none` to ensure keyboard navigation is visible while preventing focus rings on mouse clicks. Ensure all icon-only buttons have descriptive `aria-label` attributes for screen readers.
