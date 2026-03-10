@@ -88,6 +88,8 @@ const Gallery = () => {
                             <img
                                 src={image.src}
                                 alt={image.alt}
+                                loading="lazy"
+                                decoding="async"
                                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -143,6 +145,8 @@ const Gallery = () => {
                                 exit={{ scale: 0.8 }}
                                 src={selectedImage.src}
                                 alt={selectedImage.alt}
+                                loading="lazy"
+                                decoding="async"
                                 className="max-w-full max-h-[90vh] rounded-lg"
                                 onClick={(e) => e.stopPropagation()}
                             />
