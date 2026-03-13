@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+// eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'framer-motion';
 import { Bell, X, CheckCircle, AlertCircle, Info, Gift } from 'lucide-react';
 
@@ -8,48 +9,55 @@ const NotificationSystem = () => {
     const [showPanel, setShowPanel] = useState(false);
 
     // Mock notifications
-    const mockNotifications = [
-        {
-            id: 1,
-            type: 'success',
-            title: 'Admission Confirmed',
-            message: 'Your CCC course admission has been confirmed!',
-            time: '2 hours ago',
-            read: false
-        },
-        {
-            id: 2,
-            type: 'info',
-            title: 'New Course Available',
-            message: 'Check out our new Advanced Excel course',
-            time: '1 day ago',
-            read: false
-        },
-        {
-            id: 3,
-            type: 'warning',
-            title: 'Exam Registration Deadline',
-            message: 'Only 3 days left to register for CCC exam',
-            time: '2 days ago',
-            read: true
-        },
-        {
-            id: 4,
-            type: 'offer',
-            title: '20% Off Special Offer',
-            message: 'Limited time offer on all courses!',
-            time: '3 days ago',
-            read: true
-        }
-    ];
-
     useEffect(() => {
-        setNotifications(mockNotifications);
+        // Mock notifications
+        const mockNotifications = [
+            {
+                id: 1,
+                type: 'success',
+                title: 'Admission Confirmed',
+                message: 'Your CCC course admission has been confirmed!',
+                time: '2 hours ago',
+                read: false
+            },
+            {
+                id: 2,
+                type: 'info',
+                title: 'New Course Available',
+                message: 'Check out our new Advanced Excel course',
+                time: '1 day ago',
+                read: false
+            },
+            {
+                id: 3,
+                type: 'warning',
+                title: 'Exam Registration Deadline',
+                message: 'Only 3 days left to register for CCC exam',
+                time: '2 days ago',
+                read: true
+            },
+            {
+                id: 4,
+                type: 'offer',
+                title: '20% Off Special Offer',
+                message: 'Limited time offer on all courses!',
+                time: '3 days ago',
+                read: true
+            }
+        ];
+
+        // Use timeout to simulate fetching and avoid synchronous setState in effect
+        const timer = setTimeout(() => {
+            setNotifications(mockNotifications);
+        }, 0);
 
         // Check notification permission
         if ('Notification' in window) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setPermission(Notification.permission);
         }
+
+        return () => clearTimeout(timer);
     }, []);
 
     const requestPermission = async () => {
@@ -102,6 +110,7 @@ const NotificationSystem = () => {
             <div className="fixed bottom-24 right-6 z-50">
                 <button
                     onClick={() => setShowPanel(!showPanel)}
+                    aria-label="Toggle notifications panel"
                     className="relative w-14 h-14 bg-primary text-white rounded-full shadow-lg hover:bg-blue-700 transition-all flex items-center justify-center group"
                 >
                     <Bell size={24} className={showPanel ? 'animate-bounce' : ''} />
@@ -127,6 +136,7 @@ const NotificationSystem = () => {
                             <h3 className="font-bold text-lg">Notifications</h3>
                             <button
                                 onClick={() => setShowPanel(false)}
+                                aria-label="Close notifications panel"
                                 className="hover:bg-white/20 rounded-lg p-1 transition-colors"
                             >
                                 <X size={20} />
@@ -175,6 +185,7 @@ const NotificationSystem = () => {
                                                             e.stopPropagation();
                                                             deleteNotification(notif.id);
                                                         }}
+                                                        aria-label="Delete notification"
                                                         className="text-gray-400 hover:text-red-600 transition-colors shrink-0"
                                                     >
                                                         <X size={16} />
