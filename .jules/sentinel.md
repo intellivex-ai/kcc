@@ -1,0 +1,4 @@
+## 2024-03-14 - Removed Hardcoded Fallback Credentials in Admin Auth
+**Vulnerability:** The admin authentication library (`src/lib/admin-auth.js`) contained hardcoded fallback credentials (`'admin'` and `'kcc2024'`). If the expected environment variables (`VITE_ADMIN_USERNAME` and `VITE_ADMIN_PASSWORD`) were missing, any user could log in with these easily guessable credentials and access the admin dashboard.
+**Learning:** Defaulting to static fallback credentials creates a severe security risk if the environment is misconfigured. In a production environment, missing configuration must result in a secure failure (denial of access) rather than bypassing security controls.
+**Prevention:** Never use hardcoded fallback values for secrets, credentials, or keys. Ensure applications fail securely and provide clear error logs to developers when required configuration is missing.
