@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -7,7 +7,7 @@ const ServiceCard = ({ service }) => {
     const Icon = service.icon;
 
     return (
-        <motion.div
+        <Motion.div
             layout
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -36,11 +36,12 @@ const ServiceCard = ({ service }) => {
 
             <Link
                 to="/services"
-                className="inline-flex items-center text-sm font-bold text-gray-900 group-hover:text-primary transition-colors"
+                aria-label={`Learn more about ${service.title}`}
+                className="inline-flex items-center text-sm font-bold text-gray-900 group-hover:text-primary transition-colors focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none rounded-sm"
             >
                 Learn More <ArrowRight size={16} className="ml-2 group-hover:translate-x-1 transition-transform" />
             </Link>
-        </motion.div>
+        </Motion.div>
     );
 };
 
