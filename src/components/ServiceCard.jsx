@@ -1,13 +1,15 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { memo } from 'react';
+import { motion as Motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const ServiceCard = ({ service }) => {
+// ⚡ Bolt: Wrapped ServiceCard in React.memo() to prevent unnecessary
+// re-renders when the parent ServiceMatrix updates its filter state.
+const ServiceCard = memo(({ service }) => {
     const Icon = service.icon;
 
     return (
-        <motion.div
+        <Motion.div
             layout
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -40,8 +42,8 @@ const ServiceCard = ({ service }) => {
             >
                 Learn More <ArrowRight size={16} className="ml-2 group-hover:translate-x-1 transition-transform" />
             </Link>
-        </motion.div>
+        </Motion.div>
     );
-};
+});
 
 export default ServiceCard;
