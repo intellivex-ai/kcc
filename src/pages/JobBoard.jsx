@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useMemo } from 'react';
+import { motion as Motion } from 'framer-motion';
 import { Search, MapPin, Briefcase, IndianRupee, Calendar, Clock, ExternalLink, Filter } from 'lucide-react';
 import { jobListings, jobCategories } from '../data/jobs';
 
@@ -8,14 +8,17 @@ const JobBoard = () => {
     const [filterCategory, setFilterCategory] = useState('all');
     const [filterType, setFilterType] = useState('all');
 
-    const filteredJobs = jobListings.filter(job => {
-        const matchesSearch = job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            job.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            job.location.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesCategory = filterCategory === 'all' || job.category === filterCategory;
-        const matchesType = filterType === 'all' || job.type === filterType;
-        return matchesSearch && matchesCategory && matchesType;
-    });
+    const filteredJobs = useMemo(() => {
+        const searchLower = searchTerm.toLowerCase();
+        return jobListings.filter(job => {
+            const matchesSearch = job.title.toLowerCase().includes(searchLower) ||
+                job.company.toLowerCase().includes(searchLower) ||
+                job.location.toLowerCase().includes(searchLower);
+            const matchesCategory = filterCategory === 'all' || job.category === filterCategory;
+            const matchesType = filterType === 'all' || job.type === filterType;
+            return matchesSearch && matchesCategory && matchesType;
+        });
+    }, [searchTerm, filterCategory, filterType]);
 
     const getTypeColor = (type) => {
         switch (type) {
@@ -36,7 +39,7 @@ const JobBoard = () => {
             {/* Header */}
             <section className="bg-gradient-to-br from-primary to-blue-600 py-20">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <motion.div
+                    <Motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                     >
@@ -44,7 +47,7 @@ const JobBoard = () => {
                         <p className="text-blue-100 text-lg max-w-2xl mx-auto">
                             Find the latest job opportunities for computer course graduates
                         </p>
-                    </motion.div>
+                    </Motion.div>
                 </div>
             </section>
 
@@ -97,7 +100,7 @@ const JobBoard = () => {
                 {filteredJobs.length > 0 ? (
                     <div className="space-y-6">
                         {filteredJobs.map((job, index) => (
-                            <motion.div
+                            <Motion.div
                                 key={job.id}
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
@@ -182,7 +185,7 @@ const JobBoard = () => {
                                         </a>
                                     </div>
                                 </div>
-                            </motion.div>
+                            </Motion.div>
                         ))}
                     </div>
                 ) : (
