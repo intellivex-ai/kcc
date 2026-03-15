@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { Send, User, Mail, Phone, BookOpen, MessageSquare, CheckCircle } from 'lucide-react';
 import { addInquiry } from '../lib/admin-data';
+import { sanitizeInput, sanitizeEmail, sanitizePhone } from '../lib/security';
 
 const InquiryForm = () => {
     const [formData, setFormData] = useState({
@@ -38,13 +39,13 @@ const InquiryForm = () => {
         setError(null);
 
         try {
-            // Save to Supabase
+            // Sanitize input before saving
             await addInquiry({
-                name: formData.name,
-                email: formData.email,
-                phone: formData.phone,
-                subject: formData.course,
-                message: formData.message || 'No message provided'
+                name: sanitizeInput(formData.name),
+                email: sanitizeEmail(formData.email),
+                phone: sanitizePhone(formData.phone),
+                subject: sanitizeInput(formData.course),
+                message: sanitizeInput(formData.message) || 'No message provided'
             });
 
             setIsSubmitting(false);
@@ -64,7 +65,7 @@ const InquiryForm = () => {
 
     if (isSuccess) {
         return (
-            <motion.div
+            <Motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 className="bg-green-50 border-2 border-green-500 rounded-2xl p-8 text-center"
@@ -74,12 +75,12 @@ const InquiryForm = () => {
                 </div>
                 <h3 className="text-2xl font-black text-gray-900 mb-2">Thank You!</h3>
                 <p className="text-gray-600">We received your inquiry. Our team will contact you within 24 hours.</p>
-            </motion.div>
+            </Motion.div>
         );
     }
 
     return (
-        <motion.form
+        <Motion.form
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -205,7 +206,7 @@ const InquiryForm = () => {
             <p className="text-xs text-gray-500 text-center mt-4">
                 We'll respond within 24 hours • Your data is secure
             </p>
-        </motion.form>
+        </Motion.form>
     );
 };
 
