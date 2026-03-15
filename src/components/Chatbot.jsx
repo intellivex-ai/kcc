@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, X, Send, User, Bot, ExternalLink } from 'lucide-react';
 import { getBotResponse } from '../lib/chatbot-logic';
 
@@ -51,7 +51,8 @@ const Chatbot = () => {
     return (
         <>
             {/* Toggle Button */}
-            <motion.button
+            <Motion.button
+                aria-label="Toggle Chatbot"
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 whileHover={{ scale: 1.1 }}
@@ -60,12 +61,12 @@ const Chatbot = () => {
                 className="fixed bottom-6 right-6 z-50 bg-primary hover:bg-primary-light text-white p-4 rounded-full shadow-2xl flex items-center justify-center cursor-pointer"
             >
                 {isOpen ? <X size={24} /> : <MessageCircle size={28} />}
-            </motion.button>
+            </Motion.button>
 
             {/* Chat Window */}
             <AnimatePresence>
                 {isOpen && (
-                    <motion.div
+                    <Motion.div
                         initial={{ opacity: 0, y: 20, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -147,6 +148,7 @@ const Chatbot = () => {
                                 className="flex-1 bg-gray-100 text-gray-900 placeholder:text-gray-500 border-0 rounded-full px-4 py-2 text-sm focus:ring-2 focus:ring-primary focus:bg-white transition-all outline-none"
                             />
                             <button
+                                aria-label="Send message"
                                 type="submit"
                                 disabled={!input.trim()}
                                 className="bg-primary hover:bg-primary-light disabled:opacity-50 disabled:cursor-not-allowed text-white p-2 rounded-full transition-all shadow-md active:scale-95 flex items-center justify-center w-10 h-10"
@@ -154,7 +156,7 @@ const Chatbot = () => {
                                 <Send size={18} className={input.trim() ? "ml-0.5" : ""} />
                             </button>
                         </form>
-                    </motion.div>
+                    </Motion.div>
                 )}
             </AnimatePresence>
         </>
