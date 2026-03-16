@@ -1,0 +1,3 @@
+## 2024-05-18 - Improve accessibility of custom toggle buttons
+**Learning:** When building custom toggle button groups (like category filters), visual styling alone (e.g. changing background colors) is insufficient for screen readers to convey which option is currently active.
+**Action:** Use `aria-pressed={isActive}` on custom toggle buttons and add standardized `focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none` classes to ensure they are fully navigable and communicative for keyboard and screen-reader users.
