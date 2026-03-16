@@ -8,14 +8,18 @@ const ADMIN_KEY = 'kcc_admin_session';
 
 // Get credentials from environment variables
 const ADMIN_CREDENTIALS = {
-    username: import.meta.env.VITE_ADMIN_USERNAME || 'admin',
-    password: import.meta.env.VITE_ADMIN_PASSWORD || 'kcc2024'
+    username: import.meta.env.VITE_ADMIN_USERNAME,
+    password: import.meta.env.VITE_ADMIN_PASSWORD
 };
 
 /**
  * Login with username and password
  */
 export const login = (username, password) => {
+    if (!ADMIN_CREDENTIALS.username || !ADMIN_CREDENTIALS.password) {
+        return { success: false, error: 'Login is currently disabled due to missing configuration.' };
+    }
+
     // Validate credentials
     if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
         const session = {
@@ -69,16 +73,11 @@ export const getSession = () => {
 };
 
 /**
- * Change password (demo only)
+ * Change password
  */
-export const changePassword = (oldPassword, newPassword) => {
-    // In production, this would call an API
-    if (oldPassword === DEFAULT_CREDENTIALS.password) {
-        // Update credentials (in real app, this would be on server)
-        return { success: true };
-    }
-
-    return { success: false, error: 'Current password is incorrect' };
+// eslint-disable-next-line no-unused-vars
+export const changePassword = (_oldPassword, _newPassword) => {
+    return { success: false, error: 'Changing password is not supported in client-side auth mode.' };
 };
 
 export default {
