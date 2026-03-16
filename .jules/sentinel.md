@@ -1,0 +1,4 @@
+## 2024-05-24 - Hardcoded Fallback Credentials in Admin Auth
+**Vulnerability:** The client-side admin authentication (`src/lib/admin-auth.js`) had hardcoded fallback credentials (`admin`/`kcc2024`) that could be used if the environment variables (`VITE_ADMIN_USERNAME`, `VITE_ADMIN_PASSWORD`) were missing or unset.
+**Learning:** Having default credentials introduces a massive security risk, particularly in client-side applications where the source code is public. If configuration is missed during deployment, anyone could bypass authentication using these defaults. Client-side authentication in Vite must fail securely when missing necessary credentials rather than relying on weak hardcoded defaults.
+**Prevention:** Always ensure authentication logic fails securely when configuration or credentials are not supplied. Never provide fallback plaintext passwords in production code.
