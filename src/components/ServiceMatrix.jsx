@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { services } from '../lib/service-data';
 import ServiceCard from './ServiceCard';
+// eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion';
 
 const ServiceMatrix = () => {
@@ -28,7 +29,8 @@ const ServiceMatrix = () => {
                             <button
                                 key={cat}
                                 onClick={() => setFilter(cat)}
-                                className={`px-4 py-2 lg:px-6 lg:py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 ${filter === cat
+                                aria-pressed={filter === cat}
+                                className={`px-4 py-2 lg:px-6 lg:py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none ${filter === cat
                                     ? 'bg-primary text-white shadow-lg shadow-primary/30 scale-105'
                                     : 'bg-white text-gray-500 hover:bg-gray-100 hover:text-gray-900 border border-gray-200'
                                     }`}
