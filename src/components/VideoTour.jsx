@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+// eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion';
 import { Play, X } from 'lucide-react';
 
@@ -75,6 +76,7 @@ const VideoTour = () => {
                                 <button
                                     onClick={() => setIsPlaying(false)}
                                     className="absolute top-4 right-4 w-10 h-10 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center text-white transition-colors z-10"
+                                    aria-label="Close video"
                                 >
                                     <X size={20} />
                                 </button>
