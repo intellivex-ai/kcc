@@ -1,0 +1,4 @@
+## 2024-05-18 - Hardcoded Fallback Credentials for Admin Auth
+**Vulnerability:** Found hardcoded fallback credentials (`'admin'` and `'kcc2024'`) for admin authentication in `src/lib/admin-auth.js` that were used if environment variables were not set.
+**Learning:** Providing hardcoded fallback credentials is a major security risk as it creates a backdoor for unauthorized access if environment configurations fail or are inadvertently omitted in production, effectively neutralizing the intended protection of environment-based credentials.
+**Prevention:** Never include hardcoded secrets or credentials as fallbacks. Ensure the application fails securely (e.g., denying access entirely or returning an unavailability error) when critical security configurations like environment variables are missing.
