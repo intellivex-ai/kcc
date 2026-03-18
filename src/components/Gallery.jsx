@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+// eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight, Image as ImageIcon } from 'lucide-react';
 
@@ -116,22 +117,25 @@ const Gallery = () => {
                         >
                             {/* Close Button */}
                             <button
+                                aria-label="Close lightbox"
                                 onClick={() => setSelectedImage(null)}
-                                className="absolute top-4 right-4 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors"
+                                className="absolute top-4 right-4 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
                             >
                                 <X size={24} className="text-white" />
                             </button>
 
                             {/* Navigation Arrows */}
                             <button
+                                aria-label="Previous image"
                                 onClick={(e) => { e.stopPropagation(); handlePrev(); }}
-                                className="absolute left-4 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors"
+                                className="absolute left-4 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
                             >
                                 <ChevronLeft size={24} className="text-white" />
                             </button>
                             <button
+                                aria-label="Next image"
                                 onClick={(e) => { e.stopPropagation(); handleNext(); }}
-                                className="absolute right-4 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors"
+                                className="absolute right-4 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
                             >
                                 <ChevronRight size={24} className="text-white" />
                             </button>
