@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
+// eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion';
 import { Search, MapPin, Briefcase, IndianRupee, Calendar, Clock, ExternalLink, Filter } from 'lucide-react';
 import { jobListings, jobCategories } from '../data/jobs';
@@ -8,14 +9,18 @@ const JobBoard = () => {
     const [filterCategory, setFilterCategory] = useState('all');
     const [filterType, setFilterType] = useState('all');
 
-    const filteredJobs = jobListings.filter(job => {
-        const matchesSearch = job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            job.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            job.location.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesCategory = filterCategory === 'all' || job.category === filterCategory;
-        const matchesType = filterType === 'all' || job.type === filterType;
-        return matchesSearch && matchesCategory && matchesType;
-    });
+    // Optimization: Memoize the filtered jobs array to prevent expensive O(N) re-filtering
+    // on every render, especially when N (jobListings.length) grows large.
+    const filteredJobs = useMemo(() => {
+        return jobListings.filter(job => {
+            const matchesSearch = job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                job.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                job.location.toLowerCase().includes(searchTerm.toLowerCase());
+            const matchesCategory = filterCategory === 'all' || job.category === filterCategory;
+            const matchesType = filterType === 'all' || job.type === filterType;
+            return matchesSearch && matchesCategory && matchesType;
+        });
+    }, [searchTerm, filterCategory, filterType]);
 
     const getTypeColor = (type) => {
         switch (type) {
