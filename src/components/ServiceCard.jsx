@@ -1,4 +1,5 @@
 import React from 'react';
+// eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -36,7 +37,7 @@ const ServiceCard = ({ service }) => {
 
             <Link
                 to="/services"
-                className="inline-flex items-center text-sm font-bold text-gray-900 group-hover:text-primary transition-colors"
+                className="inline-flex items-center text-sm font-bold text-gray-900 group-hover:text-primary transition-colors focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none rounded-sm"
             >
                 Learn More <ArrowRight size={16} className="ml-2 group-hover:translate-x-1 transition-transform" />
             </Link>
