@@ -1,0 +1,4 @@
+## 2024-05-24 - Hardcoded Admin Credentials in Client
+**Vulnerability:** Admin authentication credentials were hardcoded in `src/lib/admin-auth.js` as fallback values, effectively bypassing any intended environment variable protection and exposing credentials to the client. Additionally, `changePassword` used a non-existent `DEFAULT_CREDENTIALS` reference, likely derived from previous versions of the code.
+**Learning:** Fallback values for sensitive environment variables in client-side code create a false sense of security while actively shipping the secrets to the browser.
+**Prevention:** Systems must fail securely. If required environment credentials are not provided, the authentication logic must deny access (e.g., throwing an error or always returning false) rather than providing a functional fallback route.
