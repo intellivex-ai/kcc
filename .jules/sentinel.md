@@ -1,0 +1,7 @@
+## 2024-03-20 - [CRITICAL] Hardcoded Admin Credentials in Client-Side Code
+**Vulnerability:** The application stored hardcoded default admin credentials (`'admin'` and `'kcc2024'`) as fallbacks in `src/lib/admin-auth.js` if the environment variables (`VITE_ADMIN_USERNAME` and `VITE_ADMIN_PASSWORD`) were missing. Because Vite packages `.js` files into the client build, these credentials would be directly exposed to end-users via the bundled javascript source code. Additionally, there was a reference error where `changePassword` referred to a non-existent `DEFAULT_CREDENTIALS` object instead of the initialized `ADMIN_CREDENTIALS` which could lead to a crash or unexpected behaviors.
+**Learning:** Hardcoding credentials as fallbacks inside source code files, especially client-side code where the source is entirely accessible to users, fundamentally undermines security. Furthermore, authentication logic shouldn't trust the client for validation of admin access entirely.
+**Prevention:**
+1. Never use hardcoded strings for credentials as a fallback or in-source default.
+2. Use server-side validation for authentication. Since this handles auth purely via client environment variables for now, fail securely and deny access by returning an error if environment variables are missing, instead of falling back to default values.
+3. Keep the environment secrets strictly in `.env` files that aren't pushed to the repo.
