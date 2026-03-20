@@ -1,0 +1,3 @@
+## 2024-05-18 - Added `htmlFor` and `id` to `InquiryForm`
+**Learning:** Found an accessibility issue pattern where form `<label>`s did not have `htmlFor` attributes pointing to the corresponding `<input>` `id`s. This is a common pattern in the app's components, making it difficult for screen readers to associate labels with inputs and for users to click labels to focus inputs.
+**Action:** When creating new forms or updating existing ones, always ensure that `<label>` elements have an `htmlFor` attribute that exactly matches the `id` of the corresponding input element.
