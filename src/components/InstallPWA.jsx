@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+// eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'framer-motion';
 import { Download, X } from 'lucide-react';
 
@@ -53,6 +54,7 @@ const InstallPWA = () => {
                 <button
                     onClick={handleDismiss}
                     className="absolute top-2 right-2 p-1 hover:bg-white/20 rounded-full transition-colors"
+                    aria-label="Dismiss install prompt"
                 >
                     <X size={20} />
                 </button>
