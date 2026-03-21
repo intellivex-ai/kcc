@@ -30,19 +30,22 @@ const Inquiries = () => {
     };
 
     const filterInquiries = () => {
-        let filtered = inquiries;
+        // Optimize: Consolidate filters and cache loop-invariant toLowerCase to O(1)
+        const lowerSearchTerm = searchTerm ? searchTerm.toLowerCase() : '';
 
-        if (statusFilter !== 'all') {
-            filtered = filtered.filter(inq => inq.status === statusFilter);
-        }
-
-        if (searchTerm) {
-            filtered = filtered.filter(inq =>
-                inq.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                inq.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        const filtered = inquiries.filter(inq => {
+            if (statusFilter !== 'all' && inq.status !== statusFilter) {
+                return false;
+            }
+            if (searchTerm && !(
+                inq.name.toLowerCase().includes(lowerSearchTerm) ||
+                inq.email.toLowerCase().includes(lowerSearchTerm) ||
                 inq.phone.includes(searchTerm)
-            );
-        }
+            )) {
+                return false;
+            }
+            return true;
+        });
 
         setFilteredInquiries(filtered);
     };
