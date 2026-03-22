@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+// eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion';
 import { Search, Filter, Eye, Trash2, CheckCircle, Download } from 'lucide-react';
 import { getInquiries, updateInquiry, deleteInquiry, exportToCSV } from '../../lib/admin-data';
@@ -11,14 +12,6 @@ const Inquiries = () => {
     const [statusFilter, setStatusFilter] = useState('all');
     const [selectedInquiry, setSelectedInquiry] = useState(null);
 
-    useEffect(() => {
-        loadInquiries();
-    }, []);
-
-    useEffect(() => {
-        filterInquiries();
-    }, [searchTerm, statusFilter, inquiries]);
-
     const loadInquiries = async () => {
         try {
             const data = await getInquiries();
@@ -30,22 +23,37 @@ const Inquiries = () => {
     };
 
     const filterInquiries = () => {
-        let filtered = inquiries;
-
-        if (statusFilter !== 'all') {
-            filtered = filtered.filter(inq => inq.status === statusFilter);
+        if (statusFilter === 'all' && !searchTerm) {
+            setFilteredInquiries(inquiries);
+            return;
         }
 
-        if (searchTerm) {
-            filtered = filtered.filter(inq =>
-                inq.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                inq.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        const lowerSearch = (searchTerm || '').toLowerCase();
+
+        const filtered = inquiries.filter(inq => {
+            const matchStatus = statusFilter === 'all' || inq.status === statusFilter;
+            if (!matchStatus) return false;
+
+            if (!searchTerm) return true;
+
+            return (
+                inq.name.toLowerCase().includes(lowerSearch) ||
+                inq.email.toLowerCase().includes(lowerSearch) ||
                 inq.phone.includes(searchTerm)
             );
-        }
+        });
 
         setFilteredInquiries(filtered);
     };
+
+    useEffect(() => {
+        loadInquiries();
+    }, []);
+
+    useEffect(() => {
+        filterInquiries();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchTerm, statusFilter, inquiries]);
 
     const handleStatusChange = async (id, newStatus) => {
         try {

@@ -1,0 +1,3 @@
+## 2024-05-24 - Array Filtering Optimization
+**Learning:** Sequential `.filter()` operations combined with repeated computation of loop invariants (e.g., calling `.toLowerCase()` on the search term inside the `.filter()` callback) inside list components leads to $O(k \cdot N)$ complexity (where $k$ is the number of filters) and redundant allocations, causing significant performance overhead on large data lists during search/filter operations.
+**Action:** Always combine sequential `.filter()` operations into a single combined pass over the array. Pre-compute and cache loop-invariant values like `searchTerm.toLowerCase()` outside the filtering loop to ensure $O(N)$ runtime complexity and minimize memory allocations.
