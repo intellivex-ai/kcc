@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+// eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion';
 import { User, Lock, Mail, Eye, EyeOff, BookOpen, Award, Calendar, FileText, Download, Bell, Settings, LogOut } from 'lucide-react';
 
@@ -98,8 +99,9 @@ const StudentPortal = () => {
                                     />
                                     <button
                                         type="button"
+                                        aria-label="Toggle password visibility"
                                         onClick={() => setShowPassword(!showPassword)}
-                                        className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                                        className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none rounded"
                                     >
                                         {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                                     </button>
@@ -140,11 +142,11 @@ const StudentPortal = () => {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
                     <h1 className="text-2xl font-black text-gray-900">Student Portal</h1>
                     <div className="flex items-center gap-4">
-                        <button className="p-2 hover:bg-gray-100 rounded-lg relative">
+                        <button aria-label="Notifications" className="p-2 hover:bg-gray-100 rounded-lg relative focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
                             <Bell size={20} />
                             <span className="absolute top-1 right-1 w-2 h-2 bg-red-600 rounded-full"></span>
                         </button>
-                        <button className="p-2 hover:bg-gray-100 rounded-lg">
+                        <button aria-label="Settings" className="p-2 hover:bg-gray-100 rounded-lg focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
                             <Settings size={20} />
                         </button>
                         <button
@@ -283,7 +285,7 @@ const StudentPortal = () => {
                                             <p className="font-semibold text-gray-900 text-sm">{doc.name}</p>
                                             <p className="text-xs text-gray-500">{doc.size} • {doc.type}</p>
                                         </div>
-                                        <button className="p-2 hover:bg-primary/10 rounded-lg text-primary">
+                                        <button aria-label="Download document" className="p-2 hover:bg-primary/10 rounded-lg text-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">
                                             <Download size={18} />
                                         </button>
                                     </div>
