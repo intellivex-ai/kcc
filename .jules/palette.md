@@ -1,0 +1,3 @@
+## 2024-05-24 - Form Field Accessibility: `htmlFor` and `id` linking
+**Learning:** For optimal accessibility and usability in form fields, `<label>` elements must explicitly define an `htmlFor` attribute that exactly matches the `id` of its corresponding input element (like `<input>`, `<select>`, or `<textarea>`). This is crucial because it ensures screen readers can correctly announce the label when the input receives focus, and more importantly, allows users to click the text label itself to bring focus to the input element. This provides a larger clickable area and improves the UX for all users.
+**Action:** Always verify that every label in a form is structurally linked to its input using the matching `htmlFor` and `id` pair rather than relying on proximity.
