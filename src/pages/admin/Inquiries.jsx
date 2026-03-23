@@ -30,19 +30,30 @@ const Inquiries = () => {
     };
 
     const filterInquiries = () => {
-        let filtered = inquiries;
-
-        if (statusFilter !== 'all') {
-            filtered = filtered.filter(inq => inq.status === statusFilter);
+        if (statusFilter === 'all' && !searchTerm) {
+            setFilteredInquiries(inquiries);
+            return;
         }
 
-        if (searchTerm) {
-            filtered = filtered.filter(inq =>
-                inq.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                inq.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                inq.phone.includes(searchTerm)
-            );
-        }
+        const lowerSearchTerm = (searchTerm || '').toLowerCase();
+
+        const filtered = inquiries.filter(inq => {
+            if (statusFilter !== 'all' && inq.status !== statusFilter) {
+                return false;
+            }
+
+            if (lowerSearchTerm) {
+                const nameMatch = (inq.name || '').toLowerCase().includes(lowerSearchTerm);
+                const emailMatch = (inq.email || '').toLowerCase().includes(lowerSearchTerm);
+                const phoneMatch = (inq.phone || '').includes(searchTerm);
+
+                if (!nameMatch && !emailMatch && !phoneMatch) {
+                    return false;
+                }
+            }
+
+            return true;
+        });
 
         setFilteredInquiries(filtered);
     };
