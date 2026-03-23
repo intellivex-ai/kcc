@@ -30,19 +30,30 @@ const Students = () => {
     };
 
     const filterStudents = () => {
-        let filtered = students;
-
-        if (courseFilter !== 'all') {
-            filtered = filtered.filter(std => std.course === courseFilter);
+        if (courseFilter === 'all' && !searchTerm) {
+            setFilteredStudents(students);
+            return;
         }
 
-        if (searchTerm) {
-            filtered = filtered.filter(std =>
-                std.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                std.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                std.phone.includes(searchTerm)
-            );
-        }
+        const lowerSearchTerm = (searchTerm || '').toLowerCase();
+
+        const filtered = students.filter(std => {
+            if (courseFilter !== 'all' && std.course !== courseFilter) {
+                return false;
+            }
+
+            if (lowerSearchTerm) {
+                const nameMatch = (std.name || '').toLowerCase().includes(lowerSearchTerm);
+                const emailMatch = (std.email || '').toLowerCase().includes(lowerSearchTerm);
+                const phoneMatch = (std.phone || '').includes(searchTerm);
+
+                if (!nameMatch && !emailMatch && !phoneMatch) {
+                    return false;
+                }
+            }
+
+            return true;
+        });
 
         setFilteredStudents(filtered);
     };
