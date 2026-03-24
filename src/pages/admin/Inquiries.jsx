@@ -32,16 +32,26 @@ const Inquiries = () => {
     const filterInquiries = () => {
         let filtered = inquiries;
 
-        if (statusFilter !== 'all') {
-            filtered = filtered.filter(inq => inq.status === statusFilter);
-        }
+        // ⚡ Bolt Performance Optimization:
+        // Caching loop-invariant lowerSearchTerm string operation outside the loop
+        // to reduce redundant O(N) string processing.
+        const lowerSearchTerm = (searchTerm || '').toLowerCase();
 
-        if (searchTerm) {
-            filtered = filtered.filter(inq =>
-                inq.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                inq.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                inq.phone.includes(searchTerm)
-            );
+        if (statusFilter !== 'all' || lowerSearchTerm) {
+            // Consolidating sequential .filter() operations into a single combined pass
+            // to change runtime from O(2N) to O(N).
+            filtered = inquiries.filter(inq => {
+                const matchesStatus = statusFilter === 'all' || inq.status === statusFilter;
+
+                if (!matchesStatus) return false; // Early return skips expensive string ops
+                if (!lowerSearchTerm) return true;
+
+                return (
+                    (inq.name || '').toLowerCase().includes(lowerSearchTerm) ||
+                    (inq.email || '').toLowerCase().includes(lowerSearchTerm) ||
+                    (inq.phone || '').includes(searchTerm)
+                );
+            });
         }
 
         setFilteredInquiries(filtered);
