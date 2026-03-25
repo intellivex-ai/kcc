@@ -1,0 +1,3 @@
+## 2024-05-18 - Optimized Array Filtering
+**Learning:** Sequential `.filter()` operations combined with repeatedly calling `.toLowerCase()` inside loops (like searching for students in dashboard) lead to O(kN) runtime complexity and redundant allocations, which can be an anti-pattern when rendering large data grids in React.
+**Action:** Consolidate array filtering passes into a single `.filter()` loop, cache loop-invariant derivations (like `.toLowerCase()` on search terms) outside the loop, and safely handle string operations on potentially undefined values to prevent crashes and drop to O(N) runtime.

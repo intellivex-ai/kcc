@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+// eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion';
 import { Search, Filter, Eye, Trash2, Download } from 'lucide-react';
 import { getStudents, deleteStudent, exportToCSV } from '../../lib/admin-data';
@@ -11,14 +12,6 @@ const Students = () => {
     const [courseFilter, setCourseFilter] = useState('all');
     const [selectedStudent, setSelectedStudent] = useState(null);
 
-    useEffect(() => {
-        loadStudents();
-    }, []);
-
-    useEffect(() => {
-        filterStudents();
-    }, [searchTerm, courseFilter, students]);
-
     const loadStudents = async () => {
         try {
             const data = await getStudents();
@@ -30,22 +23,33 @@ const Students = () => {
     };
 
     const filterStudents = () => {
-        let filtered = students;
+        // ⚡ Bolt: Cache loop-invariant lowercase search term outside the loop.
+        const lowerSearchTerm = (searchTerm || '').toLowerCase();
 
-        if (courseFilter !== 'all') {
-            filtered = filtered.filter(std => std.course === courseFilter);
-        }
+        // ⚡ Bolt: Consolidate multiple .filter() calls into a single O(N) pass.
+        // Also added safe string fallbacks to prevent crashes on undefined values.
+        const filtered = students.filter(std => {
+            const matchesCourse = courseFilter === 'all' || std.course === courseFilter;
 
-        if (searchTerm) {
-            filtered = filtered.filter(std =>
-                std.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                std.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                std.phone.includes(searchTerm)
-            );
-        }
+            const matchesSearch = !lowerSearchTerm ||
+                (std.name || '').toLowerCase().includes(lowerSearchTerm) ||
+                (std.email || '').toLowerCase().includes(lowerSearchTerm) ||
+                (std.phone || '').includes(searchTerm);
+
+            return matchesCourse && matchesSearch;
+        });
 
         setFilteredStudents(filtered);
     };
+
+    useEffect(() => {
+        loadStudents();
+    }, []);
+
+    useEffect(() => {
+        filterStudents();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchTerm, courseFilter, students]);
 
     const handleDelete = async (id) => {
         if (window.confirm('Are you sure you want to delete this student?')) {
