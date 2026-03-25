@@ -1,0 +1,4 @@
+## 2024-03-25 - Removed Hardcoded Fallback Credentials
+**Vulnerability:** The admin authentication library (`src/lib/admin-auth.js`) contained hardcoded fallback credentials (`'admin'` / `'kcc2024'`).
+**Learning:** Hardcoded credentials serve as an easy backdoor if environment variables fail to load or are not configured, bypassing security entirely. Applications must fail securely.
+**Prevention:** Do not provide default fallback values for sensitive environment variables like passwords. Ensure the system fails securely by verifying configurations early and providing generic, safe error messages when configuration is incomplete.
