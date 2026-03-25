@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+// eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion';
 import { Send, User, Mail, Phone, BookOpen, MessageSquare, CheckCircle } from 'lucide-react';
 import { addInquiry } from '../lib/admin-data';
@@ -97,10 +98,11 @@ const InquiryForm = () => {
 
             {/* Name */}
             <div className="mb-4">
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Full Name *</label>
+                <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">Full Name *</label>
                 <div className="relative">
                     <User size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
                     <input
+                        id="name"
                         type="text"
                         name="name"
                         value={formData.name}
@@ -114,10 +116,11 @@ const InquiryForm = () => {
 
             {/* Email */}
             <div className="mb-4">
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Email Address *</label>
+                <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">Email Address *</label>
                 <div className="relative">
                     <Mail size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
                     <input
+                        id="email"
                         type="email"
                         name="email"
                         value={formData.email}
@@ -131,10 +134,11 @@ const InquiryForm = () => {
 
             {/* Phone */}
             <div className="mb-4">
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Phone Number *</label>
+                <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-2">Phone Number *</label>
                 <div className="relative">
                     <Phone size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
                     <input
+                        id="phone"
                         type="tel"
                         name="phone"
                         value={formData.phone}
@@ -149,10 +153,11 @@ const InquiryForm = () => {
 
             {/* Course */}
             <div className="mb-4">
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Interested Course *</label>
+                <label htmlFor="course" className="block text-sm font-semibold text-gray-700 mb-2">Interested Course *</label>
                 <div className="relative">
                     <BookOpen size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
                     <select
+                        id="course"
                         name="course"
                         value={formData.course}
                         onChange={handleChange}
@@ -169,10 +174,11 @@ const InquiryForm = () => {
 
             {/* Message */}
             <div className="mb-6">
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Message (Optional)</label>
+                <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">Message (Optional)</label>
                 <div className="relative">
                     <MessageSquare size={18} className="absolute left-4 top-4 text-gray-400" />
                     <textarea
+                        id="message"
                         name="message"
                         value={formData.message}
                         onChange={handleChange}
