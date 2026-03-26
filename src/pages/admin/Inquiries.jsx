@@ -30,19 +30,20 @@ const Inquiries = () => {
     };
 
     const filterInquiries = () => {
-        let filtered = inquiries;
+        // ⚡ Bolt: Cache loop-invariant values outside the loop and combine filter passes
+        // to reduce runtime complexity from O(k*N) to O(N)
+        const lowerSearch = (searchTerm || '').toLowerCase();
 
-        if (statusFilter !== 'all') {
-            filtered = filtered.filter(inq => inq.status === statusFilter);
-        }
+        const filtered = inquiries.filter(inq => {
+            const matchesStatus = statusFilter === 'all' || inq.status === statusFilter;
 
-        if (searchTerm) {
-            filtered = filtered.filter(inq =>
-                inq.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                inq.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                inq.phone.includes(searchTerm)
-            );
-        }
+            if (!matchesStatus) return false;
+            if (!searchTerm) return true;
+
+            return inq.name.toLowerCase().includes(lowerSearch) ||
+                   inq.email.toLowerCase().includes(lowerSearch) ||
+                   inq.phone.includes(searchTerm);
+        });
 
         setFilteredInquiries(filtered);
     };

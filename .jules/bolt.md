@@ -1,0 +1,5 @@
+## 2024-05-24 - Combine multiple `.filter` passes and cache loop invariants
+
+**Learning:** In dashboard components with large datasets (e.g., `Students.jsx`, `Inquiries.jsx`), chaining multiple `.filter()` methods and recalculating loop invariants (like `searchTerm.toLowerCase()`) within the iteration can drastically increase runtime complexity, turning an O(n) operation into an unoptimized O(k*n) operation where `k` is the number of filters. Repeated `.toLowerCase()` calls are particularly expensive on every pass.
+
+**Action:** Consolidate sequential `.filter()` operations into a single combined pass. Always cache loop-invariant values (like normalized search terms using `(searchTerm || '').toLowerCase()`) outside the loop to reduce runtime complexity to an optimal O(n) and eliminate redundant string operations.
