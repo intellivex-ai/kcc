@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+// eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion';
 import { Search, Filter, Eye, Trash2, CheckCircle, Download } from 'lucide-react';
 import { getInquiries, updateInquiry, deleteInquiry, exportToCSV } from '../../lib/admin-data';
@@ -11,14 +12,6 @@ const Inquiries = () => {
     const [statusFilter, setStatusFilter] = useState('all');
     const [selectedInquiry, setSelectedInquiry] = useState(null);
 
-    useEffect(() => {
-        loadInquiries();
-    }, []);
-
-    useEffect(() => {
-        filterInquiries();
-    }, [searchTerm, statusFilter, inquiries]);
-
     const loadInquiries = async () => {
         try {
             const data = await getInquiries();
@@ -30,22 +23,31 @@ const Inquiries = () => {
     };
 
     const filterInquiries = () => {
-        let filtered = inquiries;
+        const lowerSearchTerm = searchTerm ? searchTerm.toLowerCase() : '';
 
-        if (statusFilter !== 'all') {
-            filtered = filtered.filter(inq => inq.status === statusFilter);
-        }
+        const filtered = inquiries.filter(inq => {
+            const matchesStatus = statusFilter === 'all' || inq.status === statusFilter;
+            if (!matchesStatus) return false;
 
-        if (searchTerm) {
-            filtered = filtered.filter(inq =>
-                inq.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                inq.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            return !searchTerm || (
+                inq.name.toLowerCase().includes(lowerSearchTerm) ||
+                inq.email.toLowerCase().includes(lowerSearchTerm) ||
                 inq.phone.includes(searchTerm)
             );
-        }
+        });
 
         setFilteredInquiries(filtered);
     };
+
+    useEffect(() => {
+        loadInquiries();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        filterInquiries();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchTerm, statusFilter, inquiries]);
 
     const handleStatusChange = async (id, newStatus) => {
         try {

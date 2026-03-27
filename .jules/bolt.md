@@ -1,0 +1,3 @@
+## 2024-05-24 - Combine Filter Loops and Cache Invariants in Admin Dashboard
+**Learning:** Sequential `.filter()` operations combined with inner-loop transformations (like `.toLowerCase()`) create an O(kN) runtime (where k is the number of filters) and redundant memory allocations.
+**Action:** When filtering lists in React components (especially dashboards like `Students.jsx` and `Inquiries.jsx`), consolidate conditions into a single `.filter()` pass and cache invariant values (e.g., `searchTerm.toLowerCase()`) before the loop. This reduces complexity to O(N) and prevents unnecessary object creation during the render cycle.
