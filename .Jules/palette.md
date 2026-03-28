@@ -1,0 +1,3 @@
+## 2024-03-28 - Explicit form label association in Inquiry Form
+**Learning:** Found a systemic accessibility issue in the Inquiry Form where `<label>` elements were visually distinct but programmatically disconnected from their corresponding input fields because they lacked `htmlFor` and `id` bindings. This forces screen reader users to rely on placeholder text or surrounding context, degrading the experience.
+**Action:** Always ensure every `<label>` has an `htmlFor` attribute that strictly matches the `id` of its corresponding `<input>`, `<select>`, or `<textarea>`. This is a baseline accessibility requirement that also provides the micro-interaction benefit of allowing users to click the label to focus the input field.
