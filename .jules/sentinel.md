@@ -1,0 +1,4 @@
+## 2024-05-24 - Hardcoded Fallback Credentials
+**Vulnerability:** Found hardcoded fallback credentials (`'admin'`, `'kcc2024'`) for the admin authentication in `src/lib/admin-auth.js` in case the environment variables (`VITE_ADMIN_USERNAME`, `VITE_ADMIN_PASSWORD`) were not set.
+**Learning:** This bypasses the intended environment-based authentication and presents a critical risk, as unauthorized users can log in if the server is misconfigured or variables are missing. It violates the fail securely principle.
+**Prevention:** Remove hardcoded fallback credentials. The authentication system should explicitly check for the presence of the required environment variables and return a failure (failing securely) if they are missing.
