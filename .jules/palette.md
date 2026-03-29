@@ -1,0 +1,3 @@
+## 2024-05-24 - Explicit Focus States
+**Learning:** Default browser focus rings may not be sufficient or visible enough on custom interactive elements styled with utility classes. Adding explicit, accessible focus rings ensures consistent keyboard navigation visibility across different browsers.
+**Action:** Add `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary` utility classes to custom interactive elements (like filter buttons) to ensure clear keyboard navigation visibility without disrupting mouse interaction styles.
