@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+// eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, X, Send, User, Bot, ExternalLink } from 'lucide-react';
 import { getBotResponse } from '../lib/chatbot-logic';
@@ -9,6 +10,7 @@ const Chatbot = () => {
         { id: 1, text: "Namaste! 🙏 I am your digital assistant. Ask me about courses or services!", sender: 'bot' }
     ]);
     const [input, setInput] = useState("");
+    const [isTyping, setIsTyping] = useState(false);
     const messagesEndRef = useRef(null);
 
     const suggestQuestions = [
@@ -25,7 +27,7 @@ const Chatbot = () => {
 
     useEffect(() => {
         scrollToBottom();
-    }, [messages]);
+    }, [messages, isTyping]);
 
     const handleSend = (e) => {
         e.preventDefault();
@@ -34,12 +36,14 @@ const Chatbot = () => {
         const userMsg = { id: Date.now(), text: input, sender: 'user' };
         setMessages(prev => [...prev, userMsg]);
         setInput("");
+        setIsTyping(true);
 
         // Simulate thinking delay
         setTimeout(() => {
             const botReplyText = getBotResponse(input);
             const botMsg = { id: Date.now() + 1, text: botReplyText, sender: 'bot' };
             setMessages(prev => [...prev, botMsg]);
+            setIsTyping(false);
         }, 600);
     };
 
@@ -58,6 +62,7 @@ const Chatbot = () => {
                 whileTap={{ scale: 0.9 }}
                 onClick={() => setIsOpen(!isOpen)}
                 className="fixed bottom-6 right-6 z-50 bg-primary hover:bg-primary-light text-white p-4 rounded-full shadow-2xl flex items-center justify-center cursor-pointer"
+                aria-label={isOpen ? "Close chat" : "Open chat"}
             >
                 {isOpen ? <X size={24} /> : <MessageCircle size={28} />}
             </motion.button>
@@ -114,10 +119,12 @@ const Chatbot = () => {
                                             onClick={() => {
                                                 const userMsg = { id: Date.now(), text: q, sender: 'user' };
                                                 setMessages(prev => [...prev, userMsg]);
+                                                setIsTyping(true);
                                                 setTimeout(() => {
                                                     const botReplyText = getBotResponse(q);
                                                     const botMsg = { id: Date.now() + 1, text: botReplyText, sender: 'bot' };
                                                     setMessages(prev => [...prev, botMsg]);
+                                                    setIsTyping(false);
                                                 }, 600);
                                             }}
                                             className="text-xs bg-white border border-primary/20 text-primary px-3 py-1.5 rounded-full hover:bg-primary hover:text-white transition-all shadow-sm active:scale-95"
@@ -125,6 +132,18 @@ const Chatbot = () => {
                                             {q}
                                         </button>
                                     ))}
+                                </div>
+                            )}
+                            {isTyping && (
+                                <div className="flex items-start gap-2">
+                                    <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 shadow-sm bg-primary text-white">
+                                        <Bot size={14} />
+                                    </div>
+                                    <div className="p-3 text-sm rounded-xl shadow-sm bg-white text-gray-800 border border-gray-100 rounded-bl-none flex items-center gap-1">
+                                        <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"></span>
+                                        <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></span>
+                                        <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0.4s" }}></span>
+                                    </div>
                                 </div>
                             )}
                             <div ref={messagesEndRef} />
@@ -148,8 +167,9 @@ const Chatbot = () => {
                             />
                             <button
                                 type="submit"
-                                disabled={!input.trim()}
+                                disabled={!input.trim() || isTyping}
                                 className="bg-primary hover:bg-primary-light disabled:opacity-50 disabled:cursor-not-allowed text-white p-2 rounded-full transition-all shadow-md active:scale-95 flex items-center justify-center w-10 h-10"
+                                aria-label="Send message"
                             >
                                 <Send size={18} className={input.trim() ? "ml-0.5" : ""} />
                             </button>

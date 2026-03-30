@@ -1,0 +1,3 @@
+## 2024-03-30 - Add Visual Feedback to Asynchronous Chat Interactions
+**Learning:** In conversational UI components like Chatbots, adding artificial delays without visual feedback (like a typing indicator) causes cognitive friction. Users may assume the system is broken or has missed their input during the delay.
+**Action:** Always pair simulated or actual asynchronous delays in chat interactions with an immediate visual loading state (e.g., animated typing dots) to signal that the system is processing the request, maintaining user confidence and improving perceived performance. Additionally, ensure icon-only buttons like toggle and send always have `aria-label` attributes for accessibility.
