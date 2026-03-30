@@ -1,0 +1,3 @@
+## 2024-03-30 - Optimize React List Filtering Performance
+**Learning:** Performing multiple sequential `.filter()` operations and computing case-conversions (e.g., `.toLowerCase()`) directly inside filter loop predicates causes redundant O(k*N) time complexity where N is the array size. State variables used in filters often trigger re-evaluations, making the render cycle slower for large data lists.
+**Action:** When filtering lists in React components, combine sequential `.filter()` conditions into a single iteration pass, and cache loop-invariant values (like lowercased search terms) outside the loop to reduce redundant computations and improve performance.

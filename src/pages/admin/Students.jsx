@@ -30,19 +30,23 @@ const Students = () => {
     };
 
     const filterStudents = () => {
-        let filtered = students;
+        // Optimize: Cache lowercase searchTerm to avoid O(N) redundant string operations
+        // and combine filter passes to iterate over the array once.
+        const lowerSearchTerm = (searchTerm || '').toLowerCase();
 
-        if (courseFilter !== 'all') {
-            filtered = filtered.filter(std => std.course === courseFilter);
-        }
-
-        if (searchTerm) {
-            filtered = filtered.filter(std =>
-                std.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                std.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                std.phone.includes(searchTerm)
-            );
-        }
+        const filtered = students.filter(std => {
+            if (courseFilter !== 'all' && std.course !== courseFilter) {
+                return false;
+            }
+            if (lowerSearchTerm) {
+                return (
+                    std.name.toLowerCase().includes(lowerSearchTerm) ||
+                    std.email.toLowerCase().includes(lowerSearchTerm) ||
+                    std.phone.includes(searchTerm)
+                );
+            }
+            return true;
+        });
 
         setFilteredStudents(filtered);
     };

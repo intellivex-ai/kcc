@@ -30,19 +30,23 @@ const Inquiries = () => {
     };
 
     const filterInquiries = () => {
-        let filtered = inquiries;
+        // Optimize: Cache lowercase searchTerm to avoid O(N) redundant string operations
+        // and combine filter passes to iterate over the array once.
+        const lowerSearchTerm = (searchTerm || '').toLowerCase();
 
-        if (statusFilter !== 'all') {
-            filtered = filtered.filter(inq => inq.status === statusFilter);
-        }
-
-        if (searchTerm) {
-            filtered = filtered.filter(inq =>
-                inq.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                inq.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                inq.phone.includes(searchTerm)
-            );
-        }
+        const filtered = inquiries.filter(inq => {
+            if (statusFilter !== 'all' && inq.status !== statusFilter) {
+                return false;
+            }
+            if (lowerSearchTerm) {
+                return (
+                    inq.name.toLowerCase().includes(lowerSearchTerm) ||
+                    inq.email.toLowerCase().includes(lowerSearchTerm) ||
+                    inq.phone.includes(searchTerm)
+                );
+            }
+            return true;
+        });
 
         setFilteredInquiries(filtered);
     };
