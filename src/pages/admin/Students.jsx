@@ -30,19 +30,26 @@ const Students = () => {
     };
 
     const filterStudents = () => {
-        let filtered = students;
-
-        if (courseFilter !== 'all') {
-            filtered = filtered.filter(std => std.course === courseFilter);
+        // ⚡ Bolt: Fast path for empty filters to avoid O(N) traversal
+        if (courseFilter === 'all' && !searchTerm) {
+            setFilteredStudents(students);
+            return;
         }
 
-        if (searchTerm) {
-            filtered = filtered.filter(std =>
-                std.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                std.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                std.phone.includes(searchTerm)
-            );
-        }
+        // ⚡ Bolt: Cache lowercased search term outside the loop to save CPU overhead
+        const lowerSearch = (searchTerm || '').toLowerCase();
+
+        // ⚡ Bolt: Consolidated sequential filters into a single O(N) pass
+        const filtered = students.filter(std => {
+            const matchesCourse = courseFilter === 'all' || std.course === courseFilter;
+            if (!matchesCourse) return false; // Short-circuit evaluation
+
+            if (!lowerSearch) return true;
+
+            return std.name.toLowerCase().includes(lowerSearch) ||
+                   std.email.toLowerCase().includes(lowerSearch) ||
+                   std.phone.includes(lowerSearch);
+        });
 
         setFilteredStudents(filtered);
     };
