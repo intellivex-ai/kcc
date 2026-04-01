@@ -1,0 +1,3 @@
+## 2024-06-18 - Missing Explicit Label Associations in Forms
+**Learning:** Found that multiple input fields (`<input>`, `<select>`, `<textarea>`) in forms like `InquiryForm` lacked an explicit `id` attribute, and their corresponding `<label>` elements were missing the `htmlFor` attribute. While implicit association (wrapping input within label) is a pattern, explicit association is safer and better supported for screen readers, and additionally enables clicking the label to focus the input.
+**Action:** Always ensure that form labels explicitly reference their corresponding input elements using `htmlFor` and `id` attributes. This provides the best accessibility and usability.
