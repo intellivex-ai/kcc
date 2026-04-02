@@ -102,7 +102,8 @@ const NotificationSystem = () => {
             <div className="fixed bottom-24 right-6 z-50">
                 <button
                     onClick={() => setShowPanel(!showPanel)}
-                    className="relative w-14 h-14 bg-primary text-white rounded-full shadow-lg hover:bg-blue-700 transition-all flex items-center justify-center group"
+                    aria-label={showPanel ? "Close notifications" : "Open notifications"}
+                    className="relative w-14 h-14 bg-primary text-white rounded-full shadow-lg hover:bg-blue-700 transition-all flex items-center justify-center group focus-visible:ring-2 focus-visible:ring-primary focus:outline-none"
                 >
                     <Bell size={24} className={showPanel ? 'animate-bounce' : ''} />
                     {unreadCount > 0 && (
@@ -127,7 +128,8 @@ const NotificationSystem = () => {
                             <h3 className="font-bold text-lg">Notifications</h3>
                             <button
                                 onClick={() => setShowPanel(false)}
-                                className="hover:bg-white/20 rounded-lg p-1 transition-colors"
+                                aria-label="Close notification panel"
+                                className="hover:bg-white/20 rounded-lg p-1 transition-colors focus-visible:ring-2 focus-visible:ring-white focus:outline-none"
                             >
                                 <X size={20} />
                             </button>
@@ -175,7 +177,8 @@ const NotificationSystem = () => {
                                                             e.stopPropagation();
                                                             deleteNotification(notif.id);
                                                         }}
-                                                        className="text-gray-400 hover:text-red-600 transition-colors shrink-0"
+                                                        aria-label={`Delete notification: ${notif.title}`}
+                                                        className="text-gray-400 hover:text-red-600 transition-colors shrink-0 focus-visible:ring-2 focus-visible:ring-primary focus:outline-none rounded-sm"
                                                     >
                                                         <X size={16} />
                                                     </button>
