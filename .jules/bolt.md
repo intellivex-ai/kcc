@@ -1,0 +1,3 @@
+## 2024-05-24 - Optimizing sequential filter operations in dashboard components
+**Learning:** Sequential `.filter()` operations on arrays (like `filtered = filtered.filter(A); filtered = filtered.filter(B)`) result in an O(kN) runtime complexity, iterating over the dataset multiple times. Additionally, repeating operations like `.toLowerCase()` inside the loop for loop-invariant values (like the search term) adds unnecessary overhead.
+**Action:** Consolidate multiple filter conditions into a single `.filter()` pass to reduce runtime complexity to O(N). Cache loop-invariant values outside the loop (e.g., `const lowerSearchTerm = (searchTerm || '').toLowerCase()`) to avoid redundant computation on every iteration.
