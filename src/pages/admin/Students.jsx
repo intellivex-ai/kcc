@@ -30,19 +30,27 @@ const Students = () => {
     };
 
     const filterStudents = () => {
-        let filtered = students;
+        // Optimize: combine multiple array passes into a single filter pass
+        // Cache loop-invariant variables outside the loop to avoid recomputing per item
+        const lowerSearchTerm = searchTerm ? searchTerm.toLowerCase() : '';
 
-        if (courseFilter !== 'all') {
-            filtered = filtered.filter(std => std.course === courseFilter);
-        }
+        const filtered = students.filter(std => {
+            // Apply course filter
+            if (courseFilter !== 'all' && std.course !== courseFilter) {
+                return false;
+            }
 
-        if (searchTerm) {
-            filtered = filtered.filter(std =>
-                std.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                std.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                std.phone.includes(searchTerm)
-            );
-        }
+            // Apply search filter
+            if (lowerSearchTerm) {
+                return (
+                    std.name.toLowerCase().includes(lowerSearchTerm) ||
+                    std.email.toLowerCase().includes(lowerSearchTerm) ||
+                    std.phone.includes(searchTerm)
+                );
+            }
+
+            return true;
+        });
 
         setFilteredStudents(filtered);
     };
