@@ -42,11 +42,17 @@ const Hero = () => {
                         </p>
 
                         <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                            <Link to="/education" className="group relative px-8 py-4 bg-primary text-white rounded-2xl font-bold text-lg overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-primary/30 transition-all hover:-translate-y-1">
+                            <Link
+                                to="/education"
+                                className="group relative px-8 py-4 bg-primary text-white rounded-2xl font-bold text-lg overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-primary/30 transition-all hover:-translate-y-1"
+                            >
                                 <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
                                 <span className="relative flex items-center gap-2">Start Learning <Rocket size={20} /></span>
                             </Link>
-                            <Link to="/services" className="px-8 py-4 bg-white text-gray-700 border border-gray-200 rounded-2xl font-bold text-lg hover:bg-gray-50 hover:border-gray-300 transition-all shadow-sm hover:shadow-md flex items-center gap-2 justify-center">
+                            <Link
+                                to="/services"
+                                className="px-8 py-4 bg-white text-gray-700 border border-gray-200 rounded-2xl font-bold text-lg hover:bg-gray-50 hover:border-gray-300 transition-all shadow-sm hover:shadow-md flex items-center gap-2 justify-center"
+                            >
                                 View Services <ShieldCheck size={20} />
                             </Link>
                         </div>
