@@ -24,7 +24,8 @@ const FAQ = () => {
         },
         {
             question: "What services do you offer apart from education?",
-            answer: "We provide Aadhaar services, PAN card, passport application, railway ticket booking, money transfer (DMT), electricity bill payment, mobile recharge, and all government form filling services."
+            answer: "We provide Aadhaar services, PAN card, passport application, railway ticket booking, " +
+                "money transfer (DMT), electricity bill payment, mobile recharge, and all government form filling services."
         },
         {
             question: "Are you authorized by government?",
