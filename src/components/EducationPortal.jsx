@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle, Search } from 'lucide-react';
+import { cn } from '../lib/utils';
 
 const EducationPortal = () => {
     return (
@@ -76,7 +77,11 @@ const EducationPortal = () => {
                                         <input
                                             type="text"
                                             placeholder="e.g. KCC2023001"
-                                            className="w-full px-5 py-3.5 rounded-xl bg-white/70 border border-gray-200 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all font-medium text-gray-900 placeholder:text-gray-400"
+                                            className={cn(
+                                                "w-full px-5 py-3.5 rounded-xl bg-white/70 border border-gray-200",
+                                                "focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all",
+                                                "font-medium text-gray-900 placeholder:text-gray-400"
+                                            )}
                                         />
                                     </div>
 
