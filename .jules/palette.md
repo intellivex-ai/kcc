@@ -1,0 +1,3 @@
+## 2024-05-24 - Explicit Form Label Associations
+**Learning:** Found that some form elements like inputs, selects, and textareas in `InquiryForm.jsx` lacked explicit association with their corresponding `<label>` tags. Screen readers depend on explicit connections (`htmlFor` on labels matching `id` on inputs) rather than just visual proximity to accurately convey the purpose of form fields to users. Without this, users navigating with screen readers or keyboards lack context, leading to poor accessibility and usability.
+**Action:** Always ensure `<label>` elements include an `htmlFor` attribute that exactly matches the `id` of the associated form control (`<input>`, `<select>`, `<textarea>`) to maintain screen reader accessibility and enable click-to-focus behavior.
