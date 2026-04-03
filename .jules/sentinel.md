@@ -1,0 +1,4 @@
+## 2025-04-03 - Remove Hardcoded Admin Credentials
+**Vulnerability:** Hardcoded fallback credentials ('admin', 'kcc2024') in `src/lib/admin-auth.js` allowed unauthorized backdoor access if environment variables were missing.
+**Learning:** Hardcoding credentials as fallbacks for environment variables creates a silent failure mode where missing configuration leads to a severe security bypass rather than a clear error. Also the codebase contained a reference to `DEFAULT_CREDENTIALS.password` which did not exist, leading to reference errors.
+**Prevention:** Always enforce the presence of required authentication configuration (e.g. environment variables) and fail securely if they are not provided, rather than falling back to default values. Use static analysis/linting to prevent accessing undefined variables.
