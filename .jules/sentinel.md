@@ -1,0 +1,4 @@
+## 2024-05-15 - Hardcoded Admin Credentials Fallback
+**Vulnerability:** Admin authentication falls back to hardcoded `'admin'`/`'kcc2024'` if VITE_ADMIN_USERNAME and VITE_ADMIN_PASSWORD environment variables are missing.
+**Learning:** This exposes the application to a critical risk where an attacker could bypass authentication by exploiting missing environment configurations. Hardcoded fallbacks undermine the security of environment-based credentials.
+**Prevention:** Always fail securely. If required environment variables for authentication are missing, the application must prevent access rather than defaulting to insecure credentials.
