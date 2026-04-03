@@ -1,0 +1,4 @@
+## 2025-02-14 - Removed Hardcoded Fallback Credentials from Admin Auth
+**Vulnerability:** Admin authentication mechanism used hardcoded fallback credentials (`admin` / `kcc2024`) if environment variables were missing, creating an easy authentication bypass and risk of unauthorized access.
+**Learning:** Default fallbacks for authentication secrets in code effectively hardcode those credentials if the deployment environment is not perfectly configured, violating the principle of failing securely.
+**Prevention:** Never provide hardcoded fallback values for sensitive environment variables (like passwords or tokens) in auth routines. Instead, fail securely by verifying the presence of these secrets before processing the login attempt.
