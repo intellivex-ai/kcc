@@ -1,0 +1,4 @@
+## 2024-04-03 - Client-Side Hardcoded Credentials Fallback
+**Vulnerability:** Client-side admin authentication logic included hardcoded default credentials (`admin`/`kcc2024`) as fallbacks when environment variables were absent.
+**Learning:** Hardcoded fallback credentials bypass environment-based configuration entirely, guaranteeing unauthorized access if environment variables fail to load or are incorrectly configured. In client-side setups, these strings become embedded in build outputs and are publicly readable.
+**Prevention:** Remove fallback literal strings for credentials. The authentication system should securely fail or block login when required environment variables are undefined or missing, enforcing a secure-by-default architecture.
