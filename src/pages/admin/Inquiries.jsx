@@ -30,19 +30,21 @@ const Inquiries = () => {
     };
 
     const filterInquiries = () => {
-        let filtered = inquiries;
+        // Optimize: cache invariant string transform
+        const lowerSearchTerm = (searchTerm || '').toLowerCase();
 
-        if (statusFilter !== 'all') {
-            filtered = filtered.filter(inq => inq.status === statusFilter);
-        }
+        // Optimize: single pass filter
+        const filtered = inquiries.filter(inq => {
+            const matchesStatus = statusFilter === 'all' || inq.status === statusFilter;
 
-        if (searchTerm) {
-            filtered = filtered.filter(inq =>
-                inq.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                inq.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                inq.phone.includes(searchTerm)
-            );
-        }
+            if (!matchesStatus) return false;
+
+            if (!searchTerm) return true;
+
+            return inq.name.toLowerCase().includes(lowerSearchTerm) ||
+                   inq.email.toLowerCase().includes(lowerSearchTerm) ||
+                   inq.phone.includes(searchTerm);
+        });
 
         setFilteredInquiries(filtered);
     };
