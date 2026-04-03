@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, Users, ChevronRight } from 'lucide-react';
+import { cn } from '../lib/utils';
 
 const CourseCalendar = () => {
     const upcomingBatches = [
@@ -118,7 +119,11 @@ const CourseCalendar = () => {
                             {/* Enroll Button */}
                             <a
                                 href="/education"
-                                className="w-full bg-primary hover:bg-primary-light text-white py-3 rounded-xl font-bold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 group"
+                                className={cn(
+                                    "w-full bg-primary hover:bg-primary-light text-white",
+                                    "py-3 rounded-xl font-bold shadow-md hover:shadow-lg",
+                                    "transition-all flex items-center justify-center gap-2 group"
+                                )}
                             >
                                 Enroll Now
                                 <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
