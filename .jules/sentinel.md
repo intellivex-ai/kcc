@@ -1,0 +1,4 @@
+## 2024-05-18 - CSV Injection in Data Export
+**Vulnerability:** The `exportToCSV` function directly stringified cell values without sanitizing them. Values starting with formula characters (`=`, `+`, `-`, `@`) could be executed as formulas if the resulting CSV was opened in software like Excel.
+**Learning:** Even simple stringification using `JSON.stringify` does not protect against CSV injection (Formula Injection) because the leading characters are still treated as formulas by the spreadsheet software.
+**Prevention:** Always check if a cell value starts with a dangerous character (`=`, `+`, `-`, `@`, `\t`, `\r`) and prepend it with a single quote (`'`) to force the spreadsheet application to treat it as a literal string.
