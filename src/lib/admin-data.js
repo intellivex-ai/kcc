@@ -296,12 +296,22 @@ export const getAnalytics = async () => {
 export const exportToCSV = (data, filename) => {
     if (!data || data.length === 0) return;
 
+    const sanitizeCSVCell = (value) => {
+        if (value === null || value === undefined) return '';
+        let strValue = String(value);
+        // Prevent CSV injection by prefixing formula characters with a single quote
+        if (/^[=+\-@\t\r]/.test(strValue)) {
+            strValue = "'" + strValue;
+        }
+        return JSON.stringify(strValue);
+    };
+
     const headers = Object.keys(data[0]);
     const csv = [
         headers.join(','),
         ...data.map(row =>
             headers.map(header =>
-                JSON.stringify(row[header] || '')
+                sanitizeCSVCell(row[header])
             ).join(',')
         )
     ].join('\n');
