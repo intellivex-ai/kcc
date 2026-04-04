@@ -1,0 +1,3 @@
+## 2024-05-24 - Optimizing Array Filters in Dashboard
+**Learning:** In dashboard components with client-side filtering (like `Students.jsx` and `Inquiries.jsx`), chaining multiple `.filter()` operations loops over the data multiple times, resulting in O(kN) complexity. Additionally, computing loop-invariant values (like calling `.toLowerCase()` on the `searchTerm`) inside the loop creates unnecessary redundant work.
+**Action:** Consolidate multiple sequential `.filter()` operations into a single combined pass, and cache loop-invariant values outside the loop to reduce runtime complexity to O(N) and minimize expensive string operations.
