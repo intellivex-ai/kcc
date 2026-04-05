@@ -46,6 +46,8 @@ const DocumentHelper = () => {
                 <div className="relative max-w-xl mx-auto">
                     <button
                         onClick={() => setIsOpen(!isOpen)}
+                        aria-expanded={isOpen}
+                        aria-controls="document-list"
                         className="w-full bg-white text-left px-6 py-4 rounded-xl shadow-xl flex items-center justify-between font-semibold text-gray-800 text-lg hover:bg-gray-50 transition-colors"
                     >
                         {selectedService}
@@ -55,6 +57,7 @@ const DocumentHelper = () => {
                     <AnimatePresence>
                         {isOpen && (
                             <motion.div
+                                id="document-list"
                                 initial={{ opacity: 0, y: -10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}
