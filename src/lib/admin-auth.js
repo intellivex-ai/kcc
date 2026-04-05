@@ -7,15 +7,21 @@
 const ADMIN_KEY = 'kcc_admin_session';
 
 // Get credentials from environment variables
+// SECURITY: Removed hardcoded fallbacks that get baked into public client bundle
 const ADMIN_CREDENTIALS = {
-    username: import.meta.env.VITE_ADMIN_USERNAME || 'admin',
-    password: import.meta.env.VITE_ADMIN_PASSWORD || 'kcc2024'
+    username: import.meta.env.VITE_ADMIN_USERNAME,
+    password: import.meta.env.VITE_ADMIN_PASSWORD
 };
 
 /**
  * Login with username and password
  */
 export const login = (username, password) => {
+    // SECURITY: Fail securely if credentials are not configured in environment
+    if (!ADMIN_CREDENTIALS.username || !ADMIN_CREDENTIALS.password) {
+        return { success: false, error: 'Admin authentication is not properly configured' };
+    }
+
     // Validate credentials
     if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
         const session = {
@@ -72,8 +78,13 @@ export const getSession = () => {
  * Change password (demo only)
  */
 export const changePassword = (oldPassword, newPassword) => {
+    // SECURITY: Fail securely if credentials are not configured
+    if (!ADMIN_CREDENTIALS.password) {
+         return { success: false, error: 'Admin authentication is not properly configured' };
+    }
+
     // In production, this would call an API
-    if (oldPassword === DEFAULT_CREDENTIALS.password) {
+    if (oldPassword === ADMIN_CREDENTIALS.password) {
         // Update credentials (in real app, this would be on server)
         return { success: true };
     }
