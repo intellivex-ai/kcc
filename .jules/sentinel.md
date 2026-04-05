@@ -1,0 +1,4 @@
+## 2025-04-05 - Hardcoded Fallback Credentials in Vite Built Apps
+**Vulnerability:** Default admin credentials ('admin'/'kcc2024') were hardcoded as fallback strings for `import.meta.env` variables in `src/lib/admin-auth.js`.
+**Learning:** In client-side build tools like Vite, environment variables are statically replaced at build time. Using `import.meta.env.VITE_VAR || 'secret'` embeds the fallback 'secret' as plaintext in the publicly accessible JavaScript bundle, permanently exposing it to any user who inspects the client source code.
+**Prevention:** Never use literal string fallbacks for environment-based credentials or secrets in client-side code. Instead, implement a secure failure state (e.g., throwing an error or explicitly denying access) if the required environment variables are undefined at runtime.
