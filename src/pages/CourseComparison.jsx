@@ -2,145 +2,156 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Check, X, IndianRupee, Calendar, Award } from 'lucide-react';
 
+const courses = {
+    ccc: {
+        name: 'CCC (Course on Computer Concepts)',
+        fee: 3500,
+        duration: '3 Months',
+        eligibility: '8th Pass',
+        certification: 'NIELIT Govt. Certified',
+        jobRoles: ['Data Entry', 'Office Assistant', 'Computer Operator'],
+        syllabus: ['MS Office', 'Internet', 'Email', 'Basic IT'],
+        examPattern: 'Online MCQ',
+        avgSalary: '₹15,000 - ₹25,000',
+        bestFor: 'Government job aspirants',
+        features: {
+            govtRecognized: true,
+            onlineExam: true,
+            placement: true,
+            certificate: true,
+            studyMaterial: true,
+            labAccess: true,
+            projectWork: false,
+            internship: false
+        }
+    },
+    olevel: {
+        name: 'O-Level',
+        fee: 12000,
+        duration: '12 Months',
+        eligibility: '10th Pass',
+        certification: 'NIELIT (Equivalent to BTECH 1st Year)',
+        jobRoles: ['Jr. Programmer', 'Web Developer', 'IT Support'],
+        syllabus: ['IT Tools', 'C++', 'Web Design', 'Database'],
+        examPattern: 'Theory + Practical',
+        avgSalary: '₹20,000 - ₹35,000',
+        bestFor: 'IT career starters',
+        features: {
+            govtRecognized: true,
+            onlineExam: false,
+            placement: true,
+            certificate: true,
+            studyMaterial: true,
+            labAccess: true,
+            projectWork: true,
+            internship: false
+        }
+    },
+    dca: {
+        name: 'DCA (Diploma in Computer Applications)',
+        fee: 8000,
+        duration: '6 Months',
+        eligibility: '12th Pass',
+        certification: 'KCC Diploma',
+        jobRoles: ['Office Executive', 'Accountant', 'Data Analyst'],
+        syllabus: ['MS Office Advanced', 'Tally', 'Internet', 'DTP'],
+        examPattern: 'Theory + Practical',
+        avgSalary: '₹18,000 - ₹28,000',
+        bestFor: 'Office job seekers',
+        features: {
+            govtRecognized: false,
+            onlineExam: false,
+            placement: true,
+            certificate: true,
+            studyMaterial: true,
+            labAccess: true,
+            projectWork: false,
+            internship: false
+        }
+    },
+    pgdca: {
+        name: 'PGDCA (Post Graduate DCA)',
+        fee: 15000,
+        duration: '12 Months',
+        eligibility: 'Graduate',
+        certification: 'KCC Post Graduate Diploma',
+        jobRoles: ['System Admin', 'Software Tester', 'Database Admin'],
+        syllabus: ['C++', 'Java', 'DBMS', 'Software Engineering'],
+        examPattern: 'Theory + Practical + Project',
+        avgSalary: '₹25,000 - ₹40,000',
+        bestFor: 'Graduates seeking IT jobs',
+        features: {
+            govtRecognized: false,
+            onlineExam: false,
+            placement: true,
+            certificate: true,
+            studyMaterial: true,
+            labAccess: true,
+            projectWork: true,
+            internship: true
+        }
+    },
+    basic: {
+        name: 'Basic Computer Course',
+        fee: 2000,
+        duration: '2 Months',
+        eligibility: 'Any',
+        certification: 'KCC Certificate',
+        jobRoles: ['Beginners', 'Self Employment', 'CSC Operator'],
+        syllabus: ['Computer Basics', 'Windows', 'MS Office', 'Internet'],
+        examPattern: 'Practical Test',
+        avgSalary: '₹10,000 - ₹15,000',
+        bestFor: 'Complete beginners',
+        features: {
+            govtRecognized: false,
+            onlineExam: false,
+            placement: false,
+            certificate: true,
+            studyMaterial: true,
+            labAccess: true,
+            projectWork: false,
+            internship: false
+        }
+    },
+    tally: {
+        name: 'Tally with GST',
+        fee: 5000,
+        duration: '3 Months',
+        eligibility: '10th Pass',
+        certification: 'KCC Certificate',
+        jobRoles: ['Accountant', 'Bookkeeper', 'Tax Consultant'],
+        syllabus: ['Tally Prime', 'GST', 'TDS', 'Accounting'],
+        examPattern: 'Practical Test',
+        avgSalary: '₹15,000 - ₹30,000',
+        bestFor: 'Accounting professionals',
+        features: {
+            govtRecognized: false,
+            onlineExam: false,
+            placement: true,
+            certificate: true,
+            studyMaterial: true,
+            labAccess: true,
+            projectWork: false,
+            internship: false
+        }
+    }
+};
+
+const allCourseKeys = Object.keys(courses);
+
+const featureLabels = {
+    govtRecognized: 'Government Recognized',
+    onlineExam: 'Online Examination',
+    placement: 'Placement Assistance',
+    certificate: 'Certificate Provided',
+    studyMaterial: 'Study Materials',
+    labAccess: '24/7 Lab Access',
+    projectWork: 'Project Work',
+    internship: 'Internship Opportunity'
+};
+
 const CourseComparison = () => {
     const [selectedCourses, setSelectedCourses] = useState(['ccc', 'olevel', 'dca']);
-
-    const courses = {
-        ccc: {
-            name: 'CCC (Course on Computer Concepts)',
-            fee: 3500,
-            duration: '3 Months',
-            eligibility: '8th Pass',
-            certification: 'NIELIT Govt. Certified',
-            jobRoles: ['Data Entry', 'Office Assistant', 'Computer Operator'],
-            syllabus: ['MS Office', 'Internet', 'Email', 'Basic IT'],
-            examPattern: 'Online MCQ',
-            avgSalary: '₹15,000 - ₹25,000',
-            bestFor: 'Government job aspirants',
-            features: {
-                govtRecognized: true,
-                onlineExam: true,
-                placement: true,
-                certificate: true,
-                studyMaterial: true,
-                labAccess: true,
-                projectWork: false,
-                internship: false
-            }
-        },
-        olevel: {
-            name: 'O-Level',
-            fee: 12000,
-            duration: '12 Months',
-            eligibility: '10th Pass',
-            certification: 'NIELIT (Equivalent to BTECH 1st Year)',
-            jobRoles: ['Jr. Programmer', 'Web Developer', 'IT Support'],
-            syllabus: ['IT Tools', 'C++', 'Web Design', 'Database'],
-            examPattern: 'Theory + Practical',
-            avgSalary: '₹20,000 - ₹35,000',
-            bestFor: 'IT career starters',
-            features: {
-                govtRecognized: true,
-                onlineExam: false,
-                placement: true,
-                certificate: true,
-                studyMaterial: true,
-                labAccess: true,
-                projectWork: true,
-                internship: false
-            }
-        },
-        dca: {
-            name: 'DCA (Diploma in Computer Applications)',
-            fee: 8000,
-            duration: '6 Months',
-            eligibility: '12th Pass',
-            certification: 'KCC Diploma',
-            jobRoles: ['Office Executive', 'Accountant', 'Data Analyst'],
-            syllabus: ['MS Office Advanced', 'Tally', 'Internet', 'DTP'],
-            examPattern: 'Theory + Practical',
-            avgSalary: '₹18,000 - ₹28,000',
-            bestFor: 'Office job seekers',
-            features: {
-                govtRecognized: false,
-                onlineExam: false,
-                placement: true,
-                certificate: true,
-                studyMaterial: true,
-                labAccess: true,
-                projectWork: false,
-                internship: false
-            }
-        },
-        pgdca: {
-            name: 'PGDCA (Post Graduate DCA)',
-            fee: 15000,
-            duration: '12 Months',
-            eligibility: 'Graduate',
-            certification: 'KCC Post Graduate Diploma',
-            jobRoles: ['System Admin', 'Software Tester', 'Database Admin'],
-            syllabus: ['C++', 'Java', 'DBMS', 'Software Engineering'],
-            examPattern: 'Theory + Practical + Project',
-            avgSalary: '₹25,000 - ₹40,000',
-            bestFor: 'Graduates seeking IT jobs',
-            features: {
-                govtRecognized: false,
-                onlineExam: false,
-                placement: true,
-                certificate: true,
-                studyMaterial: true,
-                labAccess: true,
-                projectWork: true,
-                internship: true
-            }
-        },
-        basic: {
-            name: 'Basic Computer Course',
-            fee: 2000,
-            duration: '2 Months',
-            eligibility: 'Any',
-            certification: 'KCC Certificate',
-            jobRoles: ['Beginners', 'Self Employment', 'CSC Operator'],
-            syllabus: ['Computer Basics', 'Windows', 'MS Office', 'Internet'],
-            examPattern: 'Practical Test',
-            avgSalary: '₹10,000 - ₹15,000',
-            bestFor: 'Complete beginners',
-            features: {
-                govtRecognized: false,
-                onlineExam: false,
-                placement: false,
-                certificate: true,
-                studyMaterial: true,
-                labAccess: true,
-                projectWork: false,
-                internship: false
-            }
-        },
-        tally: {
-            name: 'Tally with GST',
-            fee: 5000,
-            duration: '3 Months',
-            eligibility: '10th Pass',
-            certification: 'KCC Certificate',
-            jobRoles: ['Accountant', 'Bookkeeper', 'Tax Consultant'],
-            syllabus: ['Tally Prime', 'GST', 'TDS', 'Accounting'],
-            examPattern: 'Practical Test',
-            avgSalary: '₹15,000 - ₹30,000',
-            bestFor: 'Accounting professionals',
-            features: {
-                govtRecognized: false,
-                onlineExam: false,
-                placement: true,
-                certificate: true,
-                studyMaterial: true,
-                labAccess: true,
-                projectWork: false,
-                internship: false
-            }
-        }
-    };
-
-    const allCourseKeys = Object.keys(courses);
 
     const toggleCourse = (courseKey) => {
         if (selectedCourses.includes(courseKey)) {
@@ -152,17 +163,6 @@ const CourseComparison = () => {
                 setSelectedCourses([...selectedCourses, courseKey]);
             }
         }
-    };
-
-    const featureLabels = {
-        govtRecognized: 'Government Recognized',
-        onlineExam: 'Online Examination',
-        placement: 'Placement Assistance',
-        certificate: 'Certificate Provided',
-        studyMaterial: 'Study Materials',
-        labAccess: '24/7 Lab Access',
-        projectWork: 'Project Work',
-        internship: 'Internship Opportunity'
     };
 
     return (
