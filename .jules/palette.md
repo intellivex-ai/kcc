@@ -1,0 +1,3 @@
+## 2025-04-05 - Add ARIA Attributes to Custom Dropdown Menus
+**Learning:** Custom dropdowns constructed with divs/buttons often lack semantic links between the trigger button and the menu content, leaving screen readers unaware of the dropdown's state and contents.
+**Action:** Always link custom dropdown toggle buttons to their corresponding menus using `aria-controls="[menu-id]"` and accurately reflect the open/close state using `aria-expanded={isOpen}`. Ensure the menu has the corresponding `id`.
