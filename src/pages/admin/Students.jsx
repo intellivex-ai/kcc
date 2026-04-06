@@ -37,10 +37,11 @@ const Students = () => {
         }
 
         if (searchTerm) {
+            const lowerSearchTerm = searchTerm.toLowerCase();
             filtered = filtered.filter(std =>
-                std.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                std.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                std.phone.includes(searchTerm)
+                (std.name || '').toLowerCase().includes(lowerSearchTerm) ||
+                (std.email || '').toLowerCase().includes(lowerSearchTerm) ||
+                (std.phone || '').includes(searchTerm)
             );
         }
 
