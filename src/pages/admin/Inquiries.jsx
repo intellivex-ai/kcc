@@ -37,10 +37,11 @@ const Inquiries = () => {
         }
 
         if (searchTerm) {
+            const lowerSearchTerm = searchTerm.toLowerCase();
             filtered = filtered.filter(inq =>
-                inq.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                inq.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                inq.phone.includes(searchTerm)
+                (inq.name || '').toLowerCase().includes(lowerSearchTerm) ||
+                (inq.email || '').toLowerCase().includes(lowerSearchTerm) ||
+                (inq.phone || '').includes(searchTerm)
             );
         }
 
