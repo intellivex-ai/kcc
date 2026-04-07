@@ -1,0 +1,3 @@
+## 2025-04-07 - Avoid Repeated String Operations in Loops
+**Learning:** Found a widespread pattern of invoking `.toLowerCase()` inside `.filter()` loops across multiple admin views (Inquiries, Students, etc.). This executes redundant string transformations on the search term for every element in the array, creating an unnecessary O(N) performance bottleneck for common operations.
+**Action:** Always hoist invariant transformations like `.toLowerCase()` outside the loop body before mapping or filtering arrays. Also, ensure null checks `(r.field || '').toLowerCase()` are present to avoid runtime crashes on missing optional fields.
