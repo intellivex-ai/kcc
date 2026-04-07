@@ -1,0 +1,4 @@
+## 2025-04-06 - Remove Hardcoded Client-side Fallbacks for Environment Variables
+**Vulnerability:** Client-side hardcoded fallback strings for admin credentials (`import.meta.env.VITE_ADMIN_USERNAME || 'admin'`) were present in `src/lib/admin-auth.js`.
+**Learning:** In Vite and other client-side bundlers, environment variable fallbacks are statically replaced at build time. Using string literals as fallbacks embeds those exact strings into the publicly accessible compiled javascript outputs, exposing sensitive default credentials to anyone inspecting the source.
+**Prevention:** Never use hardcoded literal string fallbacks for sensitive client-side environment variables. Instead, check if the variable exists and fail securely (e.g., throwing an error or denying access) if it is missing or not configured in production.
