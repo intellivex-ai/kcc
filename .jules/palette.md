@@ -1,0 +1,3 @@
+## 2025-04-09 - Missing ARIA Labels on Icon-Only Chatbot UI Elements
+**Learning:** The Chatbot component (`Chatbot.jsx`) utilized floating icon-only interactive elements (toggle button, input form fields) lacking semantic `aria-label`s, rendering them non-descriptive for screen readers. Further, the toggle button was missing the `aria-expanded` state.
+**Action:** When creating or modifying floating icon-only widgets, explicitly provide descriptive `aria-label`s (e.g., `aria-label="Toggle chat window"`) and relevant accessibility states (e.g., `aria-expanded`) to ensure full keyboard and screen reader accessibility.
