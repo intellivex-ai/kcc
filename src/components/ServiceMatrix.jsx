@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { services } from '../lib/service-data';
 import ServiceCard from './ServiceCard';
+// eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion';
 
 const ServiceMatrix = () => {
@@ -8,9 +9,12 @@ const ServiceMatrix = () => {
 
     const categories = ['All', 'Banking', 'Govt Services', 'Education', 'Utility', 'Insurance'];
 
-    const filteredServices = filter === 'All'
-        ? services
-        : services.filter(s => s.category === filter);
+    // Memoize the filtered services to prevent unnecessary array iterations on re-renders
+    const filteredServices = useMemo(() => {
+        return filter === 'All'
+            ? services
+            : services.filter(s => s.category === filter);
+    }, [filter]);
 
     return (
         <section className="py-16 lg:py-24 bg-gray-50 relative overflow-hidden">
