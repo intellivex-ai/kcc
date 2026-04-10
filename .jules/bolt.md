@@ -1,0 +1,3 @@
+## 2024-04-10 - Extracted static object keys filtering to constant
+**Learning:** Extracting static object key extraction and filtering logic (e.g., `Object.keys(DOCUMENTS).filter(...)`) into a top-level constant outside the component scope is a highly effective optimization for reducing render-time CPU overhead.
+**Action:** Always extract constant objects or derivations of static data outside of the React component body to prevent unnecessary re-evaluation on every render.
