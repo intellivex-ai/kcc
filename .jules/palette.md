@@ -1,0 +1,3 @@
+## 2024-05-18 - Floating Action Button Accessibility
+**Learning:** Floating, icon-only toggle buttons (like chatbots) frequently lack proper accessibility attributes (`aria-label`, `aria-expanded`), making them invisible to screen readers. They also often miss explicit focus states (like `focus-visible:ring`), making keyboard navigation difficult.
+**Action:** Always add explicit `aria-label` to icon-only buttons, use `aria-expanded` when they control a popover/dialog, and ensure `focus-visible:ring` or equivalent styles are present for clear keyboard focus indicators.

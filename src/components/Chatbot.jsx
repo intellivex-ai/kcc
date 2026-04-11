@@ -57,7 +57,10 @@ const Chatbot = () => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => setIsOpen(!isOpen)}
-                className="fixed bottom-6 right-6 z-50 bg-primary hover:bg-primary-light text-white p-4 rounded-full shadow-2xl flex items-center justify-center cursor-pointer"
+                aria-label={isOpen ? "Close chat" : "Open chat"}
+                aria-expanded={isOpen}
+                aria-controls="chatbot-window"
+                className="fixed bottom-6 right-6 z-50 bg-primary hover:bg-primary-light text-white p-4 rounded-full shadow-2xl flex items-center justify-center cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-primary/50"
             >
                 {isOpen ? <X size={24} /> : <MessageCircle size={28} />}
             </motion.button>
@@ -66,6 +69,9 @@ const Chatbot = () => {
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
+                        id="chatbot-window"
+                        role="dialog"
+                        aria-label="Chat Support"
                         initial={{ opacity: 0, y: 20, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -141,6 +147,7 @@ const Chatbot = () => {
                         <form onSubmit={handleSend} className="p-3 bg-white border-t border-gray-100 flex gap-2 shrink-0 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
                             <input
                                 type="text"
+                                aria-label="Type your message"
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
                                 placeholder="Type your query..."
@@ -148,8 +155,9 @@ const Chatbot = () => {
                             />
                             <button
                                 type="submit"
+                                aria-label="Send message"
                                 disabled={!input.trim()}
-                                className="bg-primary hover:bg-primary-light disabled:opacity-50 disabled:cursor-not-allowed text-white p-2 rounded-full transition-all shadow-md active:scale-95 flex items-center justify-center w-10 h-10"
+                                className="bg-primary hover:bg-primary-light disabled:opacity-50 disabled:cursor-not-allowed text-white p-2 rounded-full transition-all shadow-md active:scale-95 flex items-center justify-center w-10 h-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary"
                             >
                                 <Send size={18} className={input.trim() ? "ml-0.5" : ""} />
                             </button>
