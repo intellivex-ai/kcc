@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+// eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'framer-motion';
 import { FileText, ChevronDown, CheckSquare, Sparkles } from 'lucide-react';
 
@@ -25,6 +26,8 @@ const DOCUMENTS = {
         notes: "Exams are held every month"
     }
 };
+
+const DOCUMENT_SERVICES = Object.keys(DOCUMENTS).filter(k => k !== "Select Service");
 
 const DocumentHelper = () => {
     const [selectedService, setSelectedService] = useState("Select Service");
@@ -60,7 +63,7 @@ const DocumentHelper = () => {
                                 exit={{ opacity: 0, y: -10 }}
                                 className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-2xl overflow-hidden z-20 max-h-60 overflow-y-auto"
                             >
-                                {Object.keys(DOCUMENTS).filter(k => k !== "Select Service").map((service) => (
+                                {DOCUMENT_SERVICES.map((service) => (
                                     <button
                                         key={service}
                                         onClick={() => {
