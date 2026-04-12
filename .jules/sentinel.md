@@ -1,0 +1,4 @@
+## 2024-03-24 - Do not use hardcoded literal string fallbacks for environment variables in Vite client code
+**Vulnerability:** Client-side literal string fallbacks for environment-based credentials (e.g., `import.meta.env.VITE_ADMIN_USERNAME || 'admin'`) become permanently embedded in publicly readable build outputs.
+**Learning:** In client-side Vite projects, any literal string fallback provided to an environment variable in the source code will be statically analyzed and baked into the final javascript bundle. This means hardcoded passwords intended as fallback logic are publicly accessible.
+**Prevention:** Avoid literal string fallbacks for authentication or secrets. Implement a secure failure state instead, throwing an error or denying access if the expected environment variables are missing.
