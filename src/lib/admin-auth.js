@@ -6,10 +6,10 @@
 
 const ADMIN_KEY = 'kcc_admin_session';
 
-// Get credentials from environment variables
+// Get credentials from environment variables safely
 const ADMIN_CREDENTIALS = {
-    username: import.meta.env.VITE_ADMIN_USERNAME || 'admin',
-    password: import.meta.env.VITE_ADMIN_PASSWORD || 'kcc2024'
+    username: import.meta.env.VITE_ADMIN_USERNAME,
+    password: import.meta.env.VITE_ADMIN_PASSWORD
 };
 
 /**
@@ -71,9 +71,15 @@ export const getSession = () => {
 /**
  * Change password (demo only)
  */
+// eslint-disable-next-line no-unused-vars
 export const changePassword = (oldPassword, newPassword) => {
+    // Fail securely if no env credentials are set
+    if (!ADMIN_CREDENTIALS.password) {
+        return { success: false, error: 'Authentication service configuration error' };
+    }
+
     // In production, this would call an API
-    if (oldPassword === DEFAULT_CREDENTIALS.password) {
+    if (oldPassword === ADMIN_CREDENTIALS.password) {
         // Update credentials (in real app, this would be on server)
         return { success: true };
     }
