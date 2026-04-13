@@ -1,0 +1,4 @@
+## 2024-04-13 - Hardcoded Credentials in Client-Side Builds
+**Vulnerability:** Found hardcoded fallback credentials (`'admin'` and `'kcc2024'`) for admin authentication within `src/lib/admin-auth.js` (`import.meta.env.VITE_ADMIN_USERNAME || 'admin'`).
+**Learning:** In client-side Vite projects, using literal string fallbacks for environment-based credentials causes those strings to become permanently embedded in publicly readable build outputs, exposing admin credentials if the `.env` variables are missing. Additionally, the `changePassword` function was referencing an undefined `DEFAULT_CREDENTIALS` object instead of `ADMIN_CREDENTIALS`.
+**Prevention:** Never use literal string fallbacks for sensitive environment variables in client-side code. Implement a secure failure state (e.g., returning an authentication unavailable error) if required environment variables are not configured. Always test code paths to ensure referenced objects exist.
