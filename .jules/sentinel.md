@@ -1,0 +1,4 @@
+## 2024-04-14 - Removed Literal String Fallbacks for Admin Credentials
+**Vulnerability:** Hardcoded admin credentials ('admin'/'kcc2024') were embedded in the frontend codebase as fallbacks for missing environment variables.
+**Learning:** In client-side Vite projects, literal string fallbacks for environment-based credentials become permanently embedded in publicly readable build outputs, making them trivial to extract.
+**Prevention:** Implement a secure failure state if environment variables are missing instead of falling back to default strings, and ensure critical credentials are not exposed to the client or use a proper backend authentication mechanism.
