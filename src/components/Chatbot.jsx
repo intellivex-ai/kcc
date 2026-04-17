@@ -57,7 +57,8 @@ const Chatbot = () => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => setIsOpen(!isOpen)}
-                className="fixed bottom-6 right-6 z-50 bg-primary hover:bg-primary-light text-white p-4 rounded-full shadow-2xl flex items-center justify-center cursor-pointer"
+                aria-label={isOpen ? "Close support chat" : "Open support chat"}
+                className="fixed bottom-6 right-6 z-50 bg-primary hover:bg-primary-light text-white p-4 rounded-full shadow-2xl flex items-center justify-center cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary"
             >
                 {isOpen ? <X size={24} /> : <MessageCircle size={28} />}
             </motion.button>

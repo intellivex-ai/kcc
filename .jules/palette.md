@@ -1,0 +1,1 @@
+## 2024-05-24 - Missing ARIA label for Chatbot toggle button\n**Learning:** Icon-only floating action buttons for chat/support often lack accessible names, making them invisible to screen readers.\n**Action:** Add aria-label and ensure focus-visible styles.
