@@ -52,6 +52,7 @@ const Chatbot = () => {
         <>
             {/* Toggle Button */}
             <motion.button
+                aria-label={isOpen ? "Close chat" : "Open chat"}
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 whileHover={{ scale: 1.1 }}
@@ -148,6 +149,7 @@ const Chatbot = () => {
                             />
                             <button
                                 type="submit"
+                                aria-label="Send message"
                                 disabled={!input.trim()}
                                 className="bg-primary hover:bg-primary-light disabled:opacity-50 disabled:cursor-not-allowed text-white p-2 rounded-full transition-all shadow-md active:scale-95 flex items-center justify-center w-10 h-10"
                             >
