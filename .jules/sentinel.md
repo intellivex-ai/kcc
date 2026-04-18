@@ -1,0 +1,4 @@
+## 2024-04-18 - Hardcoded Admin Credentials Fallback
+**Vulnerability:** Found hardcoded fallback values for admin credentials (`'admin'` and `'kcc2024'`) embedded in the `import.meta.env` definitions within `src/lib/admin-auth.js`.
+**Learning:** In Vite client-side projects, using logical OR with literal string fallbacks for environment variables (e.g., `import.meta.env.VITE_VAR || 'secret'`) causes the build tool to statically inline the literal fallback directly into the public build output if the environment variable is not present during the build step.
+**Prevention:** Do not use literal fallback values for sensitive environment variables in client-side code. Instead, evaluate the environment variables securely and implement robust failure states (e.g., returning an error or throwing) if required configuration is missing.
