@@ -26,6 +26,10 @@ const DOCUMENTS = {
     }
 };
 
+// ⚡ Bolt Optimization: Extract static object key extraction outside component scope
+// Prevents unnecessary iteration and array allocation on every render
+const SERVICE_OPTIONS = Object.keys(DOCUMENTS).filter(k => k !== "Select Service");
+
 const DocumentHelper = () => {
     const [selectedService, setSelectedService] = useState("Select Service");
     const [isOpen, setIsOpen] = useState(false);
@@ -60,7 +64,7 @@ const DocumentHelper = () => {
                                 exit={{ opacity: 0, y: -10 }}
                                 className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-2xl overflow-hidden z-20 max-h-60 overflow-y-auto"
                             >
-                                {Object.keys(DOCUMENTS).filter(k => k !== "Select Service").map((service) => (
+                                {SERVICE_OPTIONS.map((service) => (
                                     <button
                                         key={service}
                                         onClick={() => {
