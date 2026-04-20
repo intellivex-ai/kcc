@@ -26,6 +26,8 @@ const DOCUMENTS = {
     }
 };
 
+const AVAILABLE_SERVICES = Object.keys(DOCUMENTS).filter(k => k !== "Select Service");
+
 const DocumentHelper = () => {
     const [selectedService, setSelectedService] = useState("Select Service");
     const [isOpen, setIsOpen] = useState(false);
@@ -60,7 +62,7 @@ const DocumentHelper = () => {
                                 exit={{ opacity: 0, y: -10 }}
                                 className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-2xl overflow-hidden z-20 max-h-60 overflow-y-auto"
                             >
-                                {Object.keys(DOCUMENTS).filter(k => k !== "Select Service").map((service) => (
+                                {AVAILABLE_SERVICES.map((service) => (
                                     <button
                                         key={service}
                                         onClick={() => {
