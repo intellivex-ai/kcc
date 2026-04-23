@@ -1,0 +1,3 @@
+## 2026-04-23 - Dynamic Accessibility for Floating Icon Buttons
+**Learning:** Floating action buttons (like Chatbot toggles) and icon-only send buttons often miss dynamic `aria-label` and `aria-expanded` attributes, making their state unclear to screen readers. Furthermore, because they are positioned absolutely, standard focus rings may be obscured, requiring explicit `focus-visible:ring-2` styles.
+**Action:** Always provide explicit, dynamic ARIA labels (e.g., 'Open chat' vs 'Close chat'), `aria-expanded` state, and ensure high-contrast `focus-visible` styles are applied to floating or icon-only interactive elements.
