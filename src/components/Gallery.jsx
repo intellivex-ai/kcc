@@ -117,6 +117,7 @@ const Gallery = () => {
                             {/* Close Button */}
                             <button
                                 onClick={() => setSelectedImage(null)}
+                                aria-label="Close image"
                                 className="absolute top-4 right-4 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors"
                             >
                                 <X size={24} className="text-white" />
@@ -125,12 +126,14 @@ const Gallery = () => {
                             {/* Navigation Arrows */}
                             <button
                                 onClick={(e) => { e.stopPropagation(); handlePrev(); }}
+                                aria-label="Previous image"
                                 className="absolute left-4 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors"
                             >
                                 <ChevronLeft size={24} className="text-white" />
                             </button>
                             <button
                                 onClick={(e) => { e.stopPropagation(); handleNext(); }}
+                                aria-label="Next image"
                                 className="absolute right-4 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors"
                             >
                                 <ChevronRight size={24} className="text-white" />
