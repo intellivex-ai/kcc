@@ -27,8 +27,8 @@ const ExamCountdown = () => {
         }
     ];
 
-    const calculateTimeLeft = (targetDate) => {
-        const difference = new Date(targetDate) - new Date();
+    const calculateTimeLeft = (targetDate, now) => {
+        const difference = new Date(targetDate) - now;
 
         if (difference > 0) {
             return {
@@ -46,10 +46,11 @@ const ExamCountdown = () => {
     useEffect(() => {
         const timer = setInterval(() => {
             const newCountdowns = {};
+            const now = new Date();
             upcomingExams.forEach(exam => {
                 newCountdowns[exam.id] = {
-                    exam: calculateTimeLeft(exam.date),
-                    registration: calculateTimeLeft(exam.registrationDeadline)
+                    exam: calculateTimeLeft(exam.date, now),
+                    registration: calculateTimeLeft(exam.registrationDeadline, now)
                 };
             });
             setCountdowns(newCountdowns);
