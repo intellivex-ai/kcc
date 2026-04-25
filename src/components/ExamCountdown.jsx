@@ -27,8 +27,9 @@ const ExamCountdown = () => {
         }
     ];
 
-    const calculateTimeLeft = (targetDate) => {
-        const difference = new Date(targetDate) - new Date();
+    // ⚡ Bolt: Accepts shared `now` timestamp to avoid creating redundant Date objects
+    const calculateTimeLeft = (targetDate, now) => {
+        const difference = new Date(targetDate) - now;
 
         if (difference > 0) {
             return {
@@ -45,11 +46,13 @@ const ExamCountdown = () => {
 
     useEffect(() => {
         const timer = setInterval(() => {
+            // ⚡ Bolt: Create one Date object per interval instead of multiple per exam
+            const now = new Date();
             const newCountdowns = {};
             upcomingExams.forEach(exam => {
                 newCountdowns[exam.id] = {
-                    exam: calculateTimeLeft(exam.date),
-                    registration: calculateTimeLeft(exam.registrationDeadline)
+                    exam: calculateTimeLeft(exam.date, now),
+                    registration: calculateTimeLeft(exam.registrationDeadline, now)
                 };
             });
             setCountdowns(newCountdowns);
