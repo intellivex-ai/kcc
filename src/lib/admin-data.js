@@ -5,6 +5,7 @@
  */
 
 import supabase from './supabase';
+import { sanitizeInput, sanitizeEmail, sanitizePhone, sanitizeObject } from './security';
 
 // ============================================
 // INQUIRIES CRUD
@@ -55,11 +56,11 @@ export const addInquiry = async (inquiry) => {
         const { data, error } = await supabase
             .from('inquiries')
             .insert({
-                name: inquiry.name,
-                email: inquiry.email,
-                phone: inquiry.phone,
-                subject: inquiry.subject,
-                message: inquiry.message,
+                name: sanitizeInput(inquiry.name),
+                email: sanitizeEmail(inquiry.email),
+                phone: sanitizePhone(inquiry.phone),
+                subject: sanitizeInput(inquiry.subject),
+                message: sanitizeInput(inquiry.message),
                 status: 'new'
             })
             .select()
@@ -78,10 +79,11 @@ export const addInquiry = async (inquiry) => {
  */
 export const updateInquiry = async (id, updates) => {
     try {
+        const sanitizedUpdates = sanitizeObject(updates);
         const { data, error } = await supabase
             .from('inquiries')
             .update({
-                ...updates,
+                ...sanitizedUpdates,
                 updated_at: new Date().toISOString()
             })
             .eq('id', id)
@@ -163,12 +165,12 @@ export const addStudent = async (student) => {
         const { data, error } = await supabase
             .from('students')
             .insert({
-                name: student.name,
-                email: student.email,
-                phone: student.phone,
-                course: student.course,
-                dob: student.dob,
-                address: student.address,
+                name: sanitizeInput(student.name),
+                email: sanitizeEmail(student.email),
+                phone: sanitizePhone(student.phone),
+                course: sanitizeInput(student.course),
+                dob: sanitizeInput(student.dob),
+                address: sanitizeInput(student.address),
                 status: 'active'
             })
             .select()
@@ -187,10 +189,11 @@ export const addStudent = async (student) => {
  */
 export const updateStudent = async (id, updates) => {
     try {
+        const sanitizedUpdates = sanitizeObject(updates);
         const { data, error } = await supabase
             .from('students')
             .update({
-                ...updates,
+                ...sanitizedUpdates,
                 updated_at: new Date().toISOString()
             })
             .eq('id', id)
