@@ -2,21 +2,26 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Calculator, Check, IndianRupee } from 'lucide-react';
 
+// ⚡ Bolt Performance Optimization:
+// Extracted static `COURSES` and pre-computed `COURSE_ENTRIES` outside the component
+// to prevent object recreation and array transformation on every re-render.
+const COURSES = {
+    ccc: { name: 'CCC Course', fee: 3500, duration: '3 Months' },
+    olevel: { name: 'O-Level', fee: 12000, duration: '12 Months' },
+    basic: { name: 'Basic Computer', fee: 2000, duration: '2 Months' },
+    dca: { name: 'DCA', fee: 8000, duration: '6 Months' },
+    pgdca: { name: 'PGDCA', fee: 15000, duration: '12 Months' },
+    tally: { name: 'Tally with GST', fee: 5000, duration: '3 Months' }
+};
+
+const COURSE_ENTRIES = Object.entries(COURSES);
+
 const FeeCalculator = () => {
     const [selectedCourse, setSelectedCourse] = useState('ccc');
     const [paymentMode, setPaymentMode] = useState('full');
 
-    const courses = {
-        ccc: { name: 'CCC Course', fee: 3500, duration: '3 Months' },
-        olevel: { name: 'O-Level', fee: 12000, duration: '12 Months' },
-        basic: { name: 'Basic Computer', fee: 2000, duration: '2 Months' },
-        dca: { name: 'DCA', fee: 8000, duration: '6 Months' },
-        pgdca: { name: 'PGDCA', fee: 15000, duration: '12 Months' },
-        tally: { name: 'Tally with GST', fee: 5000, duration: '3 Months' }
-    };
-
     const calculateTotal = () => {
-        const baseFee = courses[selectedCourse].fee;
+        const baseFee = COURSES[selectedCourse].fee;
         if (paymentMode === 'installment') {
             return baseFee * 1.1; // 10% extra for installments
         }
@@ -42,7 +47,7 @@ const FeeCalculator = () => {
                     <div className="mb-6">
                         <label className="block text-sm font-bold text-gray-700 mb-3">Select Course</label>
                         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                            {Object.entries(courses).map(([key, course]) => (
+                            {COURSE_ENTRIES.map(([key, course]) => (
                                 <button
                                     key={key}
                                     onClick={() => setSelectedCourse(key)}
@@ -113,7 +118,7 @@ const FeeCalculator = () => {
                                 <span className="text-blue-100">Course Fee</span>
                                 <span className="font-semibold flex items-center">
                                     <IndianRupee size={16} />
-                                    {courses[selectedCourse].fee}
+                                    {COURSES[selectedCourse].fee}
                                 </span>
                             </div>
 
@@ -123,7 +128,7 @@ const FeeCalculator = () => {
                                         <span className="text-blue-100">Installment Charge (10%)</span>
                                         <span className="flex items-center">
                                             <IndianRupee size={14} />
-                                            {(courses[selectedCourse].fee * 0.1).toFixed(0)}
+                                            {(COURSES[selectedCourse].fee * 0.1).toFixed(0)}
                                         </span>
                                     </div>
                                     <div className="border-t border-white/20 pt-3">
@@ -153,7 +158,7 @@ const FeeCalculator = () => {
                             href="/contact"
                             className="mt-6 w-full bg-white text-primary py-3 rounded-xl font-bold hover:bg-gray-100 transition-all flex items-center justify-center"
                         >
-                            Enroll in {courses[selectedCourse].name}
+                            Enroll in {COURSES[selectedCourse].name}
                         </a>
                     </motion.div>
 
