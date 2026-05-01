@@ -1,0 +1,4 @@
+💡 What: Memoized the `filteredJobs` array in `JobBoard.jsx` using `useMemo` and extracted the repetitive `searchTerm.toLowerCase()` operation outside of the `.filter` loop.
+🎯 Why: Prevents unnecessary `O(N)` string recalculations and redundant re-rendering of the entire job list when unrelated state changes occur, significantly reducing CPU overhead during list filtering.
+📊 Impact: Reduces array reallocation and rendering overhead during typing. Eliminates redundant string conversions inside the loop, changing string lowercase time complexity from `O(N)` to `O(1)` per render cycle.
+🔬 Measurement: Verified functionality by checking that the build succeeds (`pnpm build`) without regression.
