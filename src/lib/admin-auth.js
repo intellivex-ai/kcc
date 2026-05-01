@@ -8,15 +8,20 @@ const ADMIN_KEY = 'kcc_admin_session';
 
 // Get credentials from environment variables
 const ADMIN_CREDENTIALS = {
-    username: import.meta.env.VITE_ADMIN_USERNAME || 'admin',
-    password: import.meta.env.VITE_ADMIN_PASSWORD || 'kcc2024'
+    username: import.meta.env.VITE_ADMIN_USERNAME,
+    password: import.meta.env.VITE_ADMIN_PASSWORD
 };
 
 /**
  * Login with username and password
  */
 export const login = (username, password) => {
-    // Validate credentials
+    // Validate credentials, ensuring env vars are set
+    if (!ADMIN_CREDENTIALS.username || !ADMIN_CREDENTIALS.password) {
+        console.error('Admin credentials are not configured in environment variables');
+        return { success: false, error: 'System misconfiguration' };
+    }
+
     if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
         const session = {
             username,
