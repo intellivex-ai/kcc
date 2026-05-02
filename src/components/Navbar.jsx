@@ -102,6 +102,8 @@ const Navbar = () => {
               onMouseLeave={() => setActiveDropdown(null)}
             >
               <button
+                aria-haspopup="true"
+                aria-expanded={activeDropdown === 'services'}
                 className={cn(
                   "flex items-center gap-1 font-semibold transition-colors py-2",
                   location.pathname.includes('services')
@@ -170,12 +172,15 @@ const Navbar = () => {
             <button
               onClick={toggleTheme}
               className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 text-gray-900 dark:text-yellow-400 transition-all"
+              aria-label="Toggle Dark Mode"
             >
               {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
             </button>
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="text-gray-900 dark:text-white hover:text-primary focus:outline-none p-2"
+              aria-label="Toggle mobile menu"
+              aria-expanded={isOpen}
             >
               {isOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
