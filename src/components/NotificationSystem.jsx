@@ -101,8 +101,9 @@ const NotificationSystem = () => {
             {/* Notification Bell Button */}
             <div className="fixed bottom-24 right-6 z-50">
                 <button
+                    aria-label="Toggle notifications"
                     onClick={() => setShowPanel(!showPanel)}
-                    className="relative w-14 h-14 bg-primary text-white rounded-full shadow-lg hover:bg-blue-700 transition-all flex items-center justify-center group"
+                    className="relative w-14 h-14 bg-primary text-white rounded-full shadow-lg hover:bg-blue-700 transition-all flex items-center justify-center group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary"
                 >
                     <Bell size={24} className={showPanel ? 'animate-bounce' : ''} />
                     {unreadCount > 0 && (
@@ -126,8 +127,9 @@ const NotificationSystem = () => {
                         <div className="bg-gradient-to-r from-primary to-blue-600 text-white p-4 flex items-center justify-between">
                             <h3 className="font-bold text-lg">Notifications</h3>
                             <button
+                                aria-label="Close notifications panel"
                                 onClick={() => setShowPanel(false)}
-                                className="hover:bg-white/20 rounded-lg p-1 transition-colors"
+                                className="hover:bg-white/20 rounded-lg p-1 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
                             >
                                 <X size={20} />
                             </button>
@@ -171,11 +173,12 @@ const NotificationSystem = () => {
                                                         )}
                                                     </h4>
                                                     <button
+                                                        aria-label="Delete notification"
                                                         onClick={(e) => {
                                                             e.stopPropagation();
                                                             deleteNotification(notif.id);
                                                         }}
-                                                        className="text-gray-400 hover:text-red-600 transition-colors shrink-0"
+                                                        className="text-gray-400 hover:text-red-600 transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-600 rounded"
                                                     >
                                                         <X size={16} />
                                                     </button>
