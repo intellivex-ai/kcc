@@ -1,0 +1,3 @@
+## 2024-05-18 - Notification System ARIA Labels
+**Learning:** Found multiple icon-only buttons without `aria-label`s in the `NotificationSystem` component. This component seems to be a custom interactive notification widget. Icon-only buttons (like a notification bell or close "X" buttons) heavily require `aria-label` for screen reader accessibility, as otherwise they announce blindly or as generic buttons. This pattern needs to be carefully monitored when creating interactive UI elements with icon buttons.
+**Action:** Always verify custom notification panels and toggle buttons have clear, descriptive `aria-label` attributes for accessibility. Added `aria-label` to the main bell trigger button, panel close button, and individual notification clear buttons.
