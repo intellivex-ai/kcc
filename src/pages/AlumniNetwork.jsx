@@ -1,24 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Briefcase, MapPin, Mail, Linkedin, GraduationCap } from 'lucide-react';
 import { alumniData } from '../data/alumni';
+
+// ⚡ Bolt Optimization: Hoisted static data derivations to prevent O(n) array traversal on every render
+const courses = [...new Set(alumniData.map(a => a.course))];
+const batches = [...new Set(alumniData.map(a => a.batch))].sort().reverse();
 
 const AlumniNetwork = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [filterCourse, setFilterCourse] = useState('all');
     const [filterBatch, setFilterBatch] = useState('all');
 
-    const courses = [...new Set(alumniData.map(a => a.course))];
-    const batches = [...new Set(alumniData.map(a => a.batch))].sort().reverse();
-
-    const filteredAlumni = alumniData.filter(alumni => {
-        const matchesSearch = alumni.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            alumni.currentRole.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            alumni.company.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesCourse = filterCourse === 'all' || alumni.course === filterCourse;
-        const matchesBatch = filterBatch === 'all' || alumni.batch === filterBatch;
-        return matchesSearch && matchesCourse && matchesBatch;
-    });
+    // ⚡ Bolt Optimization: Wrapped filtering in useMemo to prevent unnecessary calculations
+    // Expected impact: Eliminates O(n*m) string operations on non-filter-related re-renders
+    const filteredAlumni = useMemo(() => {
+        // Hoisted .toLowerCase() to avoid redundant conversions in the loop
+        const lowerSearch = searchTerm.toLowerCase();
+        return alumniData.filter(alumni => {
+            const matchesSearch = lowerSearch === '' ||
+                alumni.name.toLowerCase().includes(lowerSearch) ||
+                alumni.currentRole.toLowerCase().includes(lowerSearch) ||
+                alumni.company.toLowerCase().includes(lowerSearch);
+            const matchesCourse = filterCourse === 'all' || alumni.course === filterCourse;
+            const matchesBatch = filterBatch === 'all' || alumni.batch === filterBatch;
+            return matchesSearch && matchesCourse && matchesBatch;
+        });
+    }, [searchTerm, filterCourse, filterBatch]);
 
     return (
         <div className="min-h-screen bg-gray-50">
