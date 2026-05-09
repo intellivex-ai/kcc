@@ -1,0 +1,3 @@
+## 2026-05-09 - Optimizing List Filters and Static Transformations
+**Learning:** A widespread performance anti-pattern exists where `.toLowerCase()` is called repeatedly inside array `.filter()` loops during renders. Static data transformations derived from constants are also unnecessarily kept inside component render cycles.
+**Action:** Hoist expensive transformations (like `.toLowerCase()` on search terms) outside of array iteration loops within React components, combined with `useMemo`, to reduce CPU overhead during re-renders. Always move static data transformations derived from constants outside of component render cycles into top-level constants.
