@@ -1,24 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Briefcase, MapPin, Mail, Linkedin, GraduationCap } from 'lucide-react';
 import { alumniData } from '../data/alumni';
+
+// Hoist static derivations out of component render cycle
+const COURSES = [...new Set(alumniData.map(a => a.course))];
+const BATCHES = [...new Set(alumniData.map(a => a.batch))].sort().reverse();
+
+// Pre-compute lowercase searchable fields for all alumni once
+const optimizedAlumniData = alumniData.map(alumni => ({
+    ...alumni,
+    _searchName: alumni.name.toLowerCase(),
+    _searchRole: alumni.currentRole.toLowerCase(),
+    _searchCompany: alumni.company.toLowerCase()
+}));
 
 const AlumniNetwork = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [filterCourse, setFilterCourse] = useState('all');
     const [filterBatch, setFilterBatch] = useState('all');
 
-    const courses = [...new Set(alumniData.map(a => a.course))];
-    const batches = [...new Set(alumniData.map(a => a.batch))].sort().reverse();
-
-    const filteredAlumni = alumniData.filter(alumni => {
-        const matchesSearch = alumni.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            alumni.currentRole.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            alumni.company.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesCourse = filterCourse === 'all' || alumni.course === filterCourse;
-        const matchesBatch = filterBatch === 'all' || alumni.batch === filterBatch;
-        return matchesSearch && matchesCourse && matchesBatch;
-    });
+    // useMemo to prevent re-filtering and avoid calling toLowerCase inside loop
+    const filteredAlumni = useMemo(() => {
+        const lowerSearchTerm = searchTerm.toLowerCase();
+        return optimizedAlumniData.filter(alumni => {
+            const matchesSearch = !lowerSearchTerm ||
+                alumni._searchName.includes(lowerSearchTerm) ||
+                alumni._searchRole.includes(lowerSearchTerm) ||
+                alumni._searchCompany.includes(lowerSearchTerm);
+            const matchesCourse = filterCourse === 'all' || alumni.course === filterCourse;
+            const matchesBatch = filterBatch === 'all' || alumni.batch === filterBatch;
+            return matchesSearch && matchesCourse && matchesBatch;
+        });
+    }, [searchTerm, filterCourse, filterBatch]);
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -60,7 +74,7 @@ const AlumniNetwork = () => {
                             className="px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary"
                         >
                             <option value="all">All Courses</option>
-                            {courses.map(course => (
+                            {COURSES.map(course => (
                                 <option key={course} value={course}>{course}</option>
                             ))}
                         </select>
@@ -72,7 +86,7 @@ const AlumniNetwork = () => {
                             className="px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary"
                         >
                             <option value="all">All Batches</option>
-                            {batches.map(batch => (
+                            {BATCHES.map(batch => (
                                 <option key={batch} value={batch}>{batch}</option>
                             ))}
                         </select>
