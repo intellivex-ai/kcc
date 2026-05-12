@@ -1,0 +1,4 @@
+## 2024-05-12 - Critical: Remove hardcoded admin fallback credentials
+**Vulnerability:** Hardcoded admin credentials (`'admin'` and `'kcc2024'`) existed in `src/lib/admin-auth.js` as fallback values for environment variables (`VITE_ADMIN_USERNAME` and `VITE_ADMIN_PASSWORD`). An undefined variable reference `DEFAULT_CREDENTIALS` was also present in `changePassword`.
+**Learning:** Default fallbacks for critical secrets mean an application fails "open" (insecurely) rather than "closed" if the environment configuration is missing, creating an easy vector for unauthorized access, especially since `VITE_` variables are often bundled in client code.
+**Prevention:** Never use hardcoded fallback values for secrets like passwords or API keys. If configuration is missing, the application should fail securely (e.g., throwing an error or denying access) rather than silently permitting entry with default credentials.
