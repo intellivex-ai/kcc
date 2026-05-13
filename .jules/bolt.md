@@ -1,0 +1,5 @@
+## 2024-05-17 - React Component List Filtering Anti-Pattern
+
+**Learning:** There is a widespread performance anti-pattern in list filtering components across the codebase (including `src/pages/Downloads.jsx`, `src/pages/admin/Inquiries.jsx`, `src/pages/admin/Students.jsx`, and `src/pages/Blog.jsx`) where `.toLowerCase()` is called repeatedly inside array `.filter()` loops during every render. This creates unnecessary O(N) string conversions which scale poorly and consume CPU cycles unnecessarily during re-renders.
+
+**Action:** Always wrap data filtering logic involving expensive operations (like string transformations or regex operations) in `useMemo` hooks, and hoist transformations on static filter criteria (like `searchTerm.toLowerCase()`) outside of the filter iteration loop so they are only computed once per render/dependency change.
