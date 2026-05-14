@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Download, Search, FileText, Filter } from 'lucide-react';
 import { downloads, downloadCategories } from '../data/downloads';
@@ -7,12 +7,15 @@ const Downloads = () => {
     const [selectedCategory, setSelectedCategory] = useState('all');
     const [searchTerm, setSearchTerm] = useState('');
 
-    const filteredDownloads = downloads.filter(item => {
-        const matchesCategory = selectedCategory === 'all' || item.category.toLowerCase().replace(/\s+/g, '-') === selectedCategory;
-        const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            item.description.toLowerCase().includes(searchTerm.toLowerCase());
-        return matchesCategory && matchesSearch;
-    });
+    const filteredDownloads = useMemo(() => {
+        const lowerSearchTerm = searchTerm.toLowerCase();
+        return downloads.filter(item => {
+            const matchesCategory = selectedCategory === 'all' || item.category.toLowerCase().replace(/\s+/g, '-') === selectedCategory;
+            const matchesSearch = item.title.toLowerCase().includes(lowerSearchTerm) ||
+                item.description.toLowerCase().includes(lowerSearchTerm);
+            return matchesCategory && matchesSearch;
+        });
+    }, [selectedCategory, searchTerm]);
 
     return (
         <div className="min-h-screen bg-gray-50">
