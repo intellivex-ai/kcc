@@ -1,0 +1,3 @@
+## 2024-05-24 - Repeated toLowerCase() in filter loops
+**Learning:** A widespread performance anti-pattern exists in list filtering components across the codebase (including `src/pages/Downloads.jsx`, `src/pages/admin/Inquiries.jsx`, `src/pages/admin/Students.jsx`, and `src/pages/Blog.jsx`) where `.toLowerCase()` is called repeatedly inside array `.filter()` loops during renders.
+**Action:** When working with these components, hoist expensive static transformations (like converting the search term to lowercase) outside the array iteration loop, and wrap the derived filtered list in `useMemo` to prevent redundant recalculation on every re-render.
