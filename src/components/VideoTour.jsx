@@ -41,6 +41,7 @@ const VideoTour = () => {
 
                                 {/* Play Button */}
                                 <motion.button
+                                    aria-label="Play virtual tour video"
                                     onClick={() => setIsPlaying(true)}
                                     whileHover={{ scale: 1.1 }}
                                     whileTap={{ scale: 0.95 }}
@@ -73,6 +74,7 @@ const VideoTour = () => {
                                     className="absolute inset-0"
                                 ></iframe>
                                 <button
+                                    aria-label="Close virtual tour video"
                                     onClick={() => setIsPlaying(false)}
                                     className="absolute top-4 right-4 w-10 h-10 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center text-white transition-colors z-10"
                                 >
