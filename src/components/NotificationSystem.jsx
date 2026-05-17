@@ -101,6 +101,7 @@ const NotificationSystem = () => {
             {/* Notification Bell Button */}
             <div className="fixed bottom-24 right-6 z-50">
                 <button
+                    aria-label="Toggle notifications panel"
                     onClick={() => setShowPanel(!showPanel)}
                     className="relative w-14 h-14 bg-primary text-white rounded-full shadow-lg hover:bg-blue-700 transition-all flex items-center justify-center group"
                 >
@@ -126,6 +127,7 @@ const NotificationSystem = () => {
                         <div className="bg-gradient-to-r from-primary to-blue-600 text-white p-4 flex items-center justify-between">
                             <h3 className="font-bold text-lg">Notifications</h3>
                             <button
+                                aria-label="Close notifications panel"
                                 onClick={() => setShowPanel(false)}
                                 className="hover:bg-white/20 rounded-lg p-1 transition-colors"
                             >
@@ -171,6 +173,7 @@ const NotificationSystem = () => {
                                                         )}
                                                     </h4>
                                                     <button
+                                                        aria-label="Delete notification"
                                                         onClick={(e) => {
                                                             e.stopPropagation();
                                                             deleteNotification(notif.id);
