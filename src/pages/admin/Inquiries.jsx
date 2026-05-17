@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Filter, Eye, Trash2, CheckCircle, Download } from 'lucide-react';
 import { getInquiries, updateInquiry, deleteInquiry, exportToCSV } from '../../lib/admin-data';
@@ -6,7 +6,6 @@ import toast, { Toaster } from 'react-hot-toast';
 
 const Inquiries = () => {
     const [inquiries, setInquiries] = useState([]);
-    const [filteredInquiries, setFilteredInquiries] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [statusFilter, setStatusFilter] = useState('all');
     const [selectedInquiry, setSelectedInquiry] = useState(null);
@@ -14,10 +13,6 @@ const Inquiries = () => {
     useEffect(() => {
         loadInquiries();
     }, []);
-
-    useEffect(() => {
-        filterInquiries();
-    }, [searchTerm, statusFilter, inquiries]);
 
     const loadInquiries = async () => {
         try {
@@ -29,7 +24,11 @@ const Inquiries = () => {
         }
     };
 
-    const filterInquiries = () => {
+    // ⚡ Bolt Performance Optimization:
+    // 1. Used useMemo to replace redundant useEffect + useState synchronization, saving unnecessary re-renders.
+    // 2. Hoisted `searchTerm.toLowerCase()` outside of the array `.filter()` loop.
+    // Impact: Reduces React re-renders and minimizes CPU usage per render by avoiding O(N) repetitive string allocations.
+    const filteredInquiries = useMemo(() => {
         let filtered = inquiries;
 
         if (statusFilter !== 'all') {
@@ -37,15 +36,16 @@ const Inquiries = () => {
         }
 
         if (searchTerm) {
+            const lowerSearchTerm = searchTerm.toLowerCase();
             filtered = filtered.filter(inq =>
-                inq.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                inq.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                inq.name.toLowerCase().includes(lowerSearchTerm) ||
+                inq.email.toLowerCase().includes(lowerSearchTerm) ||
                 inq.phone.includes(searchTerm)
             );
         }
 
-        setFilteredInquiries(filtered);
-    };
+        return filtered;
+    }, [searchTerm, statusFilter, inquiries]);
 
     const handleStatusChange = async (id, newStatus) => {
         try {
