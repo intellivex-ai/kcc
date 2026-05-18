@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Filter, Eye, Trash2, Download } from 'lucide-react';
 import { getStudents, deleteStudent, exportToCSV } from '../../lib/admin-data';
@@ -6,7 +6,6 @@ import toast, { Toaster } from 'react-hot-toast';
 
 const Students = () => {
     const [students, setStudents] = useState([]);
-    const [filteredStudents, setFilteredStudents] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [courseFilter, setCourseFilter] = useState('all');
     const [selectedStudent, setSelectedStudent] = useState(null);
@@ -14,10 +13,6 @@ const Students = () => {
     useEffect(() => {
         loadStudents();
     }, []);
-
-    useEffect(() => {
-        filterStudents();
-    }, [searchTerm, courseFilter, students]);
 
     const loadStudents = async () => {
         try {
@@ -29,7 +24,8 @@ const Students = () => {
         }
     };
 
-    const filterStudents = () => {
+    // ⚡ Bolt: Use useMemo for derived state and hoist .toLowerCase() outside the loop
+    const filteredStudents = useMemo(() => {
         let filtered = students;
 
         if (courseFilter !== 'all') {
@@ -37,15 +33,16 @@ const Students = () => {
         }
 
         if (searchTerm) {
+            const searchLower = searchTerm.toLowerCase();
             filtered = filtered.filter(std =>
-                std.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                std.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                std.name.toLowerCase().includes(searchLower) ||
+                std.email.toLowerCase().includes(searchLower) ||
                 std.phone.includes(searchTerm)
             );
         }
 
-        setFilteredStudents(filtered);
-    };
+        return filtered;
+    }, [searchTerm, courseFilter, students]);
 
     const handleDelete = async (id) => {
         if (window.confirm('Are you sure you want to delete this student?')) {
