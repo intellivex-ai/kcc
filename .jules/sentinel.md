@@ -1,0 +1,4 @@
+## 2024-05-24 - Fix hardcoded fallback admin credentials
+**Vulnerability:** Hardcoded backdoor admin credentials (`admin` / `kcc2024`) were used as a fallback if the environment variables (`VITE_ADMIN_USERNAME` / `VITE_ADMIN_PASSWORD`) were not set.
+**Learning:** Using predictable, hardcoded fallbacks creates a significant security risk, as anyone discovering or guessing them could bypass authentication when the environment is misconfigured. In Vite applications, `crypto.randomUUID()` provides an unguessable string fallback.
+**Prevention:** Always ensure applications "fail securely." If required environment variables are missing, either throw a fatal initialization error or, in environments requiring graceful degradation, substitute them with securely generated random values (like `crypto.randomUUID()`) to explicitly block unauthorized access.
