@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Filter, Eye, Trash2, Download } from 'lucide-react';
 import { getStudents, deleteStudent, exportToCSV } from '../../lib/admin-data';
@@ -6,7 +6,6 @@ import toast, { Toaster } from 'react-hot-toast';
 
 const Students = () => {
     const [students, setStudents] = useState([]);
-    const [filteredStudents, setFilteredStudents] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [courseFilter, setCourseFilter] = useState('all');
     const [selectedStudent, setSelectedStudent] = useState(null);
@@ -15,8 +14,23 @@ const Students = () => {
         loadStudents();
     }, []);
 
-    useEffect(() => {
-        filterStudents();
+    const filteredStudents = useMemo(() => {
+        let filtered = students;
+
+        if (courseFilter !== 'all') {
+            filtered = filtered.filter(std => std.course === courseFilter);
+        }
+
+        if (searchTerm) {
+            const lowercasedSearchTerm = searchTerm.toLowerCase();
+            filtered = filtered.filter(std =>
+                std.name.toLowerCase().includes(lowercasedSearchTerm) ||
+                std.email.toLowerCase().includes(lowercasedSearchTerm) ||
+                std.phone.includes(searchTerm)
+            );
+        }
+
+        return filtered;
     }, [searchTerm, courseFilter, students]);
 
     const loadStudents = async () => {
@@ -27,24 +41,6 @@ const Students = () => {
             console.error('Failed to load students:', error);
             toast.error('Failed to load students');
         }
-    };
-
-    const filterStudents = () => {
-        let filtered = students;
-
-        if (courseFilter !== 'all') {
-            filtered = filtered.filter(std => std.course === courseFilter);
-        }
-
-        if (searchTerm) {
-            filtered = filtered.filter(std =>
-                std.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                std.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                std.phone.includes(searchTerm)
-            );
-        }
-
-        setFilteredStudents(filtered);
     };
 
     const handleDelete = async (id) => {
