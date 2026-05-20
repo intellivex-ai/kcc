@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Calendar, Clock, Tag, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -8,12 +8,19 @@ const Blog = () => {
     const [selectedCategory, setSelectedCategory] = useState('all');
     const [searchTerm, setSearchTerm] = useState('');
 
-    const filteredPosts = blogPosts.filter(post => {
-        const matchesCategory = selectedCategory === 'all' || post.category.toLowerCase() === selectedCategory;
-        const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            post.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
-        return matchesCategory && matchesSearch;
-    });
+    // ⚡ Bolt Performance Optimization
+    // Measure: Prevents redundant .toLowerCase() calls on every filter iteration
+    // Impact: Reduces CPU overhead during re-renders by hoisting string transformation
+    // and memoizing the result to avoid unnecessary recalculations
+    const filteredPosts = useMemo(() => {
+        const lowerSearchTerm = searchTerm.toLowerCase();
+        return blogPosts.filter(post => {
+            const matchesCategory = selectedCategory === 'all' || post.category.toLowerCase() === selectedCategory;
+            const matchesSearch = post.title.toLowerCase().includes(lowerSearchTerm) ||
+                post.excerpt.toLowerCase().includes(lowerSearchTerm);
+            return matchesCategory && matchesSearch;
+        });
+    }, [selectedCategory, searchTerm]);
 
     return (
         <div className="min-h-screen bg-gray-50">
