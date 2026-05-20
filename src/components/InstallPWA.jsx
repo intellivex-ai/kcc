@@ -53,6 +53,7 @@ const InstallPWA = () => {
                 <button
                     onClick={handleDismiss}
                     className="absolute top-2 right-2 p-1 hover:bg-white/20 rounded-full transition-colors"
+                    aria-label="Dismiss install prompt"
                 >
                     <X size={20} />
                 </button>
