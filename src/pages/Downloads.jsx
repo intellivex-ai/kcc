@@ -7,12 +7,21 @@ const Downloads = () => {
     const [selectedCategory, setSelectedCategory] = useState('all');
     const [searchTerm, setSearchTerm] = useState('');
 
-    const filteredDownloads = downloads.filter(item => {
-        const matchesCategory = selectedCategory === 'all' || item.category.toLowerCase().replace(/\s+/g, '-') === selectedCategory;
-        const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            item.description.toLowerCase().includes(searchTerm.toLowerCase());
-        return matchesCategory && matchesSearch;
-    });
+    // ⚡ Bolt Performance Optimization:
+    // Memoize the filtered list and hoist searchTerm.toLowerCase() outside the filter loop
+    // to prevent redundant recalculations on every render.
+    const filteredDownloads = React.useMemo(() => {
+        const searchLower = searchTerm.toLowerCase();
+        return downloads.filter(item => {
+            const matchesCategory = selectedCategory === 'all' || item.category.toLowerCase().replace(/\s+/g, '-') === selectedCategory;
+            if (!matchesCategory) return false;
+
+            if (!searchLower) return true;
+
+            return item.title.toLowerCase().includes(searchLower) ||
+                item.description.toLowerCase().includes(searchLower);
+        });
+    }, [searchTerm, selectedCategory]);
 
     return (
         <div className="min-h-screen bg-gray-50">
