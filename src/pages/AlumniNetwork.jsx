@@ -11,14 +11,23 @@ const AlumniNetwork = () => {
     const courses = [...new Set(alumniData.map(a => a.course))];
     const batches = [...new Set(alumniData.map(a => a.batch))].sort().reverse();
 
-    const filteredAlumni = alumniData.filter(alumni => {
-        const matchesSearch = alumni.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            alumni.currentRole.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            alumni.company.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesCourse = filterCourse === 'all' || alumni.course === filterCourse;
-        const matchesBatch = filterBatch === 'all' || alumni.batch === filterBatch;
-        return matchesSearch && matchesCourse && matchesBatch;
-    });
+    // ⚡ Bolt Performance Optimization:
+    // Memoize the filtered list and hoist searchTerm.toLowerCase() outside the filter loop
+    // to prevent redundant recalculations on every render.
+    const filteredAlumni = React.useMemo(() => {
+        const searchLower = searchTerm.toLowerCase();
+        return alumniData.filter(alumni => {
+            const matchesCourse = filterCourse === 'all' || alumni.course === filterCourse;
+            const matchesBatch = filterBatch === 'all' || alumni.batch === filterBatch;
+            if (!matchesCourse || !matchesBatch) return false;
+
+            if (!searchLower) return true;
+
+            return alumni.name.toLowerCase().includes(searchLower) ||
+                alumni.currentRole.toLowerCase().includes(searchLower) ||
+                alumni.company.toLowerCase().includes(searchLower);
+        });
+    }, [searchTerm, filterCourse, filterBatch]);
 
     return (
         <div className="min-h-screen bg-gray-50">

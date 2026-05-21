@@ -1,0 +1,3 @@
+## 2024-05-21 - [Hoist and Memoize Array Filters]
+**Learning:** React components containing multiple states for filtering often perform `.filter` loops directly inside the render body. When these filters use `.toLowerCase()` or similar string operations, they recalculate on every render, wasting CPU cycles and leading to unnecessary string allocations.
+**Action:** Extract `.toLowerCase()` out of the `.filter` loop body and memoize the entire filtered array with `useMemo` so it only recalculates when dependencies change. This provides a measurable CPU overhead reduction in list filtering components.

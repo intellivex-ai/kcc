@@ -37,9 +37,12 @@ const Inquiries = () => {
         }
 
         if (searchTerm) {
+            // ⚡ Bolt Performance Optimization:
+            // Hoist searchTerm.toLowerCase() outside the filter loop
+            const searchLower = searchTerm.toLowerCase();
             filtered = filtered.filter(inq =>
-                inq.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                inq.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                inq.name.toLowerCase().includes(searchLower) ||
+                inq.email.toLowerCase().includes(searchLower) ||
                 inq.phone.includes(searchTerm)
             );
         }
