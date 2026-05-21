@@ -1,0 +1,4 @@
+## 2024-05-24 - Secure Fallback for Admin Credentials
+**Vulnerability:** The admin authentication configuration in `src/lib/admin-auth.js` used hardcoded default credentials (`admin` / `kcc2024`) as fallbacks when environment variables were missing.
+**Learning:** Hardcoding default credentials as fallbacks meant that if the app was misconfigured or environment variables failed to load, anyone could log in using known defaults, bypassing authentication.
+**Prevention:** Always fail securely by using `crypto.randomUUID()` or throwing an error as a fallback for sensitive environment variables to prevent accidental access via known default credentials.
