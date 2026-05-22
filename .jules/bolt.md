@@ -1,0 +1,3 @@
+## 2024-05-24 - Performance pattern: Hoist repetitive string transformations out of render loops
+**Learning:** Found a widespread performance anti-pattern where `.toLowerCase()` is called repeatedly inside array `.filter()` loops during component renders (e.g., `searchTerm.toLowerCase()` evaluated for every single post). Since these loops execute every time the component renders, this recalculation causes unnecessary CPU overhead.
+**Action:** When filtering lists based on search terms, always hoist the string transformation outside the `.filter` loop (e.g., `const lowerSearch = searchTerm.toLowerCase();`) and memoize the entire filtered list with `useMemo` so it only re-evaluates when the search term or category changes, not on every render.
