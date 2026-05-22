@@ -1,0 +1,3 @@
+## 2025-05-15 - Add ARIA Labels to Modal Icon Buttons
+**Learning:** Found a recurring pattern in the UI where icon-only buttons inside modals/lightboxes (like Close, Previous, and Next in `Gallery.jsx`) lack `aria-label`s, making them invisible or unclear to screen readers.
+**Action:** Always add descriptive `aria-label` attributes to icon-only interactive elements and enforce visual keyboard accessibility via focus styles (`focus-visible:outline-none focus-visible:ring-4`) whenever creating or updating modal components.
