@@ -1,0 +1,3 @@
+## 2024-05-23 - Hoist expensive transformations out of filter loops
+**Learning:** Found a specific performance anti-pattern where `.toLowerCase()` was being called repeatedly inside array `.filter()` loops during React component renders (e.g., `JobBoard.jsx`). Since React re-renders frequently when search terms update, these inside-loop string transformations cause significant and redundant CPU overhead.
+**Action:** Always hoist static data transformations derived from state (like extracting lowercase search terms) outside of component render cycles into top-level constants or memoized values using `useMemo`. This prevents unnecessary recalculation and reduces CPU load during re-renders.
