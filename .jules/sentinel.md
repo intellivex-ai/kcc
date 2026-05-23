@@ -1,0 +1,4 @@
+## 2024-11-23 - Hardcoded Fallback Credentials for Admin Login
+**Vulnerability:** The `admin-auth.js` file used hardcoded fallback credentials (`'admin'` / `'kcc2024'`) for the admin login functionality if the corresponding `VITE_ADMIN_USERNAME` and `VITE_ADMIN_PASSWORD` environment variables were not set.
+**Learning:** This is a significant vulnerability because it can lead to unintentional deployment with guessable credentials if environment configuration fails, essentially leaving a backdoor open. Using guessable fallbacks compromises the security posture of the application.
+**Prevention:** To prevent this, client-side applications that depend on environment variables for sensitive access logic should "fail securely" by using random unguessable values (like `crypto.randomUUID()`) as fallbacks. This ensures that even in misconfigured states, the application remains secure against unauthorized access.
