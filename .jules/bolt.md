@@ -1,0 +1,3 @@
+## 2024-05-24 - Hoisting `.toLowerCase()` out of React loops
+**Learning:** A widespread performance anti-pattern exists in list filtering components across the codebase where `.toLowerCase()` is called repeatedly inside array `.filter()` loops during renders. Hoisting this string transformation outside the loop and using `useMemo` significantly reduces CPU overhead during re-renders.
+**Action:** Always move static data transformations derived from constants or simple state variables outside of component render cycles into top-level constants or memoized values using `useMemo` to prevent unnecessary recalculation.
