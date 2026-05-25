@@ -1,0 +1,3 @@
+## 2024-05-25 - Icon-only buttons lacking ARIA labels
+**Learning:** Common accessible elements like chat toggle buttons and send buttons that are solely icon-based (using `lucide-react`) were found lacking `aria-label`s. This makes it difficult for screen readers to identify the button's purpose, hindering accessibility. The same is true for inputs that don't have associated labels.
+**Action:** When working with components that use icon-only buttons (like `lucide-react`), proactively verify and add `aria-label` attributes to ensure they are accessible. Additionally, ensure form inputs have appropriate `aria-label` or `aria-labelledby` attributes, and both buttons and inputs have visible focus states using `focus-visible`.

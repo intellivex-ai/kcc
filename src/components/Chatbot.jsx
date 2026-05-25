@@ -52,12 +52,13 @@ const Chatbot = () => {
         <>
             {/* Toggle Button */}
             <motion.button
+                aria-label={isOpen ? "Close chat" : "Open chat support"}
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => setIsOpen(!isOpen)}
-                className="fixed bottom-6 right-6 z-50 bg-primary hover:bg-primary-light text-white p-4 rounded-full shadow-2xl flex items-center justify-center cursor-pointer"
+                className="fixed bottom-6 right-6 z-50 bg-primary hover:bg-primary-light text-white p-4 rounded-full shadow-2xl flex items-center justify-center cursor-pointer focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary focus-visible:ring-offset-2"
             >
                 {isOpen ? <X size={24} /> : <MessageCircle size={28} />}
             </motion.button>
@@ -140,16 +141,18 @@ const Chatbot = () => {
                         {/* Input Area */}
                         <form onSubmit={handleSend} className="p-3 bg-white border-t border-gray-100 flex gap-2 shrink-0 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
                             <input
+                                aria-label="Type your message"
                                 type="text"
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
                                 placeholder="Type your query..."
-                                className="flex-1 bg-gray-100 text-gray-900 placeholder:text-gray-500 border-0 rounded-full px-4 py-2 text-sm focus:ring-2 focus:ring-primary focus:bg-white transition-all outline-none"
+                                className="flex-1 bg-gray-100 text-gray-900 placeholder:text-gray-500 border-0 rounded-full px-4 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:bg-white transition-all outline-none"
                             />
                             <button
+                                aria-label="Send message"
                                 type="submit"
                                 disabled={!input.trim()}
-                                className="bg-primary hover:bg-primary-light disabled:opacity-50 disabled:cursor-not-allowed text-white p-2 rounded-full transition-all shadow-md active:scale-95 flex items-center justify-center w-10 h-10"
+                                className="bg-primary hover:bg-primary-light disabled:opacity-50 disabled:cursor-not-allowed text-white p-2 rounded-full transition-all shadow-md active:scale-95 flex items-center justify-center w-10 h-10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary focus-visible:ring-offset-2"
                             >
                                 <Send size={18} className={input.trim() ? "ml-0.5" : ""} />
                             </button>
