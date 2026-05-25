@@ -1,0 +1,3 @@
+## 2024-05-24 - Avoid redundant string operations inside array filters in React components
+**Learning:** Calling `.toLowerCase()` repeatedly inside an array filter loop (`Array.prototype.filter`) during component render causes significant unnecessary CPU overhead. This is a common performance anti-pattern in list filtering components across this codebase (e.g., JobBoard, AlumniNetwork).
+**Action:** Always hoist expensive or redundant string transformations (like `.toLowerCase()`) outside of the `.filter()` loop, and wrap the entire filtering logic with `useMemo` to cache the derived data and prevent unnecessary recalculation on every render.
