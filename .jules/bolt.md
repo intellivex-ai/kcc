@@ -1,0 +1,3 @@
+## 2024-05-18 - Hoisting expensive transformations in list filtering components
+**Learning:** There is a widespread anti-pattern in list filtering components across the codebase (e.g., `JobBoard.jsx`, `AlumniNetwork.jsx`, `Downloads.jsx`, `Blog.jsx`, and `admin/Inquiries.jsx`) where `.toLowerCase()` is called repeatedly inside array `.filter()` loops during component renders. This causes unnecessary recalculation and increases render-time CPU overhead.
+**Action:** When working with list filtering, always hoist string transformations like `.toLowerCase()` outside the iteration loops and use `useMemo` to cache the calculation. This significantly reduces redundant evaluations and improves rendering performance.
