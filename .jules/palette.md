@@ -1,0 +1,3 @@
+## 2024-05-24 - Gallery Accessibility Fix
+**Learning:** Found that interactive `motion.div` elements used as image cards in the Gallery component lacked basic keyboard accessibility support (tabIndex, role, keydown handler). This is a common pattern when using div/motion.div for clickable items instead of semantic buttons, which makes them inaccessible to keyboard users and screen readers.
+**Action:** When making custom non-button elements interactive (like `motion.div`), always explicitly add `tabIndex={0}`, `role="button"`, appropriate `aria-label`, keyboard event handlers (`onKeyDown`), and visual focus indicators (`focus-visible` classes).
