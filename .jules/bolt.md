@@ -1,0 +1,3 @@
+## 2024-11-20 - Hoisting and Memoizing String Transformations in Render Loops
+**Learning:** Calling `.toLowerCase()` repeatedly inside array `.filter()` loops during renders is a widespread performance anti-pattern across the codebase. It causes unnecessary recalculation and CPU overhead on every re-render.
+**Action:** Hoist the string transformation outside the loop and use `useMemo` to cache the calculated filtered list. This prevents redundant re-renders and reduces CPU overhead.
