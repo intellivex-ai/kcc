@@ -1,0 +1,3 @@
+## 2024-05-30 - Hoisting and Memoizing Array Filters
+**Learning:** Calling `.toLowerCase()` repeatedly inside array `.filter()` loops during renders is a widespread performance anti-pattern. React functional components run the entire body on every render, so un-memoized filters and static data operations cause unnecessary recalculations.
+**Action:** Always move static data transformations derived from constants (such as object key extraction and filtering) outside of component render cycles into top-level constants, and hoist expensive transformations (like `.toLowerCase()`) outside of array iteration loops, memoizing the filter with `useMemo` to cache the result.
