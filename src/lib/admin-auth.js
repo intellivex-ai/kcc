@@ -7,9 +7,10 @@
 const ADMIN_KEY = 'kcc_admin_session';
 
 // Get credentials from environment variables
+// Security: Using randomUUID fallback to ensure application fails securely if credentials are misconfigured, preventing hardcoded backdoor access.
 const ADMIN_CREDENTIALS = {
-    username: import.meta.env.VITE_ADMIN_USERNAME || 'admin',
-    password: import.meta.env.VITE_ADMIN_PASSWORD || 'kcc2024'
+    username: import.meta.env.VITE_ADMIN_USERNAME || crypto.randomUUID(),
+    password: import.meta.env.VITE_ADMIN_PASSWORD || crypto.randomUUID()
 };
 
 /**
