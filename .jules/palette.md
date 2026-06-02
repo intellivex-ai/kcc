@@ -1,0 +1,3 @@
+## 2024-05-24 - Add ARIA Labels and Focus Styles to Icon-only Buttons
+**Learning:** Icon-only buttons using Lucide React icons frequently lack `aria-label` attributes and keyboard focus indicators (`focus-visible` classes) in this app's components, making them inaccessible to screen readers and difficult to use for keyboard-only users.
+**Action:** Consistently add `aria-label`, `title` attributes, and Tailwind's `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2` classes whenever using icon-only buttons to ensure full accessibility and a better user experience.
