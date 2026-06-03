@@ -1,0 +1,3 @@
+## 2024-06-03 - Avoid repeated string transformations in filter loops
+**Learning:** Calling `.toLowerCase()` repeatedly on the search term inside `.filter()` loops during renders is a widespread performance anti-pattern across the codebase. It significantly increases CPU overhead as the same transformation is applied for every item in the array every time the component renders.
+**Action:** Always hoist static data transformations derived from constants (like search term conversion) outside of the filter loop. Additionally, use `useMemo` to cache the calculation so the list only re-filters when the dependencies (search term or selected filters) change.
