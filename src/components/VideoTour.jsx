@@ -45,6 +45,7 @@ const VideoTour = () => {
                                     whileHover={{ scale: 1.1 }}
                                     whileTap={{ scale: 0.95 }}
                                     className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl group"
+                                    aria-label="Play video tour"
                                 >
                                     <Play size={32} className="text-primary ml-1 group-hover:scale-110 transition-transform" fill="currentColor" />
                                 </motion.button>
@@ -75,6 +76,7 @@ const VideoTour = () => {
                                 <button
                                     onClick={() => setIsPlaying(false)}
                                     className="absolute top-4 right-4 w-10 h-10 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center text-white transition-colors z-10"
+                                    aria-label="Close video tour"
                                 >
                                     <X size={20} />
                                 </button>
