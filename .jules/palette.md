@@ -1,0 +1,3 @@
+## 2024-06-15 - [Added aria-labels to Chatbot Icon-only Buttons]
+**Learning:** Found an accessibility issue pattern specific to this app's components where icon-only buttons (using Lucide React icons) consistently lack `aria-label` attributes and keyboard focus states. The Chatbot toggle and Send buttons were visually clear but completely inaccessible to screen readers and difficult to navigate via keyboard.
+**Action:** Added `aria-label`, `aria-expanded` (where applicable), and consistent Tailwind `focus-visible` ring classes (`focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary focus-visible:ring-offset-2`) to make them accessible. Will continue to check for this pattern when working with other components.
