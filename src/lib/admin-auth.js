@@ -7,9 +7,12 @@
 const ADMIN_KEY = 'kcc_admin_session';
 
 // Get credentials from environment variables
+// Security: Use secure random fallbacks to ensure app fails securely if misconfigured. We check for crypto.randomUUID to avoid crashes in non-secure environments.
+const generateRandomFallback = () => typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2);
+
 const ADMIN_CREDENTIALS = {
-    username: import.meta.env.VITE_ADMIN_USERNAME || 'admin',
-    password: import.meta.env.VITE_ADMIN_PASSWORD || 'kcc2024'
+    username: import.meta.env.VITE_ADMIN_USERNAME || generateRandomFallback(),
+    password: import.meta.env.VITE_ADMIN_PASSWORD || generateRandomFallback()
 };
 
 /**
@@ -73,7 +76,7 @@ export const getSession = () => {
  */
 export const changePassword = (oldPassword, newPassword) => {
     // In production, this would call an API
-    if (oldPassword === DEFAULT_CREDENTIALS.password) {
+    if (oldPassword === ADMIN_CREDENTIALS.password) {
         // Update credentials (in real app, this would be on server)
         return { success: true };
     }
