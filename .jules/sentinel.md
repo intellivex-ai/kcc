@@ -1,0 +1,4 @@
+## 2024-05-15 - Hardcoded Credentials Fallback Vulnerability
+**Vulnerability:** The admin authentication logic in `src/lib/admin-auth.js` used weak, easily guessable hardcoded strings (`admin` / `kcc2024`) as fallbacks when environment variables were not provided.
+**Learning:** Hardcoded fallbacks undermine security, even when environment variables are expected, because misconfigured deployments can silently fall back to these default credentials, leaving admin interfaces fully exposed to trivial brute-force or dictionary attacks. Furthermore, secure random generators like `crypto.randomUUID()` must be checked for availability because they are not available in insecure browser contexts.
+**Prevention:** Always fail securely by using strong random values (e.g., `crypto.randomUUID()` or `Math.random()`) for fallback credentials, ensuring that missing environment variables result in an unusable system rather than an insecure one.
