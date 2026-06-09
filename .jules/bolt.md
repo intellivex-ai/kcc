@@ -1,0 +1,3 @@
+## 2024-06-09 - Widespread string transformation inside array filter loops
+**Learning:** A widespread performance anti-pattern exists in list filtering components across the codebase (e.g., JobBoard.jsx, AlumniNetwork.jsx, Downloads.jsx, Blog.jsx, and admin/Inquiries.jsx) where `.toLowerCase()` is called repeatedly inside array `.filter()` loops during renders. This recalculates the same lowercase string for every item in the list on every render.
+**Action:** When implementing search filters on lists, always hoist the string transformation (like `.toLowerCase()`) outside the `.filter()` loop and cache the result using `useMemo` to prevent redundant calculations during re-renders.
