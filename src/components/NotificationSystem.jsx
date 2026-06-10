@@ -102,7 +102,8 @@ const NotificationSystem = () => {
             <div className="fixed bottom-24 right-6 z-50">
                 <button
                     onClick={() => setShowPanel(!showPanel)}
-                    className="relative w-14 h-14 bg-primary text-white rounded-full shadow-lg hover:bg-blue-700 transition-all flex items-center justify-center group"
+                    aria-label="Toggle notifications"
+                    className="relative w-14 h-14 bg-primary text-white rounded-full shadow-lg hover:bg-blue-700 transition-all flex items-center justify-center group focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary focus-visible:ring-offset-2"
                 >
                     <Bell size={24} className={showPanel ? 'animate-bounce' : ''} />
                     {unreadCount > 0 && (
@@ -127,7 +128,8 @@ const NotificationSystem = () => {
                             <h3 className="font-bold text-lg">Notifications</h3>
                             <button
                                 onClick={() => setShowPanel(false)}
-                                className="hover:bg-white/20 rounded-lg p-1 transition-colors"
+                                aria-label="Close notifications panel"
+                                className="hover:bg-white/20 rounded-lg p-1 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
                             >
                                 <X size={20} />
                             </button>
@@ -175,7 +177,8 @@ const NotificationSystem = () => {
                                                             e.stopPropagation();
                                                             deleteNotification(notif.id);
                                                         }}
-                                                        className="text-gray-400 hover:text-red-600 transition-colors shrink-0"
+                                                        aria-label="Delete notification"
+                                                        className="text-gray-400 hover:text-red-600 transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-1 rounded-sm"
                                                     >
                                                         <X size={16} />
                                                     </button>
