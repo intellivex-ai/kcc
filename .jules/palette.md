@@ -1,0 +1,3 @@
+## 2024-06-03 - Missing ARIA Labels on Icon-only Buttons
+**Learning:** Icon-only buttons (like the notification bell, close icons, etc.) across the application frequently lack `aria-label` attributes and proper keyboard focus states (`focus-visible`). This makes them completely inaccessible to screen reader users (who hear "button" with no context) and difficult for keyboard navigators to identify when focused.
+**Action:** Always verify icon-only interactive elements have an `aria-label` describing their action and ensure consistent, visible focus rings are applied using `focus-visible` utility classes (e.g., `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2`).
