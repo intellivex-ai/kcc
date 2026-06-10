@@ -1,0 +1,3 @@
+## 2024-06-11 - Hoisting string transformations and memoization in list filtering
+**Learning:** Calling `.toLowerCase()` inside array `.filter()` loops during renders is a widespread performance anti-pattern. This causes redundant string transformations for every element in the array on every render, significantly impacting performance for larger lists.
+**Action:** Hoist the `.toLowerCase()` transformation of the search term outside the `.filter()` loop. Additionally, wrap the entire filtering operation in a `useMemo` hook to cache the calculation and prevent unnecessary recalculations on re-renders when the dependencies (data, search term, filters) haven't changed.
