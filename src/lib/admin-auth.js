@@ -6,10 +6,18 @@
 
 const ADMIN_KEY = 'kcc_admin_session';
 
+// 🛡️ Sentinel: Fixed hardcoded credentials by using a safe random generator for fallbacks.
+// This prevents crashing in insecure contexts while guaranteeing authentication failure if env vars are missing.
+const generateSafeFallback = () => {
+    return typeof crypto !== 'undefined' && crypto.randomUUID
+        ? crypto.randomUUID()
+        : Math.random().toString(36).substring(2);
+};
+
 // Get credentials from environment variables
 const ADMIN_CREDENTIALS = {
-    username: import.meta.env.VITE_ADMIN_USERNAME || 'admin',
-    password: import.meta.env.VITE_ADMIN_PASSWORD || 'kcc2024'
+    username: import.meta.env.VITE_ADMIN_USERNAME || generateSafeFallback(),
+    password: import.meta.env.VITE_ADMIN_PASSWORD || generateSafeFallback()
 };
 
 /**
@@ -73,7 +81,7 @@ export const getSession = () => {
  */
 export const changePassword = (oldPassword, newPassword) => {
     // In production, this would call an API
-    if (oldPassword === DEFAULT_CREDENTIALS.password) {
+    if (oldPassword === ADMIN_CREDENTIALS.password) {
         // Update credentials (in real app, this would be on server)
         return { success: true };
     }
