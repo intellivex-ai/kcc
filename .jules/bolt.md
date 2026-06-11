@@ -1,0 +1,3 @@
+## 2024-05-24 - Hoisting repeated string transformations
+**Learning:** A widespread performance anti-pattern was found in list filtering components where `.toLowerCase()` is called repeatedly inside array `.filter()` loops during renders, recalculating the same string transformation on every iteration. This causes unnecessary processing overhead, especially for larger data sets.
+**Action:** When filtering lists using text search, I should hoist the string transformation outside the filter loop and use `useMemo` to cache the entire filtered result array. This eliminates redundant transformations per iteration and prevents unnecessary recalculations on every component render.
