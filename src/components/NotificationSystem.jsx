@@ -103,6 +103,7 @@ const NotificationSystem = () => {
                 <button
                     onClick={() => setShowPanel(!showPanel)}
                     className="relative w-14 h-14 bg-primary text-white rounded-full shadow-lg hover:bg-blue-700 transition-all flex items-center justify-center group"
+                    aria-label="Toggle notifications panel"
                 >
                     <Bell size={24} className={showPanel ? 'animate-bounce' : ''} />
                     {unreadCount > 0 && (
@@ -128,6 +129,7 @@ const NotificationSystem = () => {
                             <button
                                 onClick={() => setShowPanel(false)}
                                 className="hover:bg-white/20 rounded-lg p-1 transition-colors"
+                                aria-label="Close notifications panel"
                             >
                                 <X size={20} />
                             </button>
@@ -176,6 +178,7 @@ const NotificationSystem = () => {
                                                             deleteNotification(notif.id);
                                                         }}
                                                         className="text-gray-400 hover:text-red-600 transition-colors shrink-0"
+                                                        aria-label="Delete notification"
                                                     >
                                                         <X size={16} />
                                                     </button>
