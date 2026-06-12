@@ -1,0 +1,3 @@
+## 2024-06-12 - Hoisting String Transformations in List Filtering
+**Learning:** Calling `.toLowerCase()` directly inside an array `.filter()` function creates unnecessary string allocations and transformations on every re-render and for every item in the list, acting as a widespread performance anti-pattern. While `JobBoard.jsx` and `AlumniNetwork.jsx` are optimized, pages like `Downloads.jsx` and `Blog.jsx` suffer from this issue.
+**Action:** Always hoist string transformations (like `.toLowerCase()`) outside of `.filter()` loops and cache the result of the filter operation using `useMemo` so that the array is only recalculated when the underlying data or search parameters change.
