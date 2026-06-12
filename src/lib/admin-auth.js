@@ -6,10 +6,18 @@
 
 const ADMIN_KEY = 'kcc_admin_session';
 
+// 🛡️ Sentinel: Safe random fallback generator
+const generateSafeId = () => {
+    return typeof crypto !== 'undefined' && crypto.randomUUID
+        ? crypto.randomUUID()
+        : Math.random().toString(36).substring(2);
+};
+
+// 🛡️ Sentinel: Removed hardcoded static credentials, using secure random fallbacks
 // Get credentials from environment variables
 const ADMIN_CREDENTIALS = {
-    username: import.meta.env.VITE_ADMIN_USERNAME || 'admin',
-    password: import.meta.env.VITE_ADMIN_PASSWORD || 'kcc2024'
+    username: import.meta.env.VITE_ADMIN_USERNAME || generateSafeId(),
+    password: import.meta.env.VITE_ADMIN_PASSWORD || generateSafeId()
 };
 
 /**
@@ -73,7 +81,8 @@ export const getSession = () => {
  */
 export const changePassword = (oldPassword, newPassword) => {
     // In production, this would call an API
-    if (oldPassword === DEFAULT_CREDENTIALS.password) {
+    // 🛡️ Sentinel: Fixed undefined reference from DEFAULT_CREDENTIALS to ADMIN_CREDENTIALS
+    if (oldPassword === ADMIN_CREDENTIALS.password) {
         // Update credentials (in real app, this would be on server)
         return { success: true };
     }
