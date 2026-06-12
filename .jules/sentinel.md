@@ -1,0 +1,7 @@
+## 2024-05-15 - Hardcoded Admin Credentials Fallback
+
+**Vulnerability:** Found hardcoded static credentials ('admin' and 'kcc2024') used as fallbacks in `src/lib/admin-auth.js` when environment variables `VITE_ADMIN_USERNAME` and `VITE_ADMIN_PASSWORD` were not set. This could allow unauthorized access to the admin panel if the application was deployed without properly configured environment variables. Additionally, the `changePassword` function had a reference error trying to use an undefined `DEFAULT_CREDENTIALS` variable instead of `ADMIN_CREDENTIALS`.
+
+**Learning:** Hardcoding default credentials as a fallback mechanism for environment variables is a common but dangerous anti-pattern. If the environment configuration fails or is omitted, the application silently defaults to known, insecure credentials, creating a critical vulnerability. The application should fail securely. Since this is a Vite application, generating safe random IDs is tricky due to `crypto.randomUUID()` not being available in insecure contexts.
+
+**Prevention:** Never use static strings as fallbacks for sensitive credentials. If fallbacks are absolutely necessary to prevent crashes during development or misconfiguration, use securely generated random strings (e.g., `typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2)`) to ensure the application fails closed/securely if misconfigured.
