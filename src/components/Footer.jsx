@@ -20,9 +20,9 @@ const Footer = () => {
                             Empowering Rajatalab with Digital Excellence. Your trusted partner for Computer Education, Banking Seva, and Government Services.
                         </p>
                         <div className="flex space-x-4 pt-2">
-                            <a href="#" className="text-gray-300 hover:text-secondary transition-colors"><Facebook size={20} /></a>
-                            <a href="#" className="text-gray-300 hover:text-secondary transition-colors"><Instagram size={20} /></a>
-                            <a href="#" className="text-gray-300 hover:text-secondary transition-colors"><Twitter size={20} /></a>
+                            <a href="#" aria-label="Facebook" className="text-gray-300 hover:text-secondary transition-colors"><Facebook size={20} /></a>
+                            <a href="#" aria-label="Instagram" className="text-gray-300 hover:text-secondary transition-colors"><Instagram size={20} /></a>
+                            <a href="#" aria-label="Twitter" className="text-gray-300 hover:text-secondary transition-colors"><Twitter size={20} /></a>
                         </div>
                     </div>
 
