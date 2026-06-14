@@ -102,6 +102,8 @@ const Navbar = () => {
               onMouseLeave={() => setActiveDropdown(null)}
             >
               <button
+                aria-haspopup="true"
+                aria-expanded={activeDropdown === 'services'}
                 className={cn(
                   "flex items-center gap-1 font-semibold transition-colors py-2",
                   location.pathname.includes('services')

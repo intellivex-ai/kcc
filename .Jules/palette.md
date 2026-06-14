@@ -1,0 +1,3 @@
+## 2023-10-27 - Missing ARIA attributes on custom hover dropdowns
+**Learning:** Custom UI components like hover-based dropdowns often miss critical accessibility attributes because standard HTML elements (`<select>` or `<details>`) handle these automatically, whereas custom elements built with `<div>` or `<button>` require manual attribute management (like `aria-haspopup` and `aria-expanded`).
+**Action:** When implementing custom interactive elements (e.g., hover menus or accordions), proactively verify that state-indicating ARIA attributes (such as `aria-expanded`) are dynamically updated alongside component state variables.
