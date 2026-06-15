@@ -1,0 +1,3 @@
+## 2024-06-15 - Unnecessary Inside-the-Loop .toLowerCase() in Array .filter()
+**Learning:** Found a widespread performance anti-pattern in list filtering components where `.toLowerCase()` is called repeatedly on the search term inside array `.filter()` loops during every render. This redundant string transformation causes unnecessary computational overhead, especially as lists grow, leading to jankier typing and slower interactions.
+**Action:** Always hoist invariant string transformations (like converting the search term to lowercase) outside the filter loop. Additionally, use `useMemo` to cache the filtered list, preventing re-computation unless the search term or filters change.
