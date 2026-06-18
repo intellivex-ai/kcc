@@ -1,0 +1,3 @@
+## 2024-05-24 - Hoist string transformations in render loops
+**Learning:** Found a widespread performance anti-pattern across list filtering components (`JobBoard.jsx`, `EventsSection.jsx`, etc.) where `.toLowerCase()` is called repeatedly inside array `.filter()` loops during render. This leads to redundant string allocations and recalculations, making filtering slow for larger lists.
+**Action:** Hoist `.toLowerCase()` transformations on inputs/search terms outside of the filter loop. Use `useMemo` to cache the resulting filtered list so it only recalculates when dependencies change. Ensure to leave a `// ⚡ Bolt:` comment explaining the optimization.
