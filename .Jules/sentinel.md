@@ -1,0 +1,4 @@
+## 2024-06-19 - Fix Hardcoded Admin Password Fallback
+**Vulnerability:** The `admin-auth.js` file used a hardcoded fallback password (`'kcc2024'`) if the `VITE_ADMIN_PASSWORD` environment variable was missing. This allows trivial bypassing of authentication in misconfigured environments.
+**Learning:** Hardcoded fallback credentials completely defeat the purpose of environment variables. They create a false sense of security where an application might appear secure, but silently degrades to a critical vulnerability if the configuration fails to load.
+**Prevention:** If an environment variable for authentication is missing, the application should fail securely. We can implement a secure random fallback generator (e.g., using `crypto.randomUUID()`) to ensure the application defaults to an impossible-to-guess state rather than a known hardcoded value.
