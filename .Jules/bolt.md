@@ -1,0 +1,3 @@
+## 2024-05-24 - Widespread List Filtering Anti-Pattern
+**Learning:** A common performance anti-pattern was discovered across several components where `.toLowerCase()` is called repeatedly inside array `.filter()` loops during renders (e.g., `searchTerm.toLowerCase()`). This causes redundant string transformations for every item in the list, especially noticeable on larger datasets.
+**Action:** When optimizing list filtering, hoist static transformations (like converting the search term to lowercase) outside the filter loop and wrap the entire calculation in a `useMemo` hook to cache the result across re-renders.
