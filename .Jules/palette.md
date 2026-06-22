@@ -1,0 +1,3 @@
+## 2023-10-25 - Form Label Accessibility in Custom Components
+**Learning:** Found that custom form components often use wrapping `div` elements and icons for styling, which can unintentionally separate the `<label>` from the `<input>` visually. While developers may structure them nearby in the DOM, failing to explicitly link them with `htmlFor` and `id` breaks both screen reader association and the UX convenience of clicking a label to focus the input.
+**Action:** Always verify that every `<label>` element has a corresponding `htmlFor` attribute that matches the `id` of its interactive form field, especially in complex or heavily styled form layouts.
