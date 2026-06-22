@@ -1,0 +1,3 @@
+## 2024-11-20 - Redundant toLowerCase() in Component Render Loops
+**Learning:** React functional components that filter arrays during render often suffer from a performance anti-pattern where `.toLowerCase()` is called repeatedly inside a `.filter()` callback for the same outer state variable (like a search term). This happens across many list views in the app (EventsSection, JobBoard, AlumniNetwork, Downloads, Inquiries, Students, Blog).
+**Action:** Always hoist the string transformations of static state variables outside of loops and map/filter callbacks. Combine this with `useMemo` to completely prevent the recalculation of the filtered list and the redundant string allocations on renders where the filter dependencies haven't changed.
