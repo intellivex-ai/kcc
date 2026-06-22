@@ -7,9 +7,12 @@
 const ADMIN_KEY = 'kcc_admin_session';
 
 // Get credentials from environment variables
+// 🛡️ Sentinel: Removed hardcoded default credentials and replaced with secure random fallback.
+const getSecureFallback = () => typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2);
+
 const ADMIN_CREDENTIALS = {
-    username: import.meta.env.VITE_ADMIN_USERNAME || 'admin',
-    password: import.meta.env.VITE_ADMIN_PASSWORD || 'kcc2024'
+    username: import.meta.env.VITE_ADMIN_USERNAME || getSecureFallback(),
+    password: import.meta.env.VITE_ADMIN_PASSWORD || getSecureFallback()
 };
 
 /**
