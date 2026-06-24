@@ -6,10 +6,11 @@
 
 const ADMIN_KEY = 'kcc_admin_session';
 
-// Get credentials from environment variables
+// 🛡️ Sentinel: Removed hardcoded default credentials to prevent unauthorized access. Uses a random fallback if env vars are missing to fail securely.
+const randomString = typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2);
 const ADMIN_CREDENTIALS = {
-    username: import.meta.env.VITE_ADMIN_USERNAME || 'admin',
-    password: import.meta.env.VITE_ADMIN_PASSWORD || 'kcc2024'
+    username: import.meta.env.VITE_ADMIN_USERNAME || `admin_${randomString}`,
+    password: import.meta.env.VITE_ADMIN_PASSWORD || randomString
 };
 
 /**
@@ -73,7 +74,7 @@ export const getSession = () => {
  */
 export const changePassword = (oldPassword, newPassword) => {
     // In production, this would call an API
-    if (oldPassword === DEFAULT_CREDENTIALS.password) {
+    if (oldPassword === ADMIN_CREDENTIALS.password) {
         // Update credentials (in real app, this would be on server)
         return { success: true };
     }
