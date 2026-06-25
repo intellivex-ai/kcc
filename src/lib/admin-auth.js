@@ -6,10 +6,17 @@
 
 const ADMIN_KEY = 'kcc_admin_session';
 
+const generateSafeFallback = () => {
+    return typeof crypto !== 'undefined' && crypto.randomUUID
+        ? crypto.randomUUID()
+        : Math.random().toString(36).substring(2);
+};
+
+// 🛡️ Sentinel: Removed hardcoded fallback credentials and replaced with unguessable random values to ensure the app fails securely if misconfigured.
 // Get credentials from environment variables
 const ADMIN_CREDENTIALS = {
-    username: import.meta.env.VITE_ADMIN_USERNAME || 'admin',
-    password: import.meta.env.VITE_ADMIN_PASSWORD || 'kcc2024'
+    username: import.meta.env.VITE_ADMIN_USERNAME || generateSafeFallback(),
+    password: import.meta.env.VITE_ADMIN_PASSWORD || generateSafeFallback()
 };
 
 /**
