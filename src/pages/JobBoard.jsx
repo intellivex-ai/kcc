@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Search, MapPin, Briefcase, IndianRupee, Calendar, Clock, ExternalLink, Filter } from 'lucide-react';
 import { jobListings, jobCategories } from '../data/jobs';
@@ -8,14 +8,18 @@ const JobBoard = () => {
     const [filterCategory, setFilterCategory] = useState('all');
     const [filterType, setFilterType] = useState('all');
 
-    const filteredJobs = jobListings.filter(job => {
-        const matchesSearch = job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            job.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            job.location.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesCategory = filterCategory === 'all' || job.category === filterCategory;
-        const matchesType = filterType === 'all' || job.type === filterType;
-        return matchesSearch && matchesCategory && matchesType;
-    });
+    // ⚡ Bolt: Hoisted searchTerm.toLowerCase() and memoized filtered results to prevent redundant string manipulation inside filter loop on every render
+    const filteredJobs = useMemo(() => {
+        const term = searchTerm.toLowerCase();
+        return jobListings.filter(job => {
+            const matchesSearch = job.title.toLowerCase().includes(term) ||
+                job.company.toLowerCase().includes(term) ||
+                job.location.toLowerCase().includes(term);
+            const matchesCategory = filterCategory === 'all' || job.category === filterCategory;
+            const matchesType = filterType === 'all' || job.type === filterType;
+            return matchesSearch && matchesCategory && matchesType;
+        });
+    }, [searchTerm, filterCategory, filterType]);
 
     const getTypeColor = (type) => {
         switch (type) {
