@@ -1,0 +1,3 @@
+## 2024-05-24 - Array Iteration Performance in React Renders
+**Learning:** Performing expensive array operations (like `.filter()` combined with string transformations like `.toLowerCase()`) directly inside a React functional component body causes these operations to run on every single re-render, creating a significant performance bottleneck, especially as the list grows or re-renders frequently.
+**Action:** Always wrap expensive list filtering and transformations inside a `useMemo` hook, providing only the required dependency (e.g., the filter state) to ensure the calculation is cached and only runs when the dependency changes.
