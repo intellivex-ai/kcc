@@ -6,10 +6,13 @@
 
 const ADMIN_KEY = 'kcc_admin_session';
 
-// Get credentials from environment variables
+// 🛡️ Sentinel: Removed hardcoded fallback credentials to prevent secret leakage
+// In a production app, authentication MUST be handled by the backend.
+// These environment variables should NOT be prefixed with VITE_ in a real app
+// as they will be bundled in the client code.
 const ADMIN_CREDENTIALS = {
-    username: import.meta.env.VITE_ADMIN_USERNAME || 'admin',
-    password: import.meta.env.VITE_ADMIN_PASSWORD || 'kcc2024'
+    username: import.meta.env.VITE_ADMIN_USERNAME,
+    password: import.meta.env.VITE_ADMIN_PASSWORD
 };
 
 /**
