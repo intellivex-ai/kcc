@@ -31,9 +31,9 @@ const DocumentHelper = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <section className="py-20 bg-primary relative overflow-hidden">
+        <section className="py-20 bg-primary relative">
             {/* Background Noise/Texture */}
-            <div className="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-700 via-gray-900 to-black"></div>
+            <div className="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-700 via-gray-900 to-black overflow-hidden pointer-events-none"></div>
 
             <div className="max-w-4xl mx-auto px-4 relative z-10 text-center">
                 <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-1 rounded-full text-secondary text-sm font-medium mb-6 border border-white/20">
@@ -43,7 +43,7 @@ const DocumentHelper = () => {
                 <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">What documents do I need?</h2>
                 <p className="text-blue-100 text-lg mb-10">Select a service below to generate an instant checklist.</p>
 
-                <div className="relative max-w-xl mx-auto">
+                <div className="relative max-w-xl mx-auto z-30">
                     <button
                         onClick={() => setIsOpen(!isOpen)}
                         className="w-full bg-white text-left px-6 py-4 rounded-xl shadow-xl flex items-center justify-between font-semibold text-gray-800 text-lg hover:bg-gray-50 transition-colors"
@@ -58,7 +58,7 @@ const DocumentHelper = () => {
                                 initial={{ opacity: 0, y: -10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}
-                                className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-2xl overflow-hidden z-20 max-h-60 overflow-y-auto"
+                                className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-2xl overflow-hidden z-40 max-h-60 overflow-y-auto"
                             >
                                 {Object.keys(DOCUMENTS).filter(k => k !== "Select Service").map((service) => (
                                     <button
