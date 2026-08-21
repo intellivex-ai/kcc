@@ -9,15 +9,21 @@ const ADMIN_KEY = 'kcc_admin_session';
 // Get credentials from environment variables
 const ADMIN_CREDENTIALS = {
     username: import.meta.env.VITE_ADMIN_USERNAME || 'admin',
-    password: import.meta.env.VITE_ADMIN_PASSWORD || 'kcc2024'
+    passwordHash: import.meta.env.VITE_ADMIN_PASSWORD_HASH || '8930feaba42a36fd7822b623fb652976a7d85c3cfe38f99936499d23cc174898'
 };
 
 /**
  * Login with username and password
  */
-export const login = (username, password) => {
+export const login = async (username, password) => {
     // Validate credentials
-    if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(password);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
+    if (username === ADMIN_CREDENTIALS.username && hashHex === ADMIN_CREDENTIALS.passwordHash) {
         const session = {
             username,
             loginTime: new Date().toISOString(),
