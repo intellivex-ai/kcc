@@ -7,13 +7,9 @@ import { db } from './firebase';
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, query, orderBy } from 'firebase/firestore';
 
 // Fallback in-memory state
-let localInquiries = [
-    { id: '1', name: 'Rahul Sharma', email: 'rahul@example.com', phone: '9876543210', course: 'ADCA', status: 'new', created_at: new Date().toISOString() }
-];
+let localInquiries = [];
 
-let localStudents = [
-    { id: '1', name: 'Priya Patel', email: 'priya@example.com', phone: '9876543211', course: 'DCA', status: 'active', enrolled_at: new Date().toISOString() }
-];
+let localStudents = [];
 
 // ============================================
 // INQUIRIES CRUD
