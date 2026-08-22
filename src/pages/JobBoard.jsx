@@ -8,14 +8,19 @@ const JobBoard = () => {
     const [filterCategory, setFilterCategory] = useState('all');
     const [filterType, setFilterType] = useState('all');
 
-    const filteredJobs = jobListings.filter(job => {
-        const matchesSearch = job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            job.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            job.location.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesCategory = filterCategory === 'all' || job.category === filterCategory;
-        const matchesType = filterType === 'all' || job.type === filterType;
-        return matchesSearch && matchesCategory && matchesType;
-    });
+    // ⚡ Bolt: Memoize filtered list and hoist .toLowerCase() out of the loop
+    const filteredJobs = React.useMemo(() => {
+        const searchLower = searchTerm.toLowerCase();
+        return jobListings.filter(job => {
+            const matchesSearch = !searchLower ||
+                job.title.toLowerCase().includes(searchLower) ||
+                job.company.toLowerCase().includes(searchLower) ||
+                job.location.toLowerCase().includes(searchLower);
+            const matchesCategory = filterCategory === 'all' || job.category === filterCategory;
+            const matchesType = filterType === 'all' || job.type === filterType;
+            return matchesSearch && matchesCategory && matchesType;
+        });
+    }, [searchTerm, filterCategory, filterType]);
 
     const getTypeColor = (type) => {
         switch (type) {
