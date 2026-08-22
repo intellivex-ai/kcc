@@ -3,7 +3,8 @@
  * Handles PWA push notification subscriptions
  */
 
-const PUBLIC_VAPID_KEY = 'YOUR_PUBLIC_VAPID_KEY_HERE'; // Replace with actual key
+// Use environment variable for VAPID key instead of hardcoding
+const PUBLIC_VAPID_KEY = import.meta.env.VITE_PUBLIC_VAPID_KEY || 'YOUR_PUBLIC_VAPID_KEY_HERE';
 
 /**
  * Request notification permission
