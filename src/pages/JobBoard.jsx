@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Search, MapPin, Briefcase, IndianRupee, Calendar, Clock, ExternalLink, Filter } from 'lucide-react';
 import { jobListings, jobCategories } from '../data/jobs';
@@ -8,14 +8,20 @@ const JobBoard = () => {
     const [filterCategory, setFilterCategory] = useState('all');
     const [filterType, setFilterType] = useState('all');
 
-    const filteredJobs = jobListings.filter(job => {
-        const matchesSearch = job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            job.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            job.location.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesCategory = filterCategory === 'all' || job.category === filterCategory;
-        const matchesType = filterType === 'all' || job.type === filterType;
-        return matchesSearch && matchesCategory && matchesType;
-    });
+    // ⚡ Bolt Optimization: Memoize filtered jobs to prevent re-calculations across non-related re-renders.
+    // ⚡ Bolt Optimization: Move searchTerm.toLowerCase() outside the filter loop to avoid O(N) redundant string transformations.
+    // Expected Impact: Reduces CPU cycles during filtering and typing, resulting in smoother list updates for large job arrays.
+    const filteredJobs = useMemo(() => {
+        const lowerSearch = searchTerm.toLowerCase();
+        return jobListings.filter(job => {
+            const matchesSearch = job.title.toLowerCase().includes(lowerSearch) ||
+                job.company.toLowerCase().includes(lowerSearch) ||
+                job.location.toLowerCase().includes(lowerSearch);
+            const matchesCategory = filterCategory === 'all' || job.category === filterCategory;
+            const matchesType = filterType === 'all' || job.type === filterType;
+            return matchesSearch && matchesCategory && matchesType;
+        });
+    }, [searchTerm, filterCategory, filterType]);
 
     const getTypeColor = (type) => {
         switch (type) {
