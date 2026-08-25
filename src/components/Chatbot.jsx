@@ -52,6 +52,7 @@ const Chatbot = () => {
         <>
             {/* Toggle Button */}
             <motion.button
+                aria-label={isOpen ? "Close chat window" : "Open chat window"}
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 whileHover={{ scale: 1.1 }}
