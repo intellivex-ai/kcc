@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, MapPin, Users, ArrowRight } from 'lucide-react';
 import { events, eventTypes } from '../data/events';
@@ -6,9 +6,13 @@ import { events, eventTypes } from '../data/events';
 const EventsSection = () => {
     const [selectedType, setSelectedType] = useState('all');
 
-    const filteredEvents = selectedType === 'all'
-        ? events.slice(0, 4)
-        : events.filter(e => e.type.toLowerCase() === selectedType).slice(0, 4);
+    // Memoize the filtered events to prevent unnecessary re-calculations on re-renders,
+    // especially since it involves a string transformation (.toLowerCase()) in a filter loop.
+    const filteredEvents = useMemo(() => {
+        return selectedType === 'all'
+            ? events.slice(0, 4)
+            : events.filter(e => e.type.toLowerCase() === selectedType).slice(0, 4);
+    }, [selectedType]);
 
     return (
         <section className="py-16 lg:py-24 bg-white">
