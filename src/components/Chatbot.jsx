@@ -58,6 +58,7 @@ const Chatbot = () => {
                 whileTap={{ scale: 0.9 }}
                 onClick={() => setIsOpen(!isOpen)}
                 className="fixed bottom-6 right-6 z-50 bg-primary hover:bg-primary-light text-white p-4 rounded-full shadow-2xl flex items-center justify-center cursor-pointer"
+                aria-label={isOpen ? "Close chat window" : "Open chat window"}
             >
                 {isOpen ? <X size={24} /> : <MessageCircle size={28} />}
             </motion.button>
@@ -150,6 +151,7 @@ const Chatbot = () => {
                                 type="submit"
                                 disabled={!input.trim()}
                                 className="bg-primary hover:bg-primary-light disabled:opacity-50 disabled:cursor-not-allowed text-white p-2 rounded-full transition-all shadow-md active:scale-95 flex items-center justify-center w-10 h-10"
+                                aria-label="Send message"
                             >
                                 <Send size={18} className={input.trim() ? "ml-0.5" : ""} />
                             </button>
