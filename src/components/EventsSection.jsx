@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, MapPin, Users, ArrowRight } from 'lucide-react';
 import { events, eventTypes } from '../data/events';
@@ -6,9 +6,14 @@ import { events, eventTypes } from '../data/events';
 const EventsSection = () => {
     const [selectedType, setSelectedType] = useState('all');
 
-    const filteredEvents = selectedType === 'all'
-        ? events.slice(0, 4)
-        : events.filter(e => e.type.toLowerCase() === selectedType).slice(0, 4);
+    // ⚡ Bolt: Cache filtered results to avoid re-running array filtering
+    // and string transformations on parent re-renders.
+    // Expected Impact: Prevents unnecessary O(N) operations when component re-renders due to parent state changes.
+    const filteredEvents = useMemo(() => {
+        return selectedType === 'all'
+            ? events.slice(0, 4)
+            : events.filter(e => e.type.toLowerCase() === selectedType).slice(0, 4);
+    }, [selectedType]);
 
     return (
         <section className="py-16 lg:py-24 bg-white">
