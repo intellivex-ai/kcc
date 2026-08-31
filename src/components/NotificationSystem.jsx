@@ -103,6 +103,7 @@ const NotificationSystem = () => {
                 <button
                     onClick={() => setShowPanel(!showPanel)}
                     className="relative w-14 h-14 bg-primary text-white rounded-full shadow-lg hover:bg-blue-700 transition-all flex items-center justify-center group"
+                    aria-label="Toggle notifications"
                 >
                     <Bell size={24} className={showPanel ? 'animate-bounce' : ''} />
                     {unreadCount > 0 && (
