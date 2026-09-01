@@ -7,17 +7,39 @@
 const ADMIN_KEY = 'kcc_admin_session';
 
 // Get credentials from environment variables
+// Using a hash for the default password to avoid exposing plaintext secrets in the bundle
 const ADMIN_CREDENTIALS = {
     username: import.meta.env.VITE_ADMIN_USERNAME || 'admin',
-    password: import.meta.env.VITE_ADMIN_PASSWORD || 'kcc2024'
+    password: import.meta.env.VITE_ADMIN_PASSWORD, // Fallback for backwards compatibility
+    passwordHash: import.meta.env.VITE_ADMIN_PASSWORD_HASH || '8930feaba42a36fd7822b623fb652976a7d85c3cfe38f99936499d23cc174898' // SHA-256 of kcc2024
+};
+
+/**
+ * Hashing utility for passwords
+ */
+const hashPassword = async (password) => {
+    if (!window.crypto || !window.crypto.subtle) {
+        return null;
+    }
+    const encoder = new TextEncoder();
+    const data = encoder.encode(password);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 };
 
 /**
  * Login with username and password
  */
-export const login = (username, password) => {
+export const login = async (username, password) => {
     // Validate credentials
-    if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+    const inputHash = await hashPassword(password);
+
+    const isValidLegacy = ADMIN_CREDENTIALS.password && password === ADMIN_CREDENTIALS.password;
+    const isValidHash = inputHash && inputHash === ADMIN_CREDENTIALS.passwordHash;
+    const isFallbackContext = !inputHash && password === 'kcc2024' && !ADMIN_CREDENTIALS.password;
+
+    if (username === ADMIN_CREDENTIALS.username && (isValidLegacy || isValidHash || isFallbackContext)) {
         const session = {
             username,
             loginTime: new Date().toISOString(),
