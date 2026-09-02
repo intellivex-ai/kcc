@@ -9,7 +9,8 @@ const ADMIN_KEY = 'kcc_admin_session';
 // Get credentials from environment variables
 const ADMIN_CREDENTIALS = {
     username: import.meta.env.VITE_ADMIN_USERNAME || 'admin',
-    password: import.meta.env.VITE_ADMIN_PASSWORD || 'kcc2024'
+    // 🛡️ Sentinel: Removed hardcoded fallback password to prevent credential exposure
+    password: import.meta.env.VITE_ADMIN_PASSWORD
 };
 
 /**
