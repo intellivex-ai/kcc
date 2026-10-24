@@ -9,7 +9,10 @@ const ADMIN_KEY = 'kcc_admin_session';
 // Get credentials from environment variables
 const ADMIN_CREDENTIALS = {
     username: import.meta.env.VITE_ADMIN_USERNAME || 'admin',
-    password: import.meta.env.VITE_ADMIN_PASSWORD || 'kcc2024'
+    // Security Risk: Client-side auth is inherently insecure.
+    // VITE_ variables are exposed in the bundle.
+    // Removed hardcoded fallback password to prevent direct leakage.
+    password: import.meta.env.VITE_ADMIN_PASSWORD
 };
 
 /**
