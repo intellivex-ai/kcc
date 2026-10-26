@@ -1,0 +1,3 @@
+## 2024-12-14 - Widespread .toLowerCase() Performance Anti-Pattern
+**Learning:** Found a widespread performance anti-pattern in list filtering components where `.toLowerCase()` is called repeatedly inside array `.filter()` loops during renders, especially for `searchTerm`. This causes unnecessary redundant string allocations and transformations on every iteration.
+**Action:** Always hoist invariant transformations (like `searchTerm.toLowerCase()`) outside of the filter loop, and wrap the filtering logic in `useMemo` to cache the calculation and prevent expensive re-computations on unrelated component re-renders.
