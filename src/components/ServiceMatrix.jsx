@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { services } from '../lib/service-data';
 import ServiceCard from './ServiceCard';
 import { motion } from 'framer-motion';
@@ -8,9 +8,10 @@ const ServiceMatrix = () => {
 
     const categories = ['All', 'Banking', 'Govt Services', 'Education', 'Utility', 'Insurance'];
 
-    const filteredServices = filter === 'All'
+    // Optimize filtering performance by memoizing the result based on the current filter
+    const filteredServices = useMemo(() => filter === 'All'
         ? services
-        : services.filter(s => s.category === filter);
+        : services.filter(s => s.category === filter), [filter]);
 
     return (
         <section className="py-16 lg:py-24 bg-gray-50 relative overflow-hidden">
