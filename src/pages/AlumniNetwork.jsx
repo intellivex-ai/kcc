@@ -1,24 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Briefcase, MapPin, Mail, Linkedin, GraduationCap } from 'lucide-react';
 import { alumniData } from '../data/alumni';
+
+// ⚡ Bolt: Moved static derivations outside component to prevent O(N log N) recalculation on every render
+const courses = [...new Set(alumniData.map(a => a.course))];
+const batches = [...new Set(alumniData.map(a => a.batch))].sort().reverse();
 
 const AlumniNetwork = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [filterCourse, setFilterCourse] = useState('all');
     const [filterBatch, setFilterBatch] = useState('all');
 
-    const courses = [...new Set(alumniData.map(a => a.course))];
-    const batches = [...new Set(alumniData.map(a => a.batch))].sort().reverse();
-
-    const filteredAlumni = alumniData.filter(alumni => {
-        const matchesSearch = alumni.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            alumni.currentRole.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            alumni.company.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesCourse = filterCourse === 'all' || alumni.course === filterCourse;
-        const matchesBatch = filterBatch === 'all' || alumni.batch === filterBatch;
-        return matchesSearch && matchesCourse && matchesBatch;
-    });
+    // ⚡ Bolt: Memoized filter and hoisted search term lowercasing to prevent 3*N redundant string operations per render
+    const filteredAlumni = useMemo(() => {
+        const searchLower = searchTerm.toLowerCase();
+        return alumniData.filter(alumni => {
+            const matchesSearch = alumni.name.toLowerCase().includes(searchLower) ||
+                alumni.currentRole.toLowerCase().includes(searchLower) ||
+                alumni.company.toLowerCase().includes(searchLower);
+            const matchesCourse = filterCourse === 'all' || alumni.course === filterCourse;
+            const matchesBatch = filterBatch === 'all' || alumni.batch === filterBatch;
+            return matchesSearch && matchesCourse && matchesBatch;
+        });
+    }, [searchTerm, filterCourse, filterBatch]);
 
     return (
         <div className="min-h-screen bg-gray-50">
