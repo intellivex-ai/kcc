@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Filter, Eye, Trash2, CheckCircle, Download } from 'lucide-react';
 import { getInquiries, updateInquiry, deleteInquiry, exportToCSV } from '../../lib/admin-data';
@@ -6,7 +6,6 @@ import toast, { Toaster } from 'react-hot-toast';
 
 const Inquiries = () => {
     const [inquiries, setInquiries] = useState([]);
-    const [filteredInquiries, setFilteredInquiries] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [statusFilter, setStatusFilter] = useState('all');
     const [selectedInquiry, setSelectedInquiry] = useState(null);
@@ -14,10 +13,6 @@ const Inquiries = () => {
     useEffect(() => {
         loadInquiries();
     }, []);
-
-    useEffect(() => {
-        filterInquiries();
-    }, [searchTerm, statusFilter, inquiries]);
 
     const loadInquiries = async () => {
         try {
@@ -29,7 +24,9 @@ const Inquiries = () => {
         }
     };
 
-    const filterInquiries = () => {
+    // ⚡ Bolt Performance Optimization: Replace derived state and useEffect with useMemo
+    // This avoids an extra re-render cycle whenever search, filter, or data changes.
+    const filteredInquiries = useMemo(() => {
         let filtered = inquiries;
 
         if (statusFilter !== 'all') {
@@ -44,8 +41,8 @@ const Inquiries = () => {
             );
         }
 
-        setFilteredInquiries(filtered);
-    };
+        return filtered;
+    }, [searchTerm, statusFilter, inquiries]);
 
     const handleStatusChange = async (id, newStatus) => {
         try {
