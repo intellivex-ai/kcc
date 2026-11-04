@@ -4,6 +4,7 @@ import { LogIn, Lock, User } from 'lucide-react';
 import { login } from '../../lib/admin-auth';
 import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
+import { useRateLimit } from '../../lib/rate-limiter';
 
 const AdminLogin = () => {
     const [username, setUsername] = useState('');
@@ -11,10 +12,20 @@ const AdminLogin = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
+    const { canSubmit, recordAttempt, resetTime } = useRateLimit('admin_login', 5, 5 * 60 * 1000);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
 
+        if (!canSubmit) {
+            const minutes = Math.ceil((resetTime - new Date()) / 60000);
+            toast.error(`Too many login attempts. Please try again in ${minutes} minute${minutes > 1 ? 's' : ''}.`);
+            setLoading(false);
+            return;
+        }
+
+        recordAttempt();
         const result = login(username, password);
 
         if (result.success) {

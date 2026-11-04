@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Send, User, Mail, Phone, BookOpen, MessageSquare, CheckCircle } from 'lucide-react';
 import { addInquiry } from '../lib/admin-data';
+import { sanitizeInput } from '../lib/security';
 
 const InquiryForm = () => {
     const [formData, setFormData] = useState({
@@ -40,11 +41,11 @@ const InquiryForm = () => {
         try {
             // Save to Supabase
             await addInquiry({
-                name: formData.name,
-                email: formData.email,
-                phone: formData.phone,
-                subject: formData.course,
-                message: formData.message || 'No message provided'
+                name: sanitizeInput(formData.name),
+                email: sanitizeInput(formData.email),
+                phone: sanitizeInput(formData.phone),
+                subject: sanitizeInput(formData.course),
+                message: sanitizeInput(formData.message || 'No message provided')
             });
 
             setIsSubmitting(false);
